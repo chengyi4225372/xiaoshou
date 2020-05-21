@@ -6,6 +6,7 @@
  * Time: 15:15
  * 购物车
  */
+namespace app\index\Controller;
 use think\Controller;
 use think\Db;
 
