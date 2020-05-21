@@ -1,0 +1,75 @@
+<include file="include/header" title="扫码登录" />
+<style>
+	.title{
+		width: 100%;
+		height: 50px;
+		line-height: 50px;
+		text-align: center;
+		font-size: 16px;
+		border-bottom: 1px solid #eee;
+	}
+	.title img{
+		width:32px;
+		height:32px;
+		vertical-align: middle;
+	}
+	.content{width:100%;}
+	.content .price{
+		height: 50px;
+		line-height: 70px;
+		text-align: center;
+		font-size: 30px;
+	}
+	.content .qrcode{
+		width: 70%;
+		height: 70%;
+		margin: 30px 15%;
+	}
+	.content .actions{
+		height: 60px;
+		font-size: 15px;
+		font-weight: 600;
+		text-align: center;
+		line-height: 60px;
+	}
+</style>
+<body>
+	<div class="title">
+		<img src="__PUBLIC__/images/wxpay.png" />
+		微信扫码登录
+	</div>
+	<div class="content">
+		<img src="{$qrcode}" class="qrcode" />
+		<div class="remark">
+		</div>
+		<div class="actions">
+			<p>手机打开微信扫码进行登录</p>
+		</div>
+	</div>
+
+<script type="text/javascript">
+	//计时器登录
+	var code = "{$code}";
+		fr = "{$_GET['fr']}";
+	
+	function getUser(){
+		var intInterval = setInterval(function(){
+			$.post("{:U('checkLogin')}",{code:code,fr:fr},function(d){
+				if(d){
+					if(d.status){
+						location.href = d.url;
+					}
+				}else{
+					alert('请求失败！');
+				}
+			});
+		}, 1000);
+	} 
+	
+	$(function(){
+		getUser();
+	}); 
+
+</script>
+</body>
+</html>

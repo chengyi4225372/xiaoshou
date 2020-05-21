@@ -1,0 +1,141 @@
+<include file="include/header4" title="{$title}" />
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/home/css/template3/style3.css" />
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/home/css/template3/bookcategory.css" />
+<style>
+.mb-tabar {
+    margin-top: 150px;
+}
+</style>
+<body>
+<header class="mui-bar mui-bar-nav classify-header">
+<a href="{:U('Index/iSearch')}">
+    <div class="classify-input mui-input-row mui-search">
+        <i class="icon-source-list icon-search"></i>
+		    <if condition="$btype eq 1">
+			  搜索漫画名~作者~
+             <elseif condition="$btype eq 2" />
+			  搜索小说名~作者~
+                <else />
+              搜索听书~作者~
+            </if>
+    </div>
+</a>
+
+<nav class="nav-row-cate type-panel" style="width:100%;">
+    <div class="shrink open-box condition-box " style="display: block;">
+        <div class="row has-label book-right">
+            <!--<label class="label"><span>分类</span></label>-->
+            <div class="container" id="store">
+                <div class="item">
+                    <a href="javascript:;" class="active my-btn" data-sid="">全部</a>
+                </div>
+                <foreach name="store" item="v" key="k">
+                    <div class="item">
+                        <a href="javascript:;" data-sid="{$k}" class="my-btn">{$v}</a>
+                    </div>
+                </foreach>
+            </div>
+        </div>
+    </div>
+
+</nav>
+</header>
+<div class="books-list mb-tabar m-box">
+<div class="w-shelfBooklist">
+<ul id="html_box">
+</ul>
+</div>
+</div>
+<script>
+    var store = "";
+    iswz = "";
+    issex = "";
+    isfw = "";
+    page = 1;
+    wait = true;
+    $(function () {
+        getData();
+        $(window).bind("scroll", function (event) {
+            if(!wait) return;
+            var top = document.documentElement.scrollTop + document.body.scrollTop;
+            var textheight = $(document).height();
+            if (textheight - top - $(window).height() <= 50) {
+                page++;
+                getData();
+            }
+        });
+    });
+
+
+    //分类点击
+    $('#store .item').click(function(){
+        $('#store .item').find('a').removeClass('active');
+        $(this).find('a').addClass('active');
+        store = $(this).find('a').attr('data-sid');
+        $('#html_box').html('');
+        page = 1;
+        getData();
+    });
+
+    //类型点击
+    $('#sexed .item').click(function(){
+        $('#sexed .item').find('a').removeClass('active');
+        $(this).find('a').addClass('active');
+        issex = $(this).find('a').attr('data-sex');
+        page = 1;
+        $('#html_box').html('');
+        getData();
+    });
+
+    //状态点击
+    $('#wzed .item').click(function(){
+        $('#wzed .item').find('a').removeClass('active');
+        $(this).find('a').addClass('active');
+        iswz = $(this).find('a').attr('data-iswz');
+        page = 1;
+        $('#html_box').html('');
+        getData();
+    });
+
+    //属性点击
+    $('#fwed .item').click(function(){
+        $('#fwed .item').find('a').removeClass('active');
+        $(this).find('a').addClass('active');
+        isfw = $(this).find('a').attr('data-isfw');
+        page = 1;
+        $('#html_box').html('');
+        getData();
+    });
+
+    function getData(){
+        data = {
+            "cateids" : store,
+            "iswz" : iswz,
+            "issex" : issex,
+            "isfw" : isfw,
+            "btype":"{$_GET['btype']}",
+            "page":page,
+        }
+        $.post("{:U('Ajax/getBookType3')}",data,function(d){
+            if(d){
+                console.log(d);
+                if(d.status){
+                    $('#html_box').append(d.info);
+                }else{
+                    console.log(page);
+                    if(page == 1 && $('#nolist').length == 0){
+                        $('#html_box').append('<li id="nolist" style="width:100%;text-align:center;line-height: 3rem;list-style: none;font-size: .35rem;" class="mui-table-view-cell mui-media">抱歉，没有您找的数据，换个条件试试</li>');
+                    }
+                    wait = false;
+                }
+            }else{
+                bh_msg_tips('加载失败！');
+            }
+        })
+    }
+</script>
+
+<include file="include/footer4" />
+
+</body>
+</html>

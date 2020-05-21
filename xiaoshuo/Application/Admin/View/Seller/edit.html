@@ -1,0 +1,262 @@
+<section class="content-header">
+	<div>
+		<ol class="breadcrumb" style="background: none; margin-bottom: 0px;">
+			<li>
+				<a href="{:U('Index/index')}" style="color: #333;">
+				<i class=" fa fa-home">
+				&nbsp;</i>Home</a>
+			</li>
+			<li class="active">名家经典</li>
+			<li class="active"><if condition="$_GET['id']">修改商家<else />添加商家</if></li>
+		</ol>
+	</div>
+</section>
+
+<section class="content">
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="box box-primary">
+				<form class="form-horizontal" style="margin-top:30px" method="POST" id="form" action="" enctype="multipart/form-data">
+					<div class="box-body">
+						<div class="form-group">
+							<label for="name" class="control-label col-sm-3">商家标题</label>
+							<div class="col-sm-6">
+								<input type="text" name="title" class="form-control col-sm-9" value="{$info['title']}">
+								<p class="help-block help-block-error col-sm-7 col-xs-10"></p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="name" class="control-label col-sm-3">商家简介</label>
+							<div class="col-sm-6">
+								<input type="text" name="remark" class="form-control col-sm-9" value="{$info['remark']}">
+								<p class="help-block help-block-error col-sm-7 col-xs-10"></p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="name" class="control-label col-sm-3">排序权值</label>
+							<div class="col-sm-6">
+								<input type="text" name="sort" class="form-control col-sm-9" value="{$info['sort']}">
+								<p class="help-block help-block-error col-sm-7 col-xs-10"></p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="name" class="control-label col-sm-3">商家logo</label>
+							<div class="col-sm-6">
+								<iframe src="{:U('Index/upload', 'event=setPics&url='.$info['logo'])}" scrolling="no" style="width:100px;height:100px;border: none;display:block;"></iframe>
+								<input type="hidden" name="logo" id="logo" value="{$info['logo']}" class="smallinput" />
+								<script>
+								function setPics(url){
+									document.getElementById('logo').value = url;
+								}
+								</script>
+								<p class="help-block help-block-error col-sm-7 col-xs-10">点击图片可进行更换</p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="name" class="control-label col-sm-3">封面图片</label>
+							<div class="col-sm-6">
+								<iframe src="{:U('Index/upload', 'event=setPic&url='.$info['coverpic'])}" scrolling="no" style="width:200px;height:120px;border: none;display:block;"></iframe>
+								<input type="hidden" name="coverpic" id="coverpic" value="{$info['coverpic']}" class="smallinput" />
+								<script>
+								function setPic(url){
+									document.getElementById('coverpic').value = url;
+								}
+								</script>
+								<p class="help-block help-block-error col-sm-7 col-xs-10">点击图片可进行更换</p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="name" class="control-label col-sm-3">商家轮播图</label>
+							<div class="col-sm-9">
+								<iframe src="{:U('Index/upload', 'event=setPic1&url='.$imgs[1])}" scrolling="no" style="width:100px;height:70px;border: none;display:block;float:left;margin:5px 10px 0 0;"></iframe>
+								<input type="hidden" name="banner1" id="banner1" value="{$imgs[1]}" class="smallinput" />
+								<script>
+								function setPic1(url){
+									document.getElementById('banner1').value = url;
+								}
+								</script>
+								<iframe src="{:U('Index/upload', 'event=setPic2&url='.$imgs[2])}" scrolling="no" style="width:100px;height:70px;border: none;display:block;float:left;margin:5px 10px 0 0;"></iframe>
+								<input type="hidden" name="banner2" id="banner2" value="{$imgs[2]}" class="smallinput" />
+								<script>
+								function setPic2(url){
+									document.getElementById('banner2').value = url;
+								}
+								</script>
+								<iframe src="{:U('Index/upload', 'event=setPic3&url='.$imgs[3])}" scrolling="no" style="width:100px;height:70px;border: none;display:block;float:left;margin:5px 10px 0 0;"></iframe>
+								<input type="hidden" name="banner3" id="banner3" value="{$imgs[3]}" class="smallinput" />
+								<script>
+								function setPic3(url){
+									document.getElementById('banner3').value = url;
+								}
+								</script>
+								<iframe src="{:U('Index/upload', 'event=setPic4&url='.$imgs[4])}" scrolling="no" style="width:100px;height:70px;border: none;display:block;float:left;margin:5px 10px 0 0;"></iframe>
+								<input type="hidden" name="banner4" id="banner4" value="{$imgs[4]}" class="smallinput" />
+								<script>
+								function setPic4(url){
+									document.getElementById('banner4').value = url;
+								}
+								</script>
+								<iframe src="{:U('Index/upload', 'event=setPic5&url='.$imgs[5])}" scrolling="no" style="width:100px;height:70px;border: none;display:block;float:left;margin:5px 10px 0 0;"></iframe>
+								<input type="hidden" name="banner5" id="banner5" value="{$imgs[5]}" class="smallinput" />
+								<script>
+								function setPic5(url){
+									document.getElementById('banner5').value = url;
+								}
+								</script>
+								<p class="help-block help-block-error col-sm-7 col-xs-10">点击图片可进行更换，最多上传五张图片</p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="name" class="control-label col-sm-3">分享赠送金额</label>
+							<div class="col-sm-6">
+								<input type="text" name="smoney" class="form-control col-sm-9" value="{$info['smoney']}">
+								<p class="help-block help-block-error col-sm-7 col-xs-10"></p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="name" class="control-label col-sm-3">购买金额</label>
+							<div class="col-sm-6">
+								<input type="text" name="money" class="form-control col-sm-9" value="{$info['money']}">
+								<p class="help-block help-block-error col-sm-7 col-xs-10"></p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="name" class="control-label col-sm-3">公告信息</label>
+							<div class="col-sm-6">
+								<input type="text" name="notice" class="form-control col-sm-9" value="{$info['notice']}">
+								<p class="help-block help-block-error col-sm-7 col-xs-10"></p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="pass" class="control-label col-sm-3">详细内容</label>
+							<div class="col-sm-6">
+								<textarea name="info" id="info" class="longinput" style="margin: 0px; height: 400px; width:100%;">{$info.info}</textarea>
+								<p class="help-block help-block-error col-sm-7 col-xs-10"></p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="name" class="control-label col-sm-3">商家详细地址</label>
+							<div class="col-sm-6">
+								<input type="text" name="district" id="suggestId" value="" placeholder="请在下方地图上选择或手动输入" class="form-control col-sm-9" />
+								<div id="searchResultPanel" style="border:1px solid #C0C0C0;width:150px;height:auto; display:none;"></div>
+								<p class="help-block help-block-error col-sm-7 col-xs-10"><if condition="$info['district']">已选择地址：{$info.district}</if></p>
+							</div>
+						</div>
+						<style>
+							#allmap {width: 100%;;height:500px;overflow: hidden;margin:0;font-family:"微软雅黑";}
+						</style>
+						<div id="allmap"></div>
+						<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=rj1dpvwNqHo2rb3AY7wH0wGcvWgWA4IK"></script>
+							
+						<script type="text/javascript">
+							//初始化显示城市
+							var city = "{$info['address']}";
+							// 百度地图API功能
+							var map = new BMap.Map("allmap");    // 创建Map实例
+							if(city==''){
+								map.centerAndZoom(new BMap.Point(116.404, 39.915), 11);  // 初始化地图,设置中心点坐标和地图级别
+							}else{
+								map.centerAndZoom(city,11);  // 初始化地图,设置中心点坐标和地图级别
+							}
+						
+							map.addControl(new BMap.MapTypeControl());   //添加地图类型控件
+							// 设置地图显示的城市 此项是必须设置的
+							
+							
+							//开启鼠标滚轮缩放  
+							map.enableScrollWheelZoom(true);  
+							//禁用地图拖拽  
+							map.disableDragging();     //禁止拖拽
+							setTimeout(function(){
+							   map.enableDragging();   //两秒后开启拖拽
+							   //map.enableInertialDragging();   //两秒后开启惯性拖拽
+							}, 2000);
+							
+							map.addEventListener("click", function(e){
+								var geoc = new BMap.Geocoder();  
+								var pt = e.point;
+								geoc.getLocation(pt, function(rs){
+									var addComp = rs.addressComponents;
+									alert(addComp.province + " " + addComp.city + " " + addComp.district + " " + addComp.street + " " + addComp.streetNumber);
+									$('input[name="address"]').val(addComp.province+'/'+addComp.city+'/'+addComp.district);
+									$('.city-picker-span').find('.title').html();
+									var html = '<span class="select-item" data-count="province" data-code="">'+addComp.province+'</span>/';
+										html += '<span class="select-item" data-count="city" data-code="">'+addComp.city+'</span>/';
+										html += '<span class="select-item" data-count="district" data-code="">'+addComp.district+'</span>';
+									$('.city-picker-span').find('.title').html(html);
+									$('#suggestId').val(addComp.street + addComp.streetNumber);
+								});        
+							});
+											
+							function G(id) {
+								return document.getElementById(id);
+							}
+							
+							var ac = new BMap.Autocomplete(    //建立一个自动完成的对象
+								{"input" : "suggestId"
+								,"location" : map
+							});
+
+							ac.addEventListener("onhighlight", function(e) {  //鼠标放在下拉列表上的事件
+							var str = "";
+								var _value = e.fromitem.value;
+								var value = "";
+								if (e.fromitem.index > -1) {
+									value = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
+								}    
+								str = "FromItem<br />index = " + e.fromitem.index + "<br />value = " + value;
+								
+								value = "";
+								if (e.toitem.index > -1) {
+									_value = e.toitem.value;
+									value = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
+								}    
+								str += "<br />ToItem<br />index = " + e.toitem.index + "<br />value = " + value;
+								G("searchResultPanel").innerHTML = str;
+							});
+
+							var myValue;
+							ac.addEventListener("onconfirm", function(e) {    //鼠标点击下拉列表后的事件
+							var _value = e.item.value;
+								myValue = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
+								G("searchResultPanel").innerHTML ="onconfirm<br />index = " + e.item.index + "<br />myValue = " + myValue;
+								
+								setPlace();
+							});
+
+							function setPlace(){
+								map.clearOverlays();    //清除地图上所有覆盖物
+								function myFun(){
+									var pp = local.getResults().getPoi(0).point;    //获取第一个智能搜索的结果
+									map.centerAndZoom(pp, 18);
+									map.addOverlay(new BMap.Marker(pp));    //添加标注
+								}
+								var local = new BMap.LocalSearch(map, { //智能搜索
+								  onSearchComplete: myFun
+								});
+								local.search(myValue);
+							}
+						</script>
+					</div>
+					<!-- /.box-body -->
+
+					<div class="box-footer">
+						<div class="form-group">
+							<div class="col-sm-offset-3 col-sm-9">
+								<input type="hidden" name="id" id="id" value="{$_GET['id']}" />
+								<button type="button" id="ajaxBtn" onclick="subForm();" class="btn btn-primary">保存</button>
+								<button type="button" class="btn btn-inverse" style="margin-left:20px;" onclick="history.go(-1)">返回</button>
+							</div>	
+						</div>
+					</div>
+				</form>
+			</div>
+			<!-- PAGE CONTENT ENDS -->
+		</div><!-- /.col -->
+	</div>
+</section>
+<script src="__PUBLIC__/plugins/ueditor1.4.3/ueditor.config.js"></script>
+<script src="__PUBLIC__/plugins/ueditor1.4.3/ueditor.all.min.js"></script>
+<script>
+	ue = UE.getEditor('info');
+</script>

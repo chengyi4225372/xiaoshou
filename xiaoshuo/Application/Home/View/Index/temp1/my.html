@@ -1,0 +1,241 @@
+<include file="include/header" title="{$title}" />
+<style>
+.erweima{
+    text-align: center;
+    padding:25px 0;
+    background: white;
+}
+.erweima img{
+    margin:0 auto;
+    width:200px;
+    height:200px;
+}
+.erweima p{
+    font-size: 14px;
+	margin-top: 0;
+	margin-bottom: 5px;		
+	color: #8f8f94;
+}
+</style>
+<div class="uh-box">
+	<img src="__PUBLIC__/home/images/ubg.png" class="bg">
+	<div class="container">
+		<div class="avatar">
+			<img width="65" height="65" id="headimg" src="{$user.headimg}" onclick="headimg();">
+			<div class="deco">
+			</div>
+		</div>
+		<div class="body">
+			<div class="title" id="nickname">
+				{$user.nickname}
+			</div>
+			<div class="text">
+				<span>ID：{$user.id}</span>
+			</div>
+		</div>
+		<div class="action">
+			<if condition="$sign">
+				<a href="javascript:void(0);" id="sign" class="btn btn-sign" style="color: #8a8383;background:#fff">已签到</a>
+			<else />
+				<a href="javascript:void(0);" id="sign" class="btn btn-sign" onclick="sign()" style="color: #fff;background:#FF9800">签到</a>
+			</if>
+		</div>
+	</div>
+</div>
+<script>
+	function headimg(){
+		$.post("{:U('Ajax/sync_profile')}",function(d){
+			if(d){
+				if(d.status){
+					$('#headimg').attr('src',d.info.headimg);
+					$('#nickname').html(d.info.nickname);
+					bh_msg_tips('更新头像成功！');
+				}else{
+					bh_msg_tips(d.info);
+				}
+			}else{
+				bh_msg_tips('请求失败！');
+			}
+		})
+	}
+</script>
+<div class="uh-row">
+	<div class="col" href="/Bills/Income">
+		<div class="num" id="usermoney">
+			{$user['money']|intval}
+		</div>
+		<div class="title">
+			书币余额
+		</div>
+	</div>
+	<div class="col" href="/home/recharge">
+		<div class="num">
+			{$user['charge_total']}
+		</div>
+		<div class="action">
+			总充值
+		</div>
+	</div>
+</div>
+<div class="uh-nav mb-10 mb-tabar" style="margin-bottom:0">
+	<div class="item mt-10">
+		<a href="{:U('Index/charge')}" class="link">
+		<i class="icon-account" style="background-image: url(./Public/home/images/svg/tabbar_me_s.svg);"></i>
+		<div class="title" style="font-weight:700;color:#ff5420">
+			立即充值
+		</div>
+		<div class="text">
+			<if condition="$user['viptime'] gt 0">
+				<span style="font-size: .35rem;margin-right: .2rem;color: #ff5420;font-weight: 600;">VIP到期时间：{$user['viptime']|date="Y-m-d",###}</span>
+			<elseif condition="$user['viptime'] lt 0" />
+				<span style="font-size: .35rem;margin-right: .2rem;color: #ff5420;font-weight: 600;">终生VIP</span>
+			</if>
+			<svg xmlns="http://www.w3.org/2000/svg" width="8" height="14" viewbox="0 0 14 24"><title>right-arrow</title><path d="M1.91 1.93L12.06 12 1.91 22" fill="none" stroke="#888888" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+		</div>
+		</a>
+	</div>
+	<div class="item tl">
+		<a href="{:U('collectHistory')}" class="link">
+		<i class="icon-book" style="background-image: url(./Public/home/images/svg/tabbar_book_n.svg);"></i>
+		<div class="title">
+			书签
+		</div>
+		<div class="text">
+			<svg xmlns="http://www.w3.org/2000/svg" width="8" height="14" viewbox="0 0 14 24"><title>right-arrow</title><path d="M1.91 1.93L12.06 12 1.91 22" fill="none" stroke="#888888" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+		</div>
+		</a>
+	</div>
+	<div class="item tl">
+		<a href="{:U('readHistory')}" class="link">
+		<i class="icon-feedback"></i>
+		<div class="title">
+			阅读历史
+		</div>
+		<div class="text">
+			<svg xmlns="http://www.w3.org/2000/svg" width="8" height="14" viewbox="0 0 14 24"><title>right-arrow</title><path d="M1.91 1.93L12.06 12 1.91 22" fill="none" stroke="#888888" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+		</div>
+		</a>
+	</div>
+	<div class="item tl">
+		<a href="{:U('Index/report')}" class="link">
+		<i class="icon-money" style="background-image: url(./Public/home/images/svg/me_icon_shop.svg); "></i>
+		<div class="title">
+			账单明细
+		</div>
+		<div class="text">
+			<svg xmlns="http://www.w3.org/2000/svg" width="8" height="14" viewbox="0 0 14 24"><title>right-arrow</title><path d="M1.91 1.93L12.06 12 1.91 22" fill="none" stroke="#888888" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+		</div>
+		</a>
+	</div>
+	<div class="item tl">
+		<a href="{:U('umsg')}" class="link">
+		<i class="icon-book" style="background-image: url(./Public/home/images/svg/msg.svg);"></i>
+		<div class="title">
+			我的消息
+		</div>
+		<div class="text">
+			<svg xmlns="http://www.w3.org/2000/svg" width="8" height="14" viewbox="0 0 14 24"><title>right-arrow</title><path d="M1.91 1.93L12.06 12 1.91 22" fill="none" stroke="#888888" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+		</div>
+		</a>
+	</div>
+<!-- 	<div class="item tl">
+		<a href="{:U('Index/feedBack')}" class="link">
+		<i class="icon-money" style="background-image: url(./Public/home/images/svg/me_icon_service.svg); "></i>
+		<div class="title">
+			建议反馈
+		</div>
+		<div class="text">
+			<svg xmlns="http://www.w3.org/2000/svg" width="8" height="14" viewbox="0 0 14 24"><title>right-arrow</title><path d="M1.91 1.93L12.06 12 1.91 22" fill="none" stroke="#888888" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+		</div>
+		</a>
+	</div> -->
+	<div class="item tl">
+		<a href="{:U('Index/qrcode')}" class="link">
+		<i class="icon-money" style="background-image: url(./Public/home/images/svg/sponsor.svg); "></i>
+		<div class="title" style="font-weight:700;color:#ff5420">
+			推广有礼
+		</div>
+		<div class="text">
+			<svg xmlns="http://www.w3.org/2000/svg" width="8" height="14" viewbox="0 0 14 24"><title>right-arrow</title><path d="M1.91 1.93L12.06 12 1.91 22" fill="none" stroke="#888888" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+		</div>
+		</a>
+	</div> 
+	<div class="item tl">
+		<a href="{:U('Index/joinUs')}" class="link">
+		<i class="icon-money" style="background-image: url(./Public/home/images/svg/me_icon_service.svg); "></i>
+		<div class="title" style="font-weight:700;color:#ff5420">
+			加盟代理
+		</div>
+		<div class="text">
+			<svg xmlns="http://www.w3.org/2000/svg" width="8" height="14" viewbox="0 0 14 24"><title>right-arrow</title><path d="M1.91 1.93L12.06 12 1.91 22" fill="none" stroke="#888888" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+		</div>
+		</a>
+	</div> 
+	<div class="item tl">
+		<a href="javascript:;" onclick="autoBuy();" class="link">
+			<i class="icon-money" style="background-image: url(./Public/home/images/svg/autoBuy.svg); "></i>
+			<div class="title">
+				自动购买付费章节
+			</div>
+			<div class="text">
+				<section class="autoBuy">
+					<div class="checkbox">
+						<input type="checkbox" id="autoBuy" <if condition="$user['autobuy']">checked</if> />
+						<label></label>
+					</div>
+				</section>	
+			</div>
+		</a>
+	</div>
+</div>
+
+<!-- <div class="bm-box erweima">
+	<if condition="$mch">
+		<img src="{$mch['qrcode']}">
+		<p>版权所有，侵权必究！<br>官方QQ：{$mch['qq']}<br>官方微信号：{$mch['weixin']}</p>
+	<else />
+		<img src="{$_site['qrcode']}">
+		<p>版权所有，侵权必究！<br>官方QQ：{$_site['qq']}<br>官方微信号：{$_site['weixin']}</p>
+	</if>
+</div> -->
+
+<script type="text/javascript">
+    //签到
+	function sign(){
+		bh_msg_tips('数据请求中....');
+		$.post("{:U('Ajax/sign')}",function(d){
+			if(d){
+				$('#bh_msg_lay').hide();
+				if(d.status){
+					$('#sign').removeAttr("onclick");
+					var money = $('#usermoney').html();
+					money =  parseInt(money) + parseInt(d.smoney);
+					$('#usermoney').html(money);
+					bh_msg_tips(d.info);
+					$('#sign').css({"color":"#8a8383","background":"#fff"});
+					$('#sign').html('已签到');
+				}else{
+					bh_msg_tips(d.info);
+				}
+			}else{
+				$('#bh_msg_lay').hide();
+				bh_msg_tips('请求失败！');
+			}
+		})
+	}
+	
+	//自动购买付费章节
+	function autoBuy(){
+		if($('#autoBuy').prop('checked')){
+			$('#autoBuy').prop("checked",true);
+		}else{
+			$('#autoBuy').prop("checked",false);
+		}
+		$.post("{:U('Ajax/autoBuy')}",function(d){
+			if(!d){
+				bh_msg_tips('请求失败！');
+			}
+		})
+	}
+</script>
+<include file="include/footer" />

@@ -1,0 +1,149 @@
+<section class="content-header">
+<div>
+	<ol class="breadcrumb" style="background: none; margin-bottom: 0px;">
+		<li><a href="{:U('Index/index')}" style="color: #333;"><i class=" fa fa-home"></i> Home</a></li>
+		<li class="active">数据信息</li>
+		<li class="active">结算信息</li>
+	</ol>
+</div>
+</section>
+<section class="content">
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box">
+			<!-- /.box-header -->
+			<div class="box-body">
+				<div class="row">
+					<div class="col-md-4">
+						<div class="well">
+							<b>未提现</b>
+							<div class="text-primary" style="font-size:32px;margin:5px 0">
+								¥<span>{$mch['money']}</span>
+								<button type="button" class="btn btn-sm btn-info" id="multi_apply">一键提现</button>
+								<a href="{:U('payment')}" class="btn btn-sm btn-primary">设置账号</a>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="well">
+							<b>提现中</b>
+							<div class="text-primary" style="font-size:32px;margin:5px 0">
+                                ¥<span>{$wmoney|default="0.00"}</span>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="well">
+							<b>累计打款</b>
+							<div class="text-primary" style="font-size:32px;margin:5px 0">
+								¥<span>{$ymoney|default="0.00"}</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<form class="form-inline" method="post" style="margin-bottom: 15px;">
+					<div class="input-group input-group-sm">
+						<input type="text" name="time1" class="form-control reservationtime" placeholder="开始时间" autocomplete="off" value="{$_GET['time1']}">
+					</div>
+					<span>-</span>
+					<div class="input-group input-group-sm">
+						<input type="text" name="time2" class="form-control reservationtime" placeholder="结束时间" autocomplete="off" value="{$_GET['time2']}">
+					</div>
+					<div class="input-group input-group-sm">
+						<input type="submit" value="查找" class="btn btn-sm btn-success">
+					</div>
+				</form>
+				<ul id="myTab" class="nav nav-tabs">
+					<li class="withdraw" _status="1"><a href="{:U('withdraw',array('status'=>1))}">提现中</a></li>
+					<li class="withdraw" _status="2"><a href="{:U('withdraw',array('status'=>2))}">已提现</a></li>
+				</ul>
+				<table class="table table-bordered table-hover table-striped text-center">
+					<tbody>
+						<tr>
+							<th>款项日期</th>
+							<th>提款金额</th>
+							<th>收款人</th>
+							<th>银行名称</th>
+							<th>银行卡号</th>
+							<th>状态</th>
+						</tr>
+						<foreach name="list" item="v">
+						<tr>
+							<td>{$v.create_time|date="Y-m-d H:i:s",###}</td>
+							<td>{$v.money}</td>
+							<td>{$v.bankname}</td>
+							<td>{$v.bank}</td>
+							<td>{$v.bankno}</td>
+							<td>
+								<if condition="$v['status'] eq 1">
+									提现中
+								<else />
+									已提现
+								</if>
+							</td>
+						</tr>
+						</foreach>
+					</tbody>
+				</table>
+			</div>
+			<!-- /.box-body -->
+			<div class="page">{$page|default="<p style='text-align:center'>暂时没有数据</p>"}</div>
+		</div>
+	</div>
+</div>
+</section><!-- /.content -->
+<script>
+	var status = "{$_GET['status']}"?"{$_GET['status']}":1;
+	$(function(){
+		$('.withdraw').each(function(){
+			if($(this).attr("_status") == status){
+				$(this).addClass("active");
+			}
+		})
+	});
+	
+	
+	$("#multi_apply").click(function(){
+		layer.confirm('确定提出所有金额',function(){
+			layer.load(2);
+			$.post("{:U('withAdd')}",function(d){
+				if(d){
+					layer.closeAll();
+					if(d.status){
+						layer.alert(d.info,function(){
+							location.reload();
+						})
+					}else{
+						layer.msg(d.info);
+					}
+				}else{
+					layer.closeAll();
+					layer.msg('请求失败！');
+				}
+			})
+		});
+	})
+	
+	$.fn.datetimepicker.dates['zh-CN'] = {
+		days: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"],
+		daysShort: ["日", "一", "二", "三", "四", "五", "六", "日"],
+		daysMin: ["日", "一", "二", "三", "四", "五", "六", "日"],
+		months: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+		monthsShort: ["一", "二", "三", "四", "五", "六", "七", "八", "九", "十", "十一", "十二"],
+		meridiem: ["上午", "下午"],
+		today: "今天"
+	};
+
+	$('.reservationtime').datetimepicker({
+		format: 'yyyy-mm-dd',
+		language: 'zh-CN',
+		weekStart: 1,
+		todayBtn: 1,
+		autoclose: 1,
+		todayHighlight: 1,
+		startView: 2,
+		minView: 2,
+		forceParse: 0,
+		showMeridian: 1
+	});
+</script>

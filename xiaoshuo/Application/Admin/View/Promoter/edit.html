@@ -1,0 +1,124 @@
+
+<section class="content-header">
+	<div>
+		<ol class="breadcrumb" style="background: none; margin-bottom: 0px;">
+			<li>
+				<a href="{:U('Index/index')}" style="color: #333;">
+					<i class=" fa fa-home"></i>&nbsp;Home
+				</a>
+			</li>
+			<li class="active">推广员信息</li>
+			<li class="active"><if condition="$_GET['id']">修改推广员信息<else />添加推广员信息</if></li>
+		</ol>
+	</div>
+
+</section>
+	<!-- Main content -->
+<section class="content">
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="box box-primary">
+				<form id="main-form" class="form-horizontal" style="margin-top:30px" method="post">
+					<div class="form-group">
+						<label class="control-label col-sm-3">站点名称</label>
+						<div class="col-sm-6">
+							<input type="text" name="title" class="form-control col-sm-9" value="{$info.title}" required="">
+							<p class="help-block help-block-error col-sm-12 col-xs-10" style="color:red;padding-left:0"></p>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-3">手机/登录账号</label>
+						<div class="col-sm-6">
+							<input type="text" name="mobile" class="form-control col-sm-9" value="{$info.mobile}" required="">
+							<p class="help-block help-block-error col-sm-7 col-xs-10"></p>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-3">登录密码</label>
+						<div class="col-sm-6">
+							<input type="text" name="pass" class="form-control col-sm-9" value="{$info.tpass}" required="">
+							<p class="help-block help-block-error col-sm-7 col-xs-10"></p>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-3">支付方式</label>
+						<div class="col-sm-6">
+							<select class="form-control col-sm-9" name="paymodel" default="{$info['paymodel']}">
+								<option value="">请选择</option>
+								<option value="1">微信支付</option>
+								<option value="2">PAYSAPI支付</option>
+							</select>
+							<p class="help-block help-block-error col-sm-7 col-xs-10"></p>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-3">返额比例</label>
+						<div class="col-sm-6">
+							<input type="text" name="lv" class="form-control col-sm-9" value="{$info.lv}" required="">
+							<p class="help-block help-block-error col-sm-7 col-xs-10" style="color:red;padding-left:0;">单位：%，填写 0 到 100 之间的数字，设置比例不能超过100%</p>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-3">距扣量数</label>
+						<div class="col-sm-6">
+							<input type="text" name="onums" class="form-control col-sm-9" value="{$info.onums}" style="width:50%;float:left" />
+							<p class="help-block help-block-error col-sm-7 col-xs-10" style="color:red;padding-left:0;">订单数量达到设定的距扣量数笔进行扣量</p>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-3">扣量比例</label>
+						<div class="col-sm-6">
+							<input type="text" class="form-control col-sm-3" value="1" style="background:#ddd;width:40%;float:left" readonly />
+							<span style="float:left;margin:1% 20px">比</span>
+							<input type="text" name="desc" class="form-control col-sm-3" value="{$info.desc}" style="width:40%;float:left" />
+							<p class="help-block help-block-error col-sm-7 col-xs-10" style="color:red;padding-left:0;">每多少笔订单扣除一笔订单</p>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-3">推广员结算收款人</label>
+						<div class="col-sm-6">
+							<input type="text" name="bankname" class="form-control col-sm-9" value="{$info.bankname}" />
+							<p class="help-block help-block-error col-sm-7 col-xs-10" style="color:red;padding-left:0;"></p>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-3">推广员结算银行</label>
+						<div class="col-sm-6">
+							<input type="text" name="bank" class="form-control col-sm-9" value="{$info.bank}" />
+							<p class="help-block help-block-error col-sm-7 col-xs-10" style="color:red;padding-left:0;"></p>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-3">推广员结算银行卡号</label>
+						<div class="col-sm-6">
+							<input type="text" name="bankno" class="form-control col-sm-9" value="{$info.bankno}" />
+							<p class="help-block help-block-error col-sm-7 col-xs-10" style="color:red;padding-left:0;"></p>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-3">二维码地址</label>
+						<div class="col-sm-6">
+							<iframe src="{:U('Index/upload', 'event=setPic&url='.$info['qrcode'])}" scrolling="no" style="width:200px;height:200px;border: none;display:block"></iframe>
+							<input type="hidden" name="qrcode" id="qrcode" value="{$info['qrcode']}" class="smallinput" />
+							<script>
+							function setPic(url){
+								document.getElementById('qrcode').value = url;
+							}
+							</script>
+							<p class="help-block help-block-error col-sm-7 col-xs-10">点击图片可进行更换</p>
+						</div>
+					</div>
+					
+					<div class="box-footer">
+						<div class="form-group">
+							<div class="col-sm-offset-3 col-sm-9">
+								<button type="button" id="ajaxBtn" class="btn btn-primary">保存</button>
+								<button type="button" class="btn btn-inverse" style="margin-left:20px;" onclick="history.go(-1)">返回</button>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</section>

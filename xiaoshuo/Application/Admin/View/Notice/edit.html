@@ -1,0 +1,56 @@
+<section class="content-header">
+	<div>
+		<ol class="breadcrumb" style="background: none; margin-bottom: 0px;">
+			<li>
+				<a href="{:U('Index/index')}" style="color: #333;">
+				<i class=" fa fa-home">
+				&nbsp;</i>Home</a>
+			</li>
+			<li class="active">公告信息</li>
+			<li class="active"><if condition="$_GET['id']">修改公告<else />添加公告</if></li>
+		</ol>
+	</div>
+</section>
+
+<section class="content">
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="box box-primary">
+				<form class="form-horizontal" style="margin-top:30px" method="POST" id="form" action="" enctype="multipart/form-data">
+					<div class="box-body">
+						<div class="form-group">
+							<label for="name" class="control-label col-sm-3">公告标题</label>
+							<div class="col-sm-6">
+								<input type="text" name="title" class="form-control col-sm-9" value="{$info['title']}">
+								<p class="help-block help-block-error col-sm-7 col-xs-10"></p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="name" class="control-label col-sm-3">公告内容</label>
+							<div class="col-sm-6">
+								<textarea name="body" id="body" class="longinput" style="margin: 0px; height: 400px; width:100%;">{:htmlspecialchars_decode($info['body'])}</textarea>
+								<p class="help-block help-block-error col-sm-7 col-xs-10"></p>
+							</div>
+						</div>
+					</div>
+					<!-- /.box-body -->
+
+					<div class="box-footer">
+						<div class="form-group">
+							<div class="col-sm-offset-3 col-sm-9">
+								<button type="button" id="ajaxBtn"  class="btn btn-primary">保存</button>
+								<button type="button" class="btn btn-inverse" style="margin-left:20px;" onclick="history.go(-1)">返回</button>
+							</div>	
+						</div>
+					</div>
+				</form>
+			</div>
+			<!-- PAGE CONTENT ENDS -->
+		</div><!-- /.col -->
+	</div>
+</section>
+<script src="__PUBLIC__/plugins/ueditor1.4.3/ueditor.config.js"></script>
+<script src="__PUBLIC__/plugins/ueditor1.4.3/ueditor.all.min.js"></script>
+<script>
+	ue = UE.getEditor('body');
+</script>

@@ -1,0 +1,169 @@
+<section class="content-header">
+	<div>
+		<ol class="breadcrumb" style="background: none; margin-bottom: 0px;">
+			<li>
+				<a href="{:U('Index/index')}" style="color: #333;">
+				<i class=" fa fa-home">
+				&nbsp;</i>Home</a>
+			</li>
+			<li class="active">漫画信息</li>
+			<li class="active"><if condition="$_GET['id']">修改漫画<else />添加漫画</if></li>
+		</ol>
+	</div>
+</section>
+
+<section class="content">
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="box box-primary">
+				<form class="form-horizontal" style="margin-top:30px" method="POST" id="form" action="" enctype="multipart/form-data">
+					<div class="box-body">
+						<div class="form-group">
+							<label for="name" class="control-label col-sm-3">视频标题</label>
+							<div class="col-sm-6">
+								<input type="text" name="title" class="form-control col-sm-9" value="{$info['title']}">
+								<p class="help-block help-block-error col-sm-7 col-xs-10"></p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="name" class="control-label col-sm-3">视频简介</label>
+							<div class="col-sm-6">
+								<input type="text" name="remark" class="form-control col-sm-9" value="{$info['remark']}">
+								<p class="help-block help-block-error col-sm-7 col-xs-10"></p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="name" class="control-label col-sm-3">封面图片</label>
+							<div class="col-sm-6">
+								<iframe src="{:U('Index/upload', 'event=setPic&url='.$info['coverpic'])}" scrolling="no" style="width:200px;height:200px;border: none;display:block;"></iframe>
+								<input type="hidden" name="coverpic" id="coverpic" value="{$info['coverpic']}" class="smallinput" />
+								<script>
+								function setPic(url){
+									document.getElementById('coverpic').value = url;
+								}
+								</script>
+								<p class="help-block help-block-error col-sm-7 col-xs-10">点击图片可进行更换</p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="name" class="control-label col-sm-3">腾讯云APP_ID</label>
+							<div class="col-sm-6">
+								<input type="text" name="appid" class="form-control col-sm-9" value="{$info['appid']}">
+								<p class="help-block help-block-error col-sm-7 col-xs-10"></p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="name" class="control-label col-sm-3">腾讯云FILE_ID</label>
+							<div class="col-sm-6">
+								<input type="text" name="fileid" class="form-control col-sm-9" value="{$info['fileid']}">
+								<p class="help-block help-block-error col-sm-7 col-xs-10"></p>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label for="name" class="control-label col-sm-3">免费试看时间</label>
+							<div class="col-sm-6">
+								<input type="text" name="trys" class="form-control col-sm-9" value="{$info['trys']}">
+								<p class="help-block help-block-error col-sm-7 col-xs-10">输入大于0的数，单位：秒</p>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label for="pass" class="control-label col-sm-3">排序权值</label>
+							<div class="col-sm-6">
+								<input type="text" name="sort" class="form-control col-sm-9" value="{$info['sort']}">
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label for="pass" class="control-label col-sm-3">发布区域</label>
+							<div class="col-sm-6">
+								<?php
+									if($info['areas']){
+										$areasArr = explode(',',$info['areas']);
+									}
+								?>
+								<foreach name="_vdArea" item="v" key="k">
+									<div class="checkbox" style="float: left;margin:0 20px 0px 0;">
+										<label>
+										  <input type="checkbox" name="areas[]" class="areas" value="{$k}" <if condition="in_array($k,$areasArr)">checked</if>>{$v}
+										</label>
+									</div>
+								</foreach>
+								<p class="help-block help-block-error col-sm-7 col-xs-10"></p>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label for="pass" class="control-label col-sm-3">视频分类</label>
+							<div class="col-sm-6">
+								<?php
+									$storeArr = explode(',',$info['cateids']);
+								?>
+								<foreach name="_vdStore" item="v" key="k">
+									<div class="checkbox" style="float: left;margin:0 20px 0px 0;">
+										<label>
+										  <input type="checkbox" class="cates" name="cateids[]" value="{$k}" <if condition="in_array($k,$storeArr)">checked</if>>{$v.name}
+										</label>
+									</div>
+								</foreach>
+								<p class="help-block help-block-error col-sm-7 col-xs-10"></p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="pass" class="control-label col-sm-3">付费属性</label>
+							<div class="col-sm-6">
+								<select class="form-control col-sm-9" name="isfw" default="{$info['isfw']}">
+                                    <option value="">请选择</option>
+									<option value="1">付费</option>
+									<option value="2">免费</option>
+								</select>
+								<p class="help-block help-block-error col-sm-7 col-xs-10"></p>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label for="pass" class="control-label col-sm-3">付费金额</label>
+							<div class="col-sm-6">
+								<input type="text" name="money" class="form-control col-sm-9" value="{$info['money']}">
+								<p class="help-block help-block-error col-sm-7 col-xs-10">请输入大于0的数</p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="pass" class="control-label col-sm-3">初始化阅读数</label>
+							<div class="col-sm-6">
+								<input type="text" name="reads" class="form-control col-sm-9" value="{$info['reads']}">
+								<p class="help-block help-block-error col-sm-7 col-xs-10">请输入大于0的自然数</p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="pass" class="control-label col-sm-3">详细内容</label>
+							<div class="col-sm-6">
+								<textarea name="info" id="info" class="longinput" style="margin: 0px; height: 400px; width:100%;">{$info.info}</textarea>
+								<p class="help-block help-block-error col-sm-7 col-xs-10"></p>
+							</div>
+						</div>
+						
+					</div>
+					<!-- /.box-body -->
+
+					<div class="box-footer">
+						<div class="form-group">
+							<div class="col-sm-offset-3 col-sm-9">
+								<input type="hidden" name="id" id="id" value="{$_GET['id']}" />
+								<button type="button" id="ajaxBtn" onclick="subForm();" class="btn btn-primary">保存</button>
+								<button type="button" class="btn btn-inverse" style="margin-left:20px;" onclick="history.go(-1)">返回</button>
+							</div>	
+						</div>
+					</div>
+				</form>
+			</div>
+			<!-- PAGE CONTENT ENDS -->
+		</div><!-- /.col -->
+	</div>
+</section>
+<script src="__PUBLIC__/plugins/ueditor1.4.3/ueditor.config.js"></script>
+<script src="__PUBLIC__/plugins/ueditor1.4.3/ueditor.all.min.js"></script>
+<script>
+	ue = UE.getEditor('info');
+</script>

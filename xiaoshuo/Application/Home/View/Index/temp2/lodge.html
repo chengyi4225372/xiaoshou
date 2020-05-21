@@ -1,0 +1,71 @@
+<include file="include/header" title="举报中心" />   
+<style>
+    .msg-box {
+        font-size: .4rem;
+        background: #f5f5f5;
+        padding: 20px 10px;
+    }
+
+    .msg-text {
+        margin: 0 auto;
+        font-size: 20px;
+        color: #1ac305;
+        text-align: center;
+        padding-bottom: 10px;
+    }
+
+    .msg-text1 {
+        margin: 0 auto;
+        font-size: 12px;
+        color: #999;
+        text-align: center;
+    }
+</style>
+
+<div class="rt-bar" data-tchee="top">
+	<div class="row">
+		<div class="col icon">
+			<a href="javascript:history.back();">
+				<svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><path d="M29.56 39.47a2 2 0 0 1-1.38-.56L8.45 20 28.17 1.09A2 2 0 1 1 30.94 4L14.23 20l16.71 16a2 2 0 0 1-1.38 3.44z" fill="#ff730a"></path></svg>
+			</a>
+		</div>
+		<div class="col title" style="margin-right: 1.333rem;">举报中心</div>
+	</div>
+</div>
+<div class="msg-box mt-10" style="display: none;">
+	<div class="msg-text">
+		举报成功！
+	</div>
+	<div class="msg-text1">
+		我们将核实您所举报的内容并进行处理。
+	</div>
+</div>
+
+<div class="qa-box mt-10">
+	<foreach name="list" item="v" key="k">
+	<div class="item" rid="{$k}">
+		<div class="head">
+			<div class="title">{$v}</div>
+		</div>
+	</div>
+	</foreach>
+</div>
+<script>
+	$(function() {
+		$(".qa-box .item").click(function(){
+			var jid = $(this).attr("rid");
+				anid = "{$_GET['anid']}";
+				url = "{$url}";
+			$.post(url,{anid:anid,jid:jid},function(d){
+				if(d){
+					console.log(d);
+					$('.qa-box').removeClass('posting').hide();
+					$(".msg-box").show();
+				}else{
+					alert('非法请求！');
+				}
+			});
+		});
+	})
+</script>
+<include file="include/footer2" />

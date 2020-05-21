@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html style="height: auto;">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>{$mch['title']}</title>
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+<link rel="stylesheet" href="__PUBLIC__/admin/css/bootstrap.min.css">
+<link href="__PUBLIC__/admin/css/font-awesome.min.css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/ionicons.min.css" rel="stylesheet">
+<link rel="stylesheet" href="__PUBLIC__/admin/css/AdminLTE.min.css">
+<link rel="stylesheet" href="__PUBLIC__/admin/css/_all-skins.min.css">
+<link rel="stylesheet" href="__PUBLIC__/admin/css/blue.css">
+<link rel="stylesheet" href="__PUBLIC__/admin/css/bootstrap-datetimepicker.min.css">
+<link href="https://novel.youshuge.com/img/favicon.ico" rel="icon" type="image/x-icon">
+<link rel="stylesheet" href="__PUBLIC__/layer/skin/default/layer.css">
+<link rel="stylesheet" href="__PUBLIC__/admin/css/checkbox.css">
+
+<script src="__PUBLIC__/admin/js/jquery-2.2.3.min.js"></script>
+<script src="__PUBLIC__/admin/js/bootstrap.min.js"></script>
+<script src="__PUBLIC__/admin/js/bootstrap-datetimepicker.min.js"></script>
+<script src="__PUBLIC__/admin/js/app.min.js"></script>
+<script src="__PUBLIC__/layer/layer.js"></script>
+<style type="text/css">
+	.skin-purple-light .wrapper, .skin-purple-light .main-sidebar, .skin-purple-light .left-side {
+		background-color: #f9f9f9;
+	}
+
+	.skin-purple-light .sidebar-menu > li > .treeview-menu {
+		background-color: #e8e8e8;
+	}
+
+	.skin-purple-light .sidebar-menu > li > a {
+		font-weight: unset;
+	}
+
+	.skin-purple-light .treeview-menu > li.active > a, .skin-purple-light .sidebar-menu > li.active > a, .skin-purple-light .treeview-menu > li.active > a {
+		background-color: #e6f7ff;
+		border-right: 2px solid #168fff;
+		color: #57b6ff;
+		font-weight: unset;
+	}
+
+	.skin-purple-light .sidebar-menu > li:hover > a, .skin-purple-light .sidebar-menu > li:hover > a, .skin-purple-light .treeview-menu > li > a:hover, .skin-purple-light .sidebar-menu > li > a:hover {
+		color: #57b6ff;
+	}
+
+	.sidebar-menu .treeview-menu > li > a {
+		padding-left: 40px;
+		padding-top: 10px;
+		padding-bottom: 10px;
+	}
+
+	.sidebar-menu .treeview-menu {
+		padding-left: 0;
+	}
+
+	.skin-purple-light .sidebar a {
+		color: #666;
+	}
+
+	.wysiwyg-color-black {
+		color: black !important;
+	}
+
+	.wysiwyg-color-silver {
+		color: silver !important;
+	}
+
+	.wysiwyg-color-gray {
+		color: gray !important;
+	}
+
+	.wysiwyg-color-maroon {
+		color: maroon !important;
+	}
+
+	.wysiwyg-color-red {
+		color: red !important;
+	}
+
+	.wysiwyg-color-purple {
+		color: purple !important;
+	}
+
+	.wysiwyg-color-green {
+		color: green !important;
+	}
+
+	.wysiwyg-color-olive {
+		color: olive !important;
+	}
+
+	.wysiwyg-color-navy {
+		color: navy !important;
+	}
+
+	.wysiwyg-color-blue {
+		color: blue !important;
+	}
+
+	.wysiwyg-color-orange {
+		color: orange !important;
+	}
+	.glyphicon {
+		margin-right: 6px;
+	}
+	.wechat{
+		line-height: 50px;
+		width: 100%;
+		display: block;
+		text-align: center;
+		font-size: 24px;
+		color: #ecfd02;
+	}
+</style>
+<link rel="stylesheet" href="__PUBLIC__/admin/css/laydate.css" id="layuicss-laydate">
+<style type="text/css">
+	.jqstooltip { position: absolute;left: 0px;top: 0px;visibility: hidden;background: rgb(0, 0, 0) transparent;background-color: rgba(0,0,0,0.6);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000);-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)";color: white;font: 10px arial, san serif;text-align: left;white-space: nowrap;padding: 5px;border: 1px solid white;z-index: 10000;}.jqsfield { color: white;font: 10px arial, san serif;text-align: left;}
+</style>
+</head>
+<body class="sidebar-mini skin-purple-light" style="height: auto;">
+<div class="wrapper" style="height: auto;">
+    <header class="main-header">
+        <a href="{:U('Index/index')}" class="logo">
+            <span class="logo-mini"><b>{:substr($mch['name'],0,3)}</b>{:substr($mch['name'],3,3)}</span>
+            <span class="logo-lg">
+				<img src="__PUBLIC__/admin/images/logo.png">
+				<b>{$mch['name']}</b>
+			</span>
+        </a>
+        <nav class="navbar navbar-static-top">
+            <a href="{:U('Index/index')}" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                <span class="sr-only">Toggle navigation</span>
+            </a>
+            <div class="navbar-custom-menu">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown user user-menu">
+                        <a href="{:U('Index/index')}" class="user-panel dropdown-toggle" data-toggle="dropdown" style="height: 50px; display: flex;">
+                            <img src="__PUBLIC__/admin/images/avatar2.png" class="user-image" alt="User Image">
+                            <span class="hidden-xs">{:session('mch.name')}</span>
+                            <span>
+                               <i class="fa fa-angle-down"></i>
+                               <i class="fa fa-angle-up hidden"></i>
+                           </span>
+                        </a>
+                        <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close" style="width: 150px;">
+                            <li>
+                                <a href="{:U('Profile/index')}"><i class="fa fa-fw fa-user"></i> 个人资料</a>
+                            </li>
+                            <li>
+                                <a href="{:U('Profile/ePass')}"><i class="fa fa-fw fa-key"></i> 修改密码</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="{:U('Pub/logout')}">
+                                    <i class="fa fa-fw fa-power-off"></i> 安全退出
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+			<b class="wechat">&#21518;&#21488;&#40;&#28304;&#30721;&#26469;&#33258;&#20061;&#29275;&#32593;&#20998;&#20139;&#41;</b>
+        </nav>
+    </header>
+   
+    <aside class="main-sidebar">
+        <section class="sidebar" style="height: auto;">
+            <ul class="sidebar-menu">
+				<li>
+                    <a href="{:U('Index/index')}">
+                        <i class="fa fa-tasks"></i> <span>首页</span>
+                    </a>
+                </li>
+				<li>
+                    <a href="{:U('Notice/index')}">
+                        <i class="fa fa-envelope"></i><span>公告信息</span>
+                    </a>
+                </li>
+				<li class="treeview">
+                    <a href="#">
+						<i class="fa fa-bar-chart"></i> 
+						<span>数据统计</span>
+                        <span class="pull-right-container">
+							<i class="fa fa-angle-left pull-right"></i>
+						</span>
+                    </a>
+                    <ul class="treeview-menu">
+						<li>
+							<a href="{:U('Center/orders')}">
+								<i class="fa fa-angle-right"></i> 
+								订单统计
+							</a>
+						</li>
+                        <li>
+							<a href="{:U('Center/users')}">
+								<i class="fa fa-angle-right"></i> 
+								用户统计
+							</a>
+						</li>
+						<li>
+							<a href="{:U('Center/charge')}">
+								<i class="fa fa-angle-right"></i> 
+								充值统计
+							</a>
+						</li>
+						<li>
+							<a href="{:U('Center/separate')}">
+								<i class="fa fa-angle-right"></i> 
+								分成统计
+							</a>
+						</li>
+						<li>
+							<a href="{:U('Center/chapter')}">
+								<i class="fa fa-angle-right"></i> 
+								外推统计
+							</a>
+						</li>
+                    </ul>
+					<li class="treeview">
+						<a href="#">
+							<i class=" fa fa-book"></i> 
+							<span>推广小说</span>
+							<span class="pull-right-container">
+								<i class="fa fa-angle-left pull-right"></i>
+							</span>
+						</a>
+						<ul class="treeview-menu">
+							<li>
+								<a href="{:U('Novel/index')}">
+									<i class="fa fa-angle-right"></i> 
+									小说列表
+								</a>
+							</li>
+							<li>
+								<a href="{:U('Nhapter/index')}">
+									<i class="fa fa-angle-right"></i> 
+									推广链接
+								</a>
+							</li>
+							<li>
+								<a href="{:U('Nhapter/allChapter')}">
+									<i class="fa fa-angle-right"></i> 
+									群推广链接
+								</a>
+							</li>
+							<li>
+								<a href="{:U('Nhapter/delList')}">
+									<i class="fa fa-angle-right"></i> 
+									推广回收
+								</a>
+							</li>
+						</ul>
+					</li>
+				</li>
+				<li class="treeview">
+                    <a href="#">
+						<i class=" fa fa-file-image-o"></i> 
+						<span>推广漫画</span>
+                        <span class="pull-right-container">
+							<i class="fa fa-angle-left pull-right"></i>
+						</span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li>
+							<a href="{:U('Cartoon/index')}">
+								<i class="fa fa-angle-right"></i> 
+								漫画列表
+							</a>
+						</li>
+						<li>
+							<a href="{:U('Chapter/index')}">
+								<i class="fa fa-angle-right"></i> 
+								推广链接
+							</a>
+						</li>
+						<li>
+							<a href="{:U('Chapter/allChapter')}">
+								<i class="fa fa-angle-right"></i> 
+								群推广链接
+							</a>
+						</li>
+						<li>
+							<a href="{:U('Chapter/delList')}">
+								<i class="fa fa-angle-right"></i> 
+								推广回收
+							</a>
+						</li>
+                    </ul>
+				</li>
+				
+               <li>
+                    <a href="{:U('User/index')}">
+                        <i class="fa fa-users"></i><span>粉丝管理</span>
+                    </a>
+                </li>
+				<if condition="$mch['topnums'] lt 4 and $mch['type'] eq 1">
+
+					<li class="treeview">
+						<a href="#">
+							<i class=" fa fa-file-image-o"></i> 
+							<span>代理商管理</span>
+							<span class="pull-right-container">
+								<i class="fa fa-angle-left pull-right"></i>
+							</span>
+						</a>
+						<ul class="treeview-menu">
+							<li>
+								<a href="{:U('Agent/indes')}">
+									<i class="fa fa-angle-right"></i> 
+									代理商列表
+								</a>
+							</li>
+							<li>
+								<a href="{:U('Agent/corder')}">
+									<i class="fa fa-angle-right"></i> 
+									代理商订单
+								</a>
+							</li>
+						</ul>
+					</li>
+				</if>
+				<if condition="$mch['type'] eq 1">
+				<li class="treeview">
+                    <a href="#">
+						<i class="fa fa-commenting"></i> 
+						<span>消息推送</span>
+                        <span class="pull-right-container">
+							<i class="fa fa-angle-left pull-right"></i>
+						</span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li>
+							<a href="{:U('Custom/index')}">
+								<i class="fa fa-angle-right"></i> 
+								群发推送
+							</a>
+						</li>
+						<li>
+							<a href="{:U('Activity/index')}">
+								<i class="fa fa-angle-right"></i> 
+								促销活动
+							</a>
+						</li>
+						<li>
+							<a href="{:U('Promotion/index')}">
+								<i class="fa fa-angle-right"></i> 
+								智能推送
+							</a>
+						</li>
+						<li>
+							<a href="{:U('Autoreply/index')}">
+								<i class="fa fa-angle-right"></i> 
+								关键词回复
+							</a>
+						</li>
+                    </ul>
+				</li>
+				</if>
+				<li class="treeview">
+                    <a href="#">
+						<i class="fa fa-bar-chart"></i> 
+						<span>财务信息</span>
+                        <span class="pull-right-container">
+							<i class="fa fa-angle-left pull-right"></i>
+						</span>
+                    </a>
+                    <ul class="treeview-menu">
+						<li>
+							<a href="{:U('Center/corder')}">
+								<i class="fa fa-angle-right"></i> 
+								订单信息
+							</a>
+						</li>
+                        <li>
+							<a href="{:U('Center/payment')}">
+								<i class="fa fa-angle-right"></i> 
+								收款信息
+							</a>
+						</li>
+						<li>
+							<a href="{:U('Center/withdraw')}">
+								<i class="fa fa-angle-right"></i> 
+								结算信息
+							</a>
+						</li>
+                    </ul>
+				</li> 
+				<if condition="$mch['type'] eq 1">
+				<li class="treeview">
+                    <a href="#">
+						<i class=" fa fa-gears"></i> 
+						<span>公众号信息</span>
+                        <span class="pull-right-container">
+							<i class="fa fa-angle-left pull-right"></i>
+						</span>
+                    </a>
+                    <ul class="treeview-menu">
+						<li>
+							<a href="{:U('Profile/tpl')}">
+								<i class="fa fa-angle-right"></i> 
+								网页模版设置
+							</a>
+						</li>
+                        <li>
+							<a href="{:U('Selfmenu/index')}">
+								<i class="fa fa-angle-right"></i> 
+								公众号菜单
+							</a>
+						</li>
+						<li>
+							<a href="{:U('Index/mp')}">
+								<i class="fa fa-angle-right"></i> 
+								公众号设置
+							</a>
+						</li>
+						<li>
+							<a href="{:U('Selfmenu/links')}">
+								<i class="fa fa-angle-right"></i> 
+								链接获取
+							</a>
+						</li>
+                    </ul>
+				</li> 
+				<else />
+				<li class="treeview">
+                    <a href="{:U('Selfmenu/links')}">
+						<i class=" fa fa-gears"></i> 
+						<span>链接获取</span>
+                    </a>
+				</li>
+				</if>
+				<if condition="$mch['type'] eq 1">
+					<li class="treeview">
+						<a href="{$_camera['furl']}" target="_blank">
+							<i class=" fa fa-camera"></i> 
+							<span>视频教程</span>
+						</a>
+					</li>	
+				<else />
+					<li class="treeview">
+						<a href="{$_camera['durl']}" target="_blank">
+							<i class=" fa fa-camera"></i> 
+							<span>视频教程</span>
+						</a>
+					</li>
+				</if>
+            </ul>
+        </section>
+    </aside>
+    <div class="content-wrapper" style="min-height: 848px;">
+       {__CONTENT__}
+
+    </div>
+  
+    <div class="control-sidebar-bg" style="position: fixed; height: auto;"></div>
+</div>
+<script src="__PUBLIC__/admin/js/common.js"></script>
+<script>
+	var route = "{$CAname}";
+    var href = '';
+    $('.sidebar-menu').find('a').each(function () {
+        $(this).parent('li').removeClass('active');
+        href = $(this).attr('href');
+        if ((href.indexOf(route) != -1) && (route != '/')) {
+            $(this).parent('li').addClass('active');
+            $(this).parents('.treeview').addClass('active');
+		}
+    });
+
+    $('.dropdown-toggle').click(function (ev) {
+        $(this).find('.fa-angle-down').toggleClass('hidden');
+        $(this).find('.fa-angle-up').toggleClass('hidden');
+    });
+	
+	// 调整默认选择内容
+	$("select").each(function(index, element) {
+		$(element).find("option[value='"+$(this).attr('default')+"']").attr('selected','selected');
+	});
+</script>
+</body>
+</html>

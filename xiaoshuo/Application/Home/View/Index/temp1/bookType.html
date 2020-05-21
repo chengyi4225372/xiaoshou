@@ -1,0 +1,172 @@
+<include file="include/header" title="{$title}" />
+<style>
+    .book-right .item {
+        width:2rem;
+    }
+</style>
+<div class="rt-bar">
+	<div class="row">
+		<div class="col icon">
+			<a href="javascript:history.go(-1);">
+			<svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 40 40"><path d="M29.56 39.47a2 2 0 0 1-1.38-.56L8.45 20 28.17 1.09A2 2 0 1 1 30.94 4L14.23 20l16.71 16a2 2 0 0 1-1.38 3.44z" fill="#ff730a"></path></svg>
+			</a>
+		</div>
+		<div class="col title" style="margin-right: 1.333rem;">
+			分类
+		</div>
+	</div>
+</div>
+<nav class="nav-row-cate type-panel" style="width:100%;">
+<div class="shrink open-box condition-box " style="display: block;">
+	<div class="row has-label book-right">
+		<label class="label"><span>分类</span></label>
+		<div class="container" id="store">
+			<div class="item">
+				<a href="javascript:;" class="active my-btn" data-sid="">全部</a>
+			</div>
+			<foreach name="store" item="v" key="k">
+				<div class="item">
+					<a href="javascript:;" data-sid="{$k}" class="my-btn">{$v}</a>
+				</div>
+			</foreach>		
+		</div>
+	</div>
+</div>
+<div class="shrink open-box condition-box" style="margin-top:-14px;">
+	<div class="row has-label book-right">
+		<label class="label"><span>类型</span></label>
+		<div class="container" id="sexed">
+			<div class="item">
+				<a href="javascript:;" class="active my-btn" data-sex="">全部</a>
+			</div>
+			<div class="item">
+				<a href="javascript:;" class="my-btn" data-sex="1">男生</a>
+			</div>
+			<div class="item">
+				<a href="javascript:;" class="my-btn" data-sex="2">女生</a>
+			</div>
+		</div>
+	</div>
+	<div class="row has-label book-right">
+		<label class="label"><span>状态</span></label>
+		<div class="container" id="wzed">
+			<div class="item">
+				<a href="javascript:;" class="active my-btn" data-iswz="">全部</a>
+			</div>
+			<div class="item">
+				<a href="javascript:;" class="my-btn" data-iswz="1">连载</a>
+			</div>
+			<div class="item">
+				<a href="javascript:;" class="my-btn" data-iswz="2">完结</a>
+			</div>
+		</div>
+	</div>
+	<div class="row has-label book-right">
+		<label class="label"><span>属性</span></label>
+		<div class="container" id="fwed">
+			<div class="item">
+				<a href="javascript:;" class="active my-btn" data-isfw="" >全部</a>
+			</div>
+			<div class="item">
+				<a href="javascript:;" class="my-btn" data-isfw="1">付费</a>
+			</div>
+			<div class="item">
+				<a href="javascript:;" class="my-btn" data-isfw="2">免费</a>
+			</div>
+		</div>
+	</div>
+</div>
+</nav>
+<div class="books-list mt-10 mb-tabar m-box" id="html_box">
+	
+</div>
+<script>
+	var store = "";
+		iswz = "";
+		issex = "";
+		isfw = "";
+		page = 1;
+		wait = true;
+     $(function () {
+		getData();
+		$(window).bind("scroll", function (event) {
+			if(!wait) return;
+			var top = document.documentElement.scrollTop + document.body.scrollTop;
+			var textheight = $(document).height();
+			if (textheight - top - $(window).height() <= 50) {
+				page++;
+				getData();
+			}
+		});
+	});
+
+	
+	//分类点击
+	$('#store .item').click(function(){
+		$('#store .item').find('a').removeClass('active');
+		$(this).find('a').addClass('active');
+		store = $(this).find('a').attr('data-sid');
+		$('#html_box').html('');
+		page = 1;
+		getData();
+	});
+	
+	//类型点击
+	$('#sexed .item').click(function(){
+		$('#sexed .item').find('a').removeClass('active');
+		$(this).find('a').addClass('active');
+		issex = $(this).find('a').attr('data-sex');
+		page = 1;
+		$('#html_box').html('');
+		getData();
+	});
+	
+	//状态点击
+	$('#wzed .item').click(function(){
+		$('#wzed .item').find('a').removeClass('active');
+		$(this).find('a').addClass('active');
+		iswz = $(this).find('a').attr('data-iswz');
+		page = 1;
+		$('#html_box').html('');
+		getData();
+	});
+	
+	//属性点击
+	$('#fwed .item').click(function(){
+		$('#fwed .item').find('a').removeClass('active');
+		$(this).find('a').addClass('active');
+		isfw = $(this).find('a').attr('data-isfw');
+		page = 1;
+		$('#html_box').html('');
+		getData();
+	});
+	
+	function getData(){
+		data = {
+			"cateids" : store,
+			"iswz" : iswz,
+			"issex" : issex,
+			"isfw" : isfw,
+			"btype":"{$_GET['btype']}",
+			"page":page,
+		}
+		$.post("{:U('Ajax/getBookType')}",data,function(d){
+			if(d){
+				console.log(d);
+				if(d.status){
+					$('#html_box').append(d.info);
+				}else{
+					console.log(page);
+					if(page == 1 && $('#nolist').length == 0){
+						$('#html_box').append('<li id="nolist" style="text-align:center;line-height: 3rem;list-style: none;font-size: .35rem;" class="mui-table-view-cell mui-media">抱歉，没有您找的数据，换个条件试试</li>');
+					}
+					wait = false;
+				}
+			}else{
+				bh_msg_tips('加载失败！');
+			}
+		})
+	}	
+</script>
+
+<include file="include/footer" />

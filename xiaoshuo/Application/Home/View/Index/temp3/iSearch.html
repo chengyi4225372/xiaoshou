@@ -1,0 +1,107 @@
+<include file="include/header" title="{$title}" />
+<link rel="stylesheet" href="__PUBLIC__/home/css/template3/nav.css">
+
+<div class="search-bar search-multiple">
+	<div class="inner">
+		<div class="field">
+			<div class="icon">
+				<svg width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 32 32"><path d="M31.21 27.4l-5.15-5.15a13.06 13.06 0 1 0-2.52 3.13l4.84 4.84zM3.8 15.78a11 11 0 1 1 11 11 11 11 0 0 1-11-11z" fill="#999"></path></svg>
+			</div>
+			<input type="text" placeholder="输入漫画名、小说名或作者" id="search_keyword" maxlength="18" value="{$keyword}">
+		</div>
+		<button id="show_cleare_btn" onclick="location.href=&#39;{:U('index')}&#39;">取消</button>
+		<button onclick="key_search_href();" id="show_sear_btn" style="display: none;">搜索</button>
+	</div>
+	<if condition="$keyword"><div class="res-text">搜索“<span class="typo-orange">{$keyword}</span>”结果，共<span class="typo-orange">{:count($list)}</span>条</div></if>
+</div>
+
+<if condition="$keyword">
+	<!-- 显示书名作者匹配-->
+	<foreach name="list" item="v">
+		<div class="books-res" id="search-result-container">
+			<div class="item">
+				<if condition="$v['btype'] eq 3">
+					<a href="{:U('stInfo',array('id'=>$v['id']))}" class="link">
+				<else />
+					<a href="{:U('info',array('id'=>$v['id']))}" class="link">
+				</if>
+				<div class="cover">
+					<img width="63" height="84" src="{$v.coverpic}">
+				</div>
+				<div class="body">
+					<div class="title">
+						{$v.title}
+					</div>
+					<div class="author">
+						作者：{$v.author}
+					</div>
+					<div class="text">
+						{$v.remark}
+					</div>
+					<div class="bottom">
+						<span class="col"><i class="icon-gray-hot"></i> {$v.hots}</span>
+						<span class="col"><i class="icon-hand"></i>{$v.likes}</span>
+					</div>
+				</div>
+				</a>
+				<div class="action">
+					<if condition="$v['btype'] eq 3">
+						<a href="{:U('stInfo',array('id'=>$v['id']))}" class="btn">阅读</a>
+					<else />
+						<a href="{:U('info',array('id'=>$v['id']))}" class="btn">阅读</a>
+					</if>
+				</div>
+			</div>
+		</div>
+	</foreach>
+<else />
+
+</if>
+
+
+<if condition="!$keyword">
+<div class="hot-words">
+	<div class="head">
+		<div class="title">
+			热门搜索
+		</div>
+	</div>
+	<div class="list">
+		<foreach name="list" item="v">
+			<div class="item">
+				<a href="{:U('info',array('id'=>$v['id']))}">{$v.title}</a>
+			</div>
+		</foreach>
+	</div>
+</div>
+</if>
+<script>
+    function key_search_href() {
+        var key_v = $('#search_keyword').val();
+        if (key_v == '') {
+            return false;
+        }
+        window.location.href = "{:U('iSearch')}&keyword=" + key_v;
+    }
+    $(function () {
+        //回车自动提交
+        $('#search_keyword').keyup(function (event) {
+            var key_v = $('#search_keyword').val();
+            if (key_v == '') {
+                $('#show_cleare_btn').show();
+                $('#show_sear_btn').hide();
+                return false;
+            }
+            else {
+                $('#show_cleare_btn').hide();
+                $('#show_sear_btn').show();
+            }
+            if (event.keyCode === 13) {
+                key_search_href();
+            }
+        });
+    });
+</script>
+
+
+<include file="include/footer3" />

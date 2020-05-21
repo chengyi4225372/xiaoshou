@@ -1,0 +1,105 @@
+<include file="include/header" title="{$title}" />
+<style>
+	html{overflow-x:hidden;}
+	textarea{
+		width: 90%;
+		padding: .3rem 5% 2rem 5%;
+		border: none;
+		border-bottom: 1px solid #eee;
+		font-size: .4rem;
+	}
+	.share{
+		height: 0.1rem;
+		line-height: 0.5rem;
+		padding-left: .5rem;
+		font-size: .4rem;
+	}
+	.copy{
+		width: 90%;
+		display: block;
+		margin: 1rem auto;
+		text-align: center;
+		padding: .2rem 0;
+		background: #2196F3;
+		color: #fff;
+		font-size: .4rem;
+		border-radius: .2rem;
+	}
+	.huas{
+		position: relative;
+		width: 96%;
+		left: 2%;
+		margin: 0.2rem 0rem 0.2rem;
+		border: solid 1px #2196F3;
+	}
+	.share-img{
+		width: 92%;
+		margin: 0.1rem auto 1rem;
+		border: solid 1px #00CC00;
+		display: block;
+	}
+	.explain-div{
+		margin: 0.3rem 0.1rem 0.3rem;
+	}
+	.share-text{
+		position: relative;
+		left: 10px;
+		font-size: 19px;
+	}
+	.explain-text{
+		position: relative;
+		left: 20px;
+		font-size: 16px;
+	}
+</style>
+
+<div class="huas">
+	<textarea id="huas">{$_site['huas']}</textarea>
+</div>
+<div class="share">
+	分享链接：<span id="share-url">{$shareUrl}</span>
+</div>
+<a href="javascript:;" class="copy" data-clipboard-action="copy" data-clipboard-text="{$info.huas}&#10;{$shareUrl}">点我 -> 【一键复制】</a>
+
+<div>
+	<img src="{$_site['huaspic']}" class="share-img"/>
+</div>
+<script src="__PUBLIC__/admin/js/clipboard.min.js"></script>
+<script>
+	varHtml();
+	function varHtml(){
+		var huas = $('textarea').val();
+			url = $('#share-url').html();
+		if($("textarea").val() != ""){
+			var html = huas+"\n"+url;
+			$('.copy').attr("data-clipboard-text",html);
+		}
+	}
+	//bind
+	$('textarea').bind('input propertychange', function(){
+		var huas = $('textarea').val();
+			url = $('#share-url').html();
+		if($("textarea").val() != ""){
+			var html = huas+"\n"+url;
+			$('.copy').attr("data-clipboard-text",html);
+		}
+    });
+	//分享复制
+	var clipboard = new Clipboard('.copy');
+	clipboard.on('success', function (e) {
+		layer.open({
+            content: '<div style="color:darkorange;font-size:14px;">【一键复制成功】<br>请按下面的教程操作即可！</div>' ,
+            btn: '确定',
+            one: function (index) {
+                layer.close(index);
+            }
+        });
+		e.clearSelection();
+	});
+
+	clipboard.on('error', function (e) {
+		console.error('Action:', e.action);
+		console.error('Trigger:', e.trigger);
+	});
+</script>
+

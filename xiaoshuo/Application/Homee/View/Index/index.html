@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8">
+<title>{$_site['name']}</title>
+<meta name="keywords" content="{$_site['name']},{$_site['name']}平台,韩国漫画,小说漫画分销平台,小说平台,微信小说,公众号漫画分销平台,小说分销,漫画分销,小说漫画分销系统">
+<meta name="description" content="加盟{$_site['name']}漫画分销平台，全网唯一的小说漫画集合系统，小说漫画聚合在一起，满足各类阅读需求，集合公众号最热的韩国漫画小说资源，充值好、分成高！公众号挣钱利器，零投入，自主注册，开放后台，功能齐全，数据透明，欢迎加盟！">
+<link rel="stylesheet" href="__PUBLIC__/Homee/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/Homee/css/css.css">
+<style type="text/css">
+    .fl{float:left;}
+    .fr{float: right;}
+    a{color:#000000;text-decoration: none!imporatent;}
+    a:hover{color:#CE1B31;text-decoration: none!imporatent;}
+	a:visited{text-decoration:none!imporatent;}
+    a:active{color:#D84E43;text-decoration: none!imporatent;}
+    .main{width:1100px;margin: auto;}
+    .header{width:100%;height: 100px;}
+    .header .main{padding:15px 0;}
+    .header .fr a{position: relative;float: left;width: 125px;font-size: 18px;line-height: 20px;height: 65px; padding: 16px 0 29px;border-top: 3px solid transparent;box-sizing: border-box;cursor: pointer;text-align: center;
+    }
+    .header .fr .curr:after{content: '';position: absolute;left:10px;bottom:0;right:10px;height:5px;background-color: #CE1B31;}
+    #banner1,#banner2 {text-align: center;position: relative;left: 50%;margin-left: -960px;width: 1920px;height: 600px;background: url(./Public/Homee/images/bg1.jpg) no-repeat; background-color: #212A39;}
+    #banner1 .btns{padding:50px; text-align: center;}
+    #banner1 .btns a{display: inline-block;padding:10px 35px;margin:0 15px;background: #F69814;color:#fff;border-radius: 100px;font-size: 18px;text-decoration:none}
+    #banner1 .btns .contact{background: #fff;color:#CF1D35;}
+    #banner2{background: url(./Public/Homee/images/bg2.jpg) no-repeat;background-color: #212A39;}
+    #banner2 .info{color:#fff;padding-top:235px;}
+    #banner2 .info p{font-size:40px;}
+    #banner2 .info span{font-size:25px;}
+    .banner_txt{padding: 50px;text-align: center;}
+     .ti{font-size:30px;line-height: 60px}
+    .des{ font-size: 18px;}
+    .superiority .w25{width: 25%;padding-top:55px;}
+    .superiority .w25 h1{font-size: 30px;padding: 30px;}
+    .superiority .w25 .intro{color:#16273B;line-height: 30px;font-size: 16px;}
+    .foot{width:100%; background: #1F2B39;text-align: center;color:#9D9BA2;font-size: 16px;padding-top:30px;font-size:14px;}
+    .contact_item{padding:60px 0 30px 0;}
+    .contact_item .fl{width:33.3333%; text-align: center;}
+    .contact_item .fl img{padding-bottom:10px;}
+    .contact_item .fl p{}
+    .qrcode-maskbg {display:none;position: fixed;top: 0;left: 0;right:0;bottom:0;background: rgba(0, 0, 0, 0.5);z-index: 100;}
+    .qrcode-maskbg .qrcode-box {position: absolute; top: 50%;left: 50%;width: 280px;height: 310px;margin: -155px 0 0 -140px;padding: 20px;background: rgba(0, 0, 0, 0.5);}
+    .qrcode-maskbg .qrcode-box img {width:100%;}
+    .qrcode-maskbg .qrcode-box p {text-align: center;color: #fff;font-size: 16px;padding:10px 0;}
+</style>
+<link rel="shortcut icon" href="__PUBLIC__/Homee/images/favicon.ico">
+<link rel="bookmark" href="__PUBLIC__/Homee/images/favicon.ico">
+</head>
+<body>
+<div class="qrcode-maskbg">
+	<div class="qrcode-box">
+		<img src="{$qrcode}">
+		<p>扫一扫关注作者授权公众号阅读</p>
+	</div>
+</div>
+<div class="header">
+	<div class="top main">
+		<div class="fl" style="font-size: 32px;font-weight: 700;line-height: 63px;margin-left: 100px;">
+			{$title}
+		</div>
+		<div class="fr">
+			<a href="{:U('Index/index')}" class="curr">首页</a>
+			<a href="javascript:;" class="contact">加入我们</a>
+		</div>
+	</div>
+</div>
+<div id="banner1">
+	<img src="__PUBLIC__/Homee/images/txt-img.png" style="margin-top:175px">
+	<div class="btns">
+		<a href="javascript:;" class="" id="showreadbook-qrcode" style="background: #fff;color: #CF1D35;">关注公众号</a>
+	</div>
+</div>
+<div class="banner_txt">
+	<div class="main">
+		<p class="ti">
+			我们的优势
+		</p>
+		<span class="des">让您实现及拥有更加完善的阅读及服务体系</span>
+	</div>
+	<div class="main superiority clearfix">
+		<div class="fl w25">
+			<img src="__PUBLIC__/Homee/images/ic-01.png">
+			<h1>零成本</h1>
+			<p class="intro">
+				个人订阅号、认证服务号皆可<br>
+				即可快速创建自己的小说漫画网站
+			</p>
+		</div>
+		<div class="fl w25">
+			<img src="__PUBLIC__/Homee/images/ic-02.png">
+			<h1>涨粉多</h1>
+			<p class="intro">
+				强制关注<br>
+				适合引流，日涨千粉很轻松
+			</p>
+		</div>
+		<div class="fl w25">
+			<img src="__PUBLIC__/Homee/images/ic-03.png">
+			<h1>内容好</h1>
+			<p class="intro">
+				全网唯一小说漫画集合系统<br>
+				小说和漫画集合在一起，满足不同的阅读需求
+			</p>
+		</div>
+		<div class="fl w25">
+			<img src="__PUBLIC__/Homee/images/ic-04.png">
+			<h1>结算快</h1>
+			<p class="intro">
+				随时提现，最迟次日结算打款
+			</p>
+		</div>
+	</div>
+</div>
+<div id="banner2">
+	<div class="info">
+		<p>
+			更专业服务
+		</p>
+		<span>多途径、高效率、充分了解您的用户，<br>
+		通过多种有效渠道直达意向用户，及时进行销售。</span>
+	</div>
+</div>
+<div class="banner_txt">
+	<div class="main">
+		<p class="ti">
+			成功案例
+		</p>
+		<span class="des">秉承优质服务，实现合作共赢</span>
+	</div>
+	<div class="main superiority clearfix">
+		<div class="fl w25">
+			<img src="__PUBLIC__/Homee/images/case-01.png" style="width: 230px;">
+		</div>
+		<div class="fl w25">
+			<img src="__PUBLIC__/Homee/images/case-02.png" style="width: 230px;">
+		</div>
+		<div class="fl w25">
+			<img src="__PUBLIC__/Homee/images/case-03.png" style="width: 230px;">
+		</div>
+		<div class="fl w25">
+			<img src="__PUBLIC__/Homee/images/case-04.png" style="width: 230px;">
+		</div>
+	</div>
+</div>
+<div class="foot">
+	<div style="color:#fff;">
+		<p class="ti">
+			联系我们
+		</p>
+		<span class="des">加盟小说漫画分销平台，小说漫画分销系统，上千本正版热门小说漫画，充值好、分成高！</span>
+	</div>
+	<div class="main contact_item clearfix">
+		<div class="fl">
+			<img style="width:40px;height:50px;" src="__PUBLIC__/Homee/images/ic-email.png">
+			<p>
+				<if condition="$mch">
+					邮箱：{$mch['qq']}@qq.com(客服)
+				<else />
+					邮箱：{$_site['qq']}@qq.com(客服)
+				</if>
+			</p>
+		</div>
+		<div class="fl">
+			<img style="width:40px;height:50px;" src="__PUBLIC__/Homee/images/ic-qq.png">
+			<p>
+				<if condition="$mch">
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;商务QQ：{$mch['qq']}(客服)
+				<else />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;商务QQ：{$_site['qq']}(客服)
+				</if>
+				
+			</p>
+			<p>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			</p>
+			<p>
+			</p>
+		</div>
+		<div class="fl">
+			<img style="width:40px;height:50px;" src="__PUBLIC__/Homee/images/ic-tel.png">
+			<p>
+				<if condition="$mch">
+					合作微信：{$mch['weixin']}
+				<else />
+					合作微信：{$_site['weixin']}
+				</if>
+				
+			</p>
+		</div>
+	</div>
+	<div style="padding:20px 0;border-top:1px solid #828E9A;">
+        Copyright 瑞企网络 © 2018.01-2020.01 All rights reserved.
+		<br>
+	</div>
+</div>
+<script type="text/javascript" src="__PUBLIC__/Homee/js/jquery-2.1.3.min.js"></script>
+<script>
+    $(function(){
+        $(".contact").bind('click',function(event){
+            event.stopPropagation();
+            $('html, body').animate({scrollTop:5000}, 1500);
+        });
+        $("#showreadbook-qrcode").click(function(){
+            $(".qrcode-maskbg").fadeIn();
+        })
+        $(".qrcode-maskbg").click(function(){
+            $(".qrcode-maskbg").fadeOut();
+        })
+    });
+</script>
+</body>
+</html>

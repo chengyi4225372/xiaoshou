@@ -1,0 +1,180 @@
+<section class="content-header">
+<div>
+	<ol class="breadcrumb" style="background: none; margin-bottom: 0px;">
+		<li><a href="{:U('Index/index')}" style="color: #333;"><i class=" fa fa-home"></i>&nbsp;Home</a></li>
+		<li class="active">充值信息</li>
+		<li class="active">充值设置</li>
+	</ol>
+</div>
+</section>
+<section class="content">
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box">
+			<div class="box-header">
+				<h3 class="box-title"></h3>
+				<a href="javascript:;" onclick="addTr();" class="btn btn-success">添加充值</a>
+			</div>
+			<!-- /.box-header -->
+			<div class="box-body">
+				<form class="form-horizontal" style="margin-top:30px" method="POST" enctype="multipart/form-data">
+					<table class="table table-bordered table-hover table-striped text-center">
+						<tbody id="tables">
+							<tr>
+								<th width="100">充值金额</th>
+								<th width="100">赠送金额</th>
+								<th width="100">金额书币比例</th>
+								<th>是否热门</th>
+								<th>是否半年</th>
+								<th>是否包年</th>
+								<th>是否终身</th>
+								<th>是否启用</th>
+								<th>是否选中</th>
+								<th>操作</th>
+							</tr>
+							<foreach name="_charge" item="v">
+								<tr>
+									<td><input type="text" name="money[]" class="form-control col-sm-9" value="{$v.money}"></td>
+									<td><input type="text" name="smoney[]" class="form-control col-sm-9" value="{$v.smoney}"></td>
+									<td><input type="text" name="lv[]" class="form-control col-sm-9" value="{$v.lv}"></td>
+									<td>
+										<select class="form-control col-sm-9" name="ishot[]" default="{$v['ishot']}">
+											<option value="">请选择</option>
+											<option value="1">是</option>
+											<option value="0">否</option>
+										</select>
+									</td>
+									<td>
+										<select class="form-control col-sm-9" name="ishalf[]" default="{$v['ishalf']}">
+											<option value="">请选择</option>
+											<option value="1">是</option>
+											<option value="0">否</option>
+										</select>
+									</td>
+									<td>
+										<select class="form-control col-sm-9" name="isyear[]" default="{$v['isyear']}">
+											<option value="">请选择</option>
+											<option value="1">是</option>
+											<option value="0">否</option>
+										</select>
+									</td>
+									<td>
+										<select class="form-control col-sm-9" name="isover[]" default="{$v['isover']}">
+											<option value="">请选择</option>
+											<option value="1">是</option>
+											<option value="0">否</option>
+										</select>
+									</td>
+									<td>
+										<select class="form-control col-sm-9" name="isopen[]" default="{$v['isopen']}">
+											<option value="">请选择</option>
+											<option value="1">是</option>
+											<option value="0">否</option>
+										</select>
+									</td>
+									<td>
+										<select class="form-control col-sm-9" name="ischoose[]" default="{$v['ischoose']}">
+											<option value="">请选择</option>
+											<option value="1">是</option>
+											<option value="0">否</option>
+										</select>
+									</td>
+									<td>
+										<a href="javascript:;" onclick="delTr(this);" class="cannel_vip btn bg-maroon margin">
+											<i class="fa fa-times"></i>删除
+										</a>
+									</td>
+								</tr>
+							</foreach>
+						</tbody>
+					</table>
+					
+					<div class="box-footer">
+						<div class="form-group">
+							<div class="col-sm-offset-3 col-sm-9">
+								<button type="button" id="ajaxBtn" class="btn btn-primary">保存</button>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+</section>
+<script>
+	function addTr(){
+		var html = '';
+			html+='<tr>';
+			
+			html+='<td>';
+			html+='<input type="text" name="money[]" class="form-control col-sm-9" value="">';
+			html+='</td>';
+			
+			html+='<td>';
+			html+='<input type="text" name="smoney[]" class="form-control col-sm-9" value="">';
+			html+='</td>';
+			
+			html+='<td>';
+			html+='<input type="text" name="lv[]" class="form-control col-sm-9" value="">';
+			html+='</td>';
+			
+			html+='<td>';
+			html+='<select class="form-control col-sm-9" name="ishot[]" default="">';
+			html+='<option value="">请选择</option>';
+			html+='<option value="1">是</option>';
+			html+='<option value="0">否</option>';
+			html+='</select>';
+			html+='</td>';
+			
+			html+='<td>';
+			html+='<select class="form-control col-sm-9" name="ishalf[]" default="">';
+			html+='<option value="">请选择</option>';
+			html+='<option value="1">是</option>';
+			html+='<option value="0">否</option>';
+			html+='</select>';
+			html+='</td>';
+			
+			html+='<td>';
+			html+='<select class="form-control col-sm-9" name="isyear[]" default="">';
+			html+='<option value="">请选择</option>';
+			html+='<option value="1">是</option>';
+			html+='<option value="0">否</option>';
+			html+='</select>';
+			html+='</td>';
+			
+			html+='<td>';
+			html+='<select class="form-control col-sm-9" name="isover[]" default="">';
+			html+='<option value="">请选择</option>';
+			html+='<option value="1">是</option>';
+			html+='<option value="0">否</option>';
+			html+='</select>';
+			html+='</td>';
+			
+			html+='<td>';
+			html+='<select class="form-control col-sm-9" name="isopen[]" default="">';
+			html+='<option value="">请选择</option>';
+			html+='<option value="1">是</option>';
+			html+='<option value="0">否</option>';
+			html+='</select>';
+			html+='</td>';
+			
+			html+='<td>';
+			html+='<select class="form-control col-sm-9" name="ischoose[]" default="">';
+			html+='<option value="">请选择</option>';
+			html+='<option value="1">是</option>';
+			html+='<option value="0">否</option>';
+			html+='</select>';
+			html+='</td>';
+			
+			html+='<td>';
+			html+='<a href="javascript:;" onclick="delTr(this);" class="cannel_vip btn bg-maroon margin"><i class="fa fa-times"></i>删除</a>';
+			html+='</td>';
+			html+='</tr>';
+		$('#tables').append(html);
+	}
+	
+	function delTr(ob){
+		$(ob).parents('tr').remove();
+	}
+</script>

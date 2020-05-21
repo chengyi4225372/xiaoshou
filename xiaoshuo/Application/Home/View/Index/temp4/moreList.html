@@ -1,0 +1,81 @@
+<include file="include/header5" title="{$title}" />
+<div class="body_sytle">
+	<div class="c_list_box">
+		<ul class="r_img_ul" id="html_box">
+		
+		
+			 
+		</ul>
+		<div class="loading_box"></div> 
+		<!--r_img_ul 列表 r_img_remove_select-->
+	</div>
+
+	<div class="content_null_box" style="display: none;">
+		<img src="https://cpsn.zsjwaw.cn/assets/clientweb/img/frontend/search/search_icon_3.png?v=2.2.94" style="width: 1.28rem;">
+		<span>暂无该类别图书，换个条件试试看吧！</span>
+		<div class="content_null_but_box">
+			<a href="/" class="client-url">去首页看看</a>
+		</div>
+	</div>
+</div>
+   
+       
+<script type="text/javascript" src="__PUBLIC__/home/js/zepto.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/home/js/zepto.cookie.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/home/js/zepto.picLazyLoad.min.js"></script>			
+<script type="text/javascript" src="__PUBLIC__/home/js/template5_common.js"></script>			
+      
+
+<script>
+	var page = 1;
+	var wait = true;
+	
+	$(function () {
+		//随机颜色
+		var arr = ['#1A772B','#A15E08','#97277F','#256088'];
+		var arrLength = arr.length;
+		$('.tl span').css('color',arr[rand(arrLength)]);  //取值0~6
+	
+		getData();
+		$(window).bind("scroll", function (event) {
+			if(!wait) return;
+			var top = document.documentElement.scrollTop + document.body.scrollTop;
+			var textheight = $(document).height();
+			if (textheight - top - $(window).height() <= 100) {
+				page++;
+				getData();
+			}
+		});
+	});
+	
+	//获取数据
+	function getData(){
+		$('.loading_box').html('<span>正在加載中，请稍候......</span>').show();
+		$.post("{:U('Ajax/getMoreList5')}",{page:page,field:"{$_GET['field']}",value:"{$_GET['value']}",btype:"{$_GET['btype']}"},function(d){
+			if(d){
+				if(d.status){
+					$('#html_box').append(d.info);
+				}else{
+					if(page == 1 && $('#nolist').length == 0){
+						$('.loading_box').html('<span>已显示全部</span>').show();
+					}
+					wait = false;
+				}
+				$('img').picLazyLoad({
+					effect : "fadeIn"
+				});
+			}else{
+				 $('.c_list_box,.loading_box').hide();
+			     $('.content_null_box').show();
+			}
+		})
+		$('.loading_box').html('<span>已显示全部</span>').show();
+	}	
+	
+	function rand(number) {
+		return Math.floor(Math.random()*number);
+	}
+	
+
+</script>
+

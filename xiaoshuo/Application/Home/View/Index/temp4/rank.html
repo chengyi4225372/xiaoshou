@@ -1,0 +1,145 @@
+<include file="include/header5" title="{$title}" />
+
+<div class="body_sytle">
+
+	<div class="c_list_tab_box">
+		<a href="javascript:;" type="hots" onclick="location.href=&#39;{:U('rank',array('order'=>'hots','btype'=>$_GET['btype']))}&#39;" <neq name="_GET['order']" value="time"> class="hover" </neq> type="click">点击榜</a>
+		<a href="javascript:;" type="time" <eq name="_GET['order']" value="time"> class="hover" </eq> onclick="location.href=&#39;{:U('rank',array('order'=>'time','btype'=>$_GET['btype']))}&#39;"  type="sell">畅销榜</a>
+	</div>
+		
+	<div class="c_list_box" style="padding-top: .15rem;">
+		<ul class="r_img_ul">
+		
+		</ul>
+		<div class="loading_box"></div> 
+		<!--r_img_ul 列表 r_img_remove_select-->
+	</div>
+	
+	<div class="content_null_box" style="display: none; padding-top: 1rem;">
+		<img src="__PUBLIC__/home/img/icon/search_icon_3.png" style="width: 1.28rem;" />
+		<span>暂无该类别图书，换个条件试试看吧！</span>
+		<div class="content_null_but_box">
+			<a href="/">去首页看看</a>
+		</div>
+	</div>
+</div>
+<script type="text/javascript" src="__PUBLIC__/home/js/zepto.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/home/js/zepto.cookie.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/home/js/zepto.picLazyLoad.min.js"></script>		
+<script type="text/javascript" src="__PUBLIC__/home/js/template5_common.js"></script>
+
+<script type="text/javascript">
+var pagenum=1,sBookstop=true,sBookstopTime=null,pagesize=10,type = "{$_GET['order']}";
+
+
+$(function(){
+	loadingList();
+		$(".c_list_tab_box_2 > a").click(function(){
+			$(this).addClass("hover");
+			$(this).siblings().removeClass("hover");
+			$('.r_img_ul').html('').show();
+			$('.content_null_box').hide();
+			$('.loading_box').html('<span>正在加载中，请稍后......</span>').show();
+			type = $(this).attr("type");
+			loadingList();
+		});
+		
+	$(window).scroll(function(){
+		var nWinH =  document.documentElement.clientHeight;
+		var nScrollTop = (document.body.scrollTop || document.documentElement.scrollTop) + nWinH;
+		var nBodyScrollH = document.body.scrollHeight;
+		if(sBookstop && nBodyScrollH - nScrollTop < 240){
+			bookstoptime();
+			$('.loading_box').html('<span>正在加載中，请稍候......</span>').show();
+			loadingList();
+		}
+	});
+});
+
+function loadingList(){
+	$.ajax({
+		type: 'post',
+		url: "{:U('Ajax/getBookhot5')}",
+		timeout: 10000,
+		cache: false,
+		dataType: 'json',
+		data: {
+			"btype":"{$_GET['btype']}",
+			'type':type,
+			'page':pagenum
+		},
+		success: function (data) {
+			clearTimeout(sBookstopTime);
+			if (typeof data == 'string') {
+				data = JSON.parse(data);
+			}
+			if(data<=0 && pagenum == 1){
+			   $('.c_list_box,.loading_box').hide();
+			   $('.content_null_box').show();
+				return false;
+			}
+			var sLi = '';
+			var sisfinish = '<i>已完结</i>';
+			for(var i=0; i<data.length; i++){
+				if(data[i].iswz == 2){
+					sisfinish = '<i>已完结</i>';
+				}else{
+					sisfinish = '<i style="color: #ffc701;">连载中</i>';
+				}
+				
+					sLi += '<li class="section-block">\
+						<a href="/index.php?m=&c=Index&a=info&btype=2&id='+ data[i]['id'] +'" class="section-data" data-zone="点击榜" data-book_id="'+ data[i]['id'] +'">\
+							<div class="r_img">\
+								<img src="__PUBLIC__/home/img/icon/default_img.png" data-original="'+ data[i]['selectpic'] +'" />\
+								<em>'+ (pagenum*pagesize + i -9) +'</em>\
+							</div>\
+							<div class="r_img_text">\
+								<h3>'+ data[i]['title'] +'</h3>\
+								<p>'+ data[i]['remark'] +'</p>\
+								<div class="i_images_txt_other">\
+									<strong>' + sisfinish +'\
+										<b>'+ data[i]['author'] +'</b>\
+									</strong>\
+									<em>'+ data[i]['id'] +'人在追</em>\
+								</div>\
+							</div>\
+						</a>\
+					</li>';
+
+				
+			}
+			$('.r_img_ul').append(sLi);
+			pagenum ++;
+			if(data.length < pagesize){
+				$('.loading_box').html('<span>已显示全部</span>').show();
+				sBookstop = false;
+			}else{
+				$('.loading_box').html('<span>下拉加载更多</span>').show();
+				sBookstop = true;
+			}			
+			$('img').picLazyLoad({
+				effect : "fadeIn"
+			});
+
+		},
+		error: function (XMLHttpRequest, textStatus, errorThrown) {
+		}
+	});
+}
+
+
+
+//防止重复请求数据
+function bookstoptime() {
+	clearTimeout(sBookstopTime);
+	sBookstop = false;
+	sBookstopTime = setTimeout(function () {
+		sBookstop = true;
+	}, 10000);
+}
+
+</script>
+
+</body>
+</html>
+	

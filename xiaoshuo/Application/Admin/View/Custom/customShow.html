@@ -1,0 +1,409 @@
+<style>
+	.template-msg-editor {
+		border: #ddd 1px solid;
+		border-radius: 4px;
+		padding: 8px;
+		background: white;
+		width: 400px;
+	}
+
+	.item-title:hover {
+		text-decoration: underline;
+		color: #86D0FF;
+	}
+
+	.item-img {
+		cursor: pointer;
+	}
+
+	ul {
+		list-style: none;
+	}
+
+	.rich-msg-editor {
+		border: #ddd 1px solid;
+		border-radius: 4px;
+		padding: 8px;
+		background: white;
+		width: 400px;
+	}
+
+	.rich-msg-editor .msg-edit-pic-overlay {
+		display: none;
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		text-align: center;
+		line-height: 170px;
+		background: rgba(0, 0, 0, .2);
+	}
+
+	.msg-sub-item {
+		padding: 5px 0;
+		border-bottom: 1px #ddd solid;
+	}
+
+	.msg-sub-item-img {
+		width: 40px;
+		height: 40px;
+		position: relative;
+	}
+
+	.msg-sub-item-img img {
+		width: 100%;
+		height: 100%;
+	}
+
+	.msg-sub-item-img-overlay {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		line-height: 40px;
+		top: 0;
+		left: 0;
+		text-align: center
+	}
+
+	.msg-sub-item-img-overlay:hover .msg-sub-item-img-overlay span {
+		display: block;
+	}
+
+	.msg-sub-item-img-overlay span {
+		color: #fff;
+		cursor: pointer;
+		text-decoration: underline;
+		display: none;
+	}
+
+	.msg-sub-item-img-overlay:hover span {
+		color: #fff;
+		cursor: pointer;
+		text-decoration: underline;
+		display: block;
+	}
+
+	.check_time {
+		cursor: pointer;
+	}
+
+</style>
+<link rel="stylesheet" href="__PUBLIC__/admin/css/message_filter.css">
+<section class="content-header">
+	<div>
+		<ol class="breadcrumb" style="background: none; margin-bottom: 0px;">
+			<li><a href="{:U('Index/index')}" style="color: #333;"><i class=" fa fa-home"></i> Home</a></li>
+			<li class="active">客服消息</li>
+		</ol>
+	</div>
+
+</section>
+
+        <!-- Main content -->
+        <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+
+                <div class="box box-primary" style="padding-bottom: 20px;">
+                    <div style="margin-bottom:30px">
+                    </div>
+                    <form id="main-form" class="form-horizontal" method="post">
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">任务名称</label>
+                            <div class="col-sm-6">
+                                <input type="text" name="name" id="name" disabled class="form-control col-sm-9" value="{$info.name}">
+                                <p class="help-block help-block-error col-sm-7 col-xs-10"></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">图文选择</label>
+                            <div class="col-sm-6">
+                                <div style="background: #eee;padding: 10px">
+                                    <div id="rich-msg-editor" class="rich-msg-editor">
+                                        <div class="msg-title" style="margin-bottom:5px;">
+                                            <span>{$info['title']}</span>
+                                        </div>
+                                       <div class="msg-cover" style="position: relative;padding-bottom:10px;border-bottom: 1px solid #ddd">
+                                            <img src="{$info['pic']}" id="tpic" alt="" style="width: 100%;height: 250px">
+                                        </div> 
+                                        <div class="msg-sub-items">
+											<foreach name="items" item="v">
+											<div class="msg-sub-item clearfix">
+												<div class="pull-left">
+													<span class="sub-title">{$v.title}</span>
+													
+													<div class="msg-sub-item-meta">
+														<span class="msg-sub-item-link" style="color:red;cursor: pointer">{$v.url|default="链接未配置"}</span>
+													</div>
+												</div>
+												<div class="pull-right">
+													<div class="msg-sub-item-img">
+														<img src="{$v.picurl}">
+													</div>
+												</div>
+											</div>
+											</foreach>
+											
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">头条链接</label>
+                            <div class="col-sm-6">
+                                <input type="text" name="url" id="url" class="form-control col-sm-9" disabled placeholder="请输入点击跳转链接" required="" value="{$info.url}">
+                                <p class="help-block no-padding-left">
+                                    用户点击客服消息后跳转到的网页链接
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">消息描述</label>
+                            <div class="col-sm-6">
+                                <textarea type="text" name="remark" required="" disabled id="remark" class="form-control col-sm-9">{$info.remark}</textarea>
+                                <p class="help-block help-block-error col-sm-7 col-xs-10"></p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">接收用户</label>
+                            <div class="col-sm-6">
+                                <div class="radio col-sm-3">
+                                    <label>
+                                        <input type="radio" name="is_all" value="1"> 全部用户
+                                    </label>
+                                </div>
+                                <div class="radio col-sm-3">
+                                    <label>
+                                        <input type="radio" name="is_all" value="0" checked=""> 按分类选择
+                                    </label>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="form-group" id="filter">
+                            <div class="col-sm-6 col-sm-offset-3">
+                                <div class="filter">
+                                    <div class="tags-group-list">
+                                        <div class="tags-items-wrap clearfix">
+                                            <label class="tags-items-label fl" style="width: 15%">性别：</label>
+                                            <div class="tags-items-list fl clearfix" style="width: 85%">
+                                                <div class="ant-tag">
+                                                    <input type="radio" name="sex" value="0" id="sex_0" class="filter-radio" <if condition="$info['sex'] eq 0">checked</if>> <label for="sex_0">不限</label>
+                                                </div>
+                                                <div class="ant-tag">
+                                                    <input type="radio" name="sex" value="1" id="sex_1" class="filter-radio" <if condition="$info['sex'] eq 1">checked</if>> <label for="sex_1">男</label>
+                                                </div>
+                                                <div class="ant-tag">
+                                                    <input type="radio" name="sex" value="2" id="sex_2" class="filter-radio" <if condition="$info['sex'] eq 2">checked</if>> <label for="sex_2">女</label>
+                                                </div>
+                                                <div class="ant-tag">
+                                                    <input type="radio" name="sex" value="3" id="sex_3" class="filter-radio" <if condition="$info['sex'] eq 3">checked</if>> <label for="sex_3">保密</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tags-items-wrap clearfix">
+                                            <label class="tags-items-label fl" style="width: 15%">充值情况：</label>
+                                            <div class="tags-items-list fl clearfix" style="width: 85%">
+											   <div class="ant-tag">
+													<input type="radio" name="charge" value="0" id="charge_0" class="filter-radio" <if condition="$info['charge'] eq 0">checked</if>>
+													<label for="recharge_0">不限</label>
+												</div>
+												<div class="ant-tag">
+													<input type="radio" name="charge" value="2" id="charge_1" class="filter-radio" <if condition="$info['charge'] eq 2">checked</if>>
+													<label for="recharge_1">未充值用户</label>
+												</div>
+												<div class="ant-tag">
+													<input type="radio" name="charge" value="1" id="charge_2" class="filter-radio" <if condition="$info['charge'] eq 1">checked</if>>
+													<label for="recharge_2">已充值用户</label>
+												</div>
+                                            </div>
+                                        </div>
+                                        <div class="tags-items-wrap clearfix">
+                                            <label class="tags-items-label fl" style="width: 15%">阅读币剩余：</label>
+                                            <div class="tags-items-list fl clearfix" style="width: 85%">
+                                                <div class="ant-tag">
+                                                    <input type="radio" name="money" value="0" id="money_0" class="filter-radio" <if condition="$info['money'] eq 0">checked</if>>
+                                                    <label for="balance_0">不限</label>
+                                                </div>
+                                                <div class="ant-tag">
+                                                    <input type="radio" name="money" value="1" id="money_1" class="filter-radio" <if condition="$info['money'] eq 1">checked</if>>
+                                                    <label for="balance_1">低于500</label>
+                                                </div>
+                                                <div class="ant-tag">
+                                                    <input type="radio" name="money" value="2" id="money_2" class="filter-radio" <if condition="$info['money'] eq 2">checked</if>>
+                                                    <label for="balance_2">低于2000</label>
+                                                </div>
+                                                <div class="ant-tag">
+                                                    <input type="radio" name="money" value="3" id="money_3" class="filter-radio" <if condition="$info['money'] eq 3">checked</if>>
+                                                    <label for="balance_3">低于5000</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tags-items-wrap clearfix">
+                                            <label class="tags-items-label fl" style="width: 15%">关注时间：</label>
+                                            <div class="tags-items-list fl clearfix" style="width: 85%">
+                                                <div class="ant-tag">
+                                                    <input type="radio" name="join_time" value="0" id="join_time_0" class="filter-radio" <if condition="$info['join_time'] eq 0">checked</if>>
+                                                    <label for="attention_time_0">不限</label>
+                                                </div>
+                                                <div class="ant-tag">
+                                                    <input type="radio" name="join_time" value="1" id="join_time_6" class="filter-radio" <if condition="$info['join_time'] eq 1">checked</if>>
+                                                    <label for="attention_time_6">一天内</label>
+                                                </div>
+                                                <div class="ant-tag">
+                                                    <input type="radio" name="join_time" value="2" id="join_time_1" class="filter-radio" <if condition="$info['join_time'] eq 2">checked</if>>
+                                                    <label for="attention_time_1">一周内</label>
+                                                </div>
+                                                <div class="ant-tag">
+                                                    <input type="radio" name="join_time" value="3" id="join_time_2" class="filter-radio" <if condition="$info['join_time'] eq 3">checked</if>>
+                                                    <label for="attention_time_2">半个月内</label>
+                                                </div>
+                                                <div class="ant-tag">
+                                                    <input type="radio" name="join_time" value="4" id="join_time_3" class="filter-radio" <if condition="$info['join_time'] eq 4">checked</if>>
+                                                    <label for="attention_time_3">一个月内</label>
+                                                </div>
+                                                <div class="ant-tag">
+                                                    <input type="radio" name="join_time" value="5" id="join_time_4" class="filter-radio" <if condition="$info['join_time'] eq 5">checked</if>>
+                                                    <label for="attention_time_4">三个月内</label>
+                                                </div>
+                                                <div class="ant-tag">
+                                                    <input type="radio" name="join_time" value="6" id="join_time_5" class="filter-radio" <if condition="$info['join_time'] eq 6">checked</if>>
+                                                    <label for="attention_time_5">更早</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tags-group-footer clearfix">
+                                        <div class="fl">
+                                            <span>符合条件的用户：</span>
+                                            <span>约 <img src="__PUBLIC__/admin/images/loading.gif" style="width: 18px; height: 18px; display: none;" id="loading-img"><span id="count" style="display: inline;">{$persons}</span> 人</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">发送时间</label>
+                            <div class="col-sm-6">
+                                <input type="text" name="send_time" class="form-control col-sm-9" disabled id="reservationtime" required="" placeholder="选择发送时间" value="{$info.stime|date="Y-m-d H:i:s",###}">
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+
+            </div><!-- /.col -->
+        </div>
+    </section>
+    <div class="modal fade" id="chose_title" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="myModalLabel">选择标题</h4>
+                </div>
+                <div class="modal-body" style="max-height:400px;overflow:auto;">
+                    <ul class="list-group">
+						<foreach name="titles" item="v">
+							<li class="list-group-item item-title" style="color: #337ab7;cursor: pointer" data-title="{$v.title}">{$v.title}</li>
+						</foreach>
+					</ul>
+                </div>
+                <div class="modal-footer">
+                    <div class="form-group clearfix" style="margin-bottom: 10px">
+                        <div class="col-sm-12">
+                            <input type="text" name="url" id="self-title" class="form-control" placeholder="自填标题">
+                        </div>
+                    </div>
+                    <div>
+                        <button type="button" class="btn btn-info" id="self-title-button">选用自填标题</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    </div>
+
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+    <div class="modal fade" id="chose_img" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="myModalLabel">选择图片</h4>
+                </div>
+                <div class="modal-body" style="max-height:400px;overflow:auto;">
+                    <ul>
+						<foreach name="pics" item="v">
+						<li class="item-img" data-img="{$v.pic}" style="margin: 5px;width: 23%;float: left;height: 80px">
+							<img src="{$v.pic}" alt="" style="width: 100%;height: 100%">
+                        </li>
+						</foreach>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="chose_link" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="myModalLabel">输入链接</h4>
+                </div>
+                <div class="modal-body" style="height: 100px">
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <input type="text" id="form-control-ipt" class="form-control" placeholder="请输入点击跳转链接">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="save-link">保存</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+	
+	get_number_count();
+   
+    function get_number_count() {
+        $(".filter-radio").attr("disabled",true);
+        var count = $('#count');
+        var loading = $('#loading-img');
+        loading.show();
+        count.hide();
+		var data = {
+			sex: $('input[name="sex"]:checked').val(),
+			charge: $('input[name="charge"]:checked').val(),
+			money: $('input[name="money"]:checked').val(),
+			join_time:$('input[name="join_time"]:checked').val()
+		}
+		$.post("{:U('getUserCount')}",data,function(d){
+			if(d){
+			console.log(d);
+				loading.hide();
+				count.text(d.info);
+				count.show();
+				$(".filter-radio").removeAttr("disabled");
+			}else{
+				layer.msg('请求失败！');
+			}
+		});
+    }	
+	
+	
+
+
+</script>

@@ -1,0 +1,170 @@
+<link rel="stylesheet" href="__PUBLIC__/admin/css/switch.css">
+<section class="content-header">
+	<div>
+		<ol class="breadcrumb" style="background: none; margin-bottom: 0px;">
+			<li><a href="{:U('Index/index')}" style="color: #333;"><i class=" fa fa-home"></i> Home</a></li>
+			<li class="active">消息推送</li>
+			<li class="active">促销活动</li>
+		</ol>
+	</div>
+
+</section>
+
+<!-- Main content -->
+<section class="content">
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box">
+			<div class="box-header with-border">
+				<h3 class="panel-title">&nbsp;<i class="fa fa-calendar-check-o"></i>&nbsp;&nbsp;促销活动</h3>
+			</div>
+			<div class="box-body">
+				<table class="table table-bordered table-hover table-striped text-center">
+					<tbody>
+						<tr>
+							<th>标题</th>
+							<th>活动时间</th>
+							<th>活动价格</th>
+							<th>活动页面</th>
+							<th>支付金额</th>
+							<th>支付订单数</th>
+							<th>阅读页是否展示</th>
+							<th>操作</th>
+						</tr>													
+						<foreach name="list" item="v">
+						<tr>
+							<td>{$v.title}</td>
+							<td style="width: 150px;">
+								{$v.stime|date="Y-m-d H:i:s",###}
+								<br>
+								{$v.etime|date="Y-m-d H:i:s",###}
+							</td>
+							<td>充{$v.money}送{$v.smoney}</td>
+							<td>
+								<if condition="$nowtime lt $v['etime']">
+									<p>
+										<img src="__PUBLIC__/images/fire.png" width="20" height="20">
+										<i style="color:red">活动火热进行中 ！！！</i>
+									</p>
+									http://{$mch['url']}/index.php?a=activity&id={$v.actid}
+									<button type="button" class="btn btn-primary copy" data-clipboard-action="copy" data-clipboard-text="http://{$mch['url']}/index.php?a=activity&id={$v.actid}">复制</button>																													</td>
+								<else />
+									请点击获取链接按钮获取
+								</if>
+							</td>
+							<td>￥{$v.charge_total}</td>
+							<td>{$v.charge_nums}</td>
+							<td>
+								<div class="switch switch-small checkbox has-switch" data-title="is_push" data-on="success" onclick="clickCheckbox({$v.id},this);">
+									<div class="switch-animate <if condition="$v['isshow'] eq 1">switch-on<else />switch-off</if>">
+									<input type="checkbox" checked="">
+									<span class="switch-left switch-small switch-success">ON</span><label class="switch-small">&nbsp;</label><span class="switch-right switch-small">OFF</span>
+									</div>
+								</div>
+							</td>
+							<td style="width: 150px;">
+								<if condition="$nowtime elt $v['etime']">
+								<a href="{:U('Custom/activity',array('id'=>$v['id']))}">
+									<button class="btn-info btn btn-xs">
+										生成活动客服消息
+									</button>
+								</a>
+								<else />
+									<a href="{:U('Custom/activity',array('id'=>$v['id']))}">
+										<button class="btn-info btn btn-xs" disabled="">
+											生成活动客服消息
+										</button>
+									</a>
+									<a href="javascript:;" class="set_activities_channel" data-title="限量特惠，无限畅读！" data-start_time="2018/08/15 22:05:00" data-end_time="2018/08/17 22:05:00" data-act_id="16" data-url="https://wx60c3a0f05fad104d.youshuge.com/recharge_act?activity_id=16" data-update_time="2018-08-14 22:09:59">
+										<button class="btn-success btn btn-xs" style="margin-top:5px;">点击设置 获取链接
+										</button>
+									</a>
+								</if>
+							</td>
+						</tr>
+						</foreach>
+					</tbody>
+				</table>
+			</div>
+			<div class="page">{$page|default="<p style='text-align:center'>暂时没有数据</p>"}</div>
+		</div>
+	</div>
+</div>
+</section>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static">
+<div class="modal-dialog" role="document">
+	<div class="modal-content">
+		<input type="hidden" id="act_id" value="">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">×</span>
+			</button>
+			<h5 class="modal-title">设置活动时间</h5>
+		</div>
+		<div class="modal-body">
+			<div class="form-group act_title">
+				<div style="color:red;">此活动每月仅可设置一次，每一次最多只能选择三天时间</div>
+				<div style="color:red;">请在设置活动时间时要谨慎，一旦设置成功之后将无法修改</div>
+
+			</div>
+			<div class="form-group">
+				<label for="message-text" class="form-control-label">活动名称:&nbsp;&nbsp;<span id="names"></span></label>
+
+			</div>
+			<div class="form-group">
+				<label for="message-text" class="form-control-label">开始时间:</label>
+				<input type="text" id="start_time" class="form-control time">
+			</div>
+			<div class="form-group">
+				<label for="message-text" class="form-control-label">结束时间:</label>
+				<input type="text" id="end_time" class="form-control time">
+			</div>
+			<div class="form-group act_link" style="display: none;">
+				<label for="message-text" class="form-control-label">活动链接地址</label>
+				<div id="urls" class=""></div>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<button type="button" id="sub" class="btn btn-success" style="float: right;">保存设置</button>
+			<button type="button" id="links" class=" btn activ_link" style="float: right; margin-right: 10px; background: rgb(255, 255, 255); color: green; border-color: green; display: none;" data-clipboard-action="copy" data-clipboard-target="#urls">复制活动链接
+			</button>
+		</div>
+	</div>
+</div>
+</div>
+
+<link rel="stylesheet" href="__PUBLIC__/layer/skin/default/layer.css">
+<script src="__PUBLIC__/admin/js/clipboard.min.js"></script>
+<script src="__PUBLIC__/layer/layer.js"></script>
+<script>
+	function clickCheckbox(id,ob,field){
+		$.post("{:U('setShow')}",{id:id},function(d){
+			if(d){
+				if($(ob).find(".switch-off").length>0){
+					$(ob).find(".switch-animate").removeClass('switch-off');
+					$(ob).find(".switch-animate").addClass('switch-on');
+				}else{
+					$(ob).find(".switch-animate").removeClass('switch-on');
+					$(ob).find(".switch-animate").addClass('switch-off');
+				}
+				layer.alert(d.info,function(d){
+					location.reload();
+				});
+			}else{
+				layer.msg('请求失败！');
+			}
+		});
+	}
+
+var clipboard = new Clipboard('.copy');
+
+clipboard.on('success', function (e) {
+	layer.msg("复制成功!");
+	e.clearSelection();
+});
+
+clipboard.on('error', function (e) {
+	console.error('Action:', e.action);
+	console.error('Trigger:', e.trigger);
+});
+</script>

@@ -1,0 +1,32 @@
+<if condition="$plat neq 1">
+<nav class="mui-bar mui-bar-tab nav-footer tophref">
+	<input type="hidden" name="yemain" value="a.ruiqi88.com" />
+	<a class="mui-tab-item" href="{:U('Index/novel')}">
+	<!--<a class="mui-tab-item mui-active" href="{:U('Index/index')}">-->
+		<span class="footer-nav-icon icon-recommended"></span>
+		<span class="mui-tab-label">推荐</span>
+	</a>
+	<a class="mui-tab-item" href="{:U('Index/bookType',array('btype'=>2))}">
+		<span class="footer-nav-icon icon-class"></span>
+		<span class="mui-tab-label">找书</span>
+	</a>
+	<a class="mui-tab-item"  href="{:U('Index/readHistory')}">
+		<span class="footer-nav-icon icon-bookcase"></span>
+		<span class="mui-tab-label">书架</span>
+	</a>
+
+	<a class="mui-tab-item" href="{:U('Index/my')}">
+		<span class="footer-nav-icon icon-mine"></span>
+		<span class="mui-tab-label">我的</span>
+	</a>
+</nav>
+</if>
+<script>
+    mui('.tophref').on('tap','a',function(){document.location.href=this.href;});
+	$(document).ready(function(){
+        $('.nav-footer a').each(function(){
+            if($($(this))[0].href==String(window.location))
+                $(this).addClass('mui-active');
+        });
+    })
+</script>

@@ -1,0 +1,149 @@
+<include file="include/header5" title="{$title}"/>
+
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/layer/skin/default/layer.css">
+<link href="__PUBLIC__/home/css/template5_book_details.css" rel="stylesheet" type="text/css">
+
+<div class="body_sytle">
+	<div class="bd_head_box">
+	 <if condition="$user['viptime'] eq 0">
+<div class="bd_head_open_vip" style="background-color:#fdf6e3;height:40px;"><a href="{:U('Index/vip')}" style="background-color:#fdf6e3;height:40px;line-height:40px;">开通 VIP，万本好书免费看</a></div>
+</if>
+		<div class="bd_head_info">
+			<div class="bd_head_info_img"><img src="{$info.infopic}" /></div>
+			<div class="bd_head_info_txt">
+				<h1>{$info.title}</h1>
+				<div class="i_images_txt_other">
+					<strong>
+					<?php 
+				$cates = explode(",",$info['cateids']);
+				if($info['btype'] == 1){
+					$cArr = $_mhStore;
+				}else{
+					$cArr = $_xsStore;
+				}
+			?>
+					<eq name="info['iswz']" value="1">
+												<i style="color: #7fdae9;">连载中</i>
+												<else/>
+												<i>已完结</i>
+												</eq>
+												<b><foreach name="cates" item="v" key="k">
+                           {$cArr[$v]}
+                        </foreach></b>
+					</strong>
+				</div>
+				<div class="bd_head_info_other"><span>46.83万字</span></div>
+				
+				<div class="bd_head_info_other"><em style="fl">19.91万人在追</em></div>
+			</div>
+			
+			
+			<div class="bd_description_box bd_description_open">
+				<p class="j_cutstrtxt">{$info.remark}</p>
+				<a href="javascript:;"></a>
+			</div>
+			<div class="bd_li_renewal_box">
+				<strong>更新</strong>
+				<a href="/index.php?m=&c=Index&a=readAnime&anid={$inchapter['anid']}&chaps={$inchapter['chaps']}">最新章节：{$inchapter['title']}</a>
+			</div>
+			<div class="bd_directory_tit">目录<span>（共{$info.allchapter}章）</span></div>
+		</div>
+
+		<ul class="bd_list_ul">
+			<volist name="info_chapter" id="vv">
+			 <li><a href="/index.php?m=&c=Index&a=readAnime&anid={$vv['anid']}&chaps={$vv['chaps']}">{$vv.title}</a></li>
+			
+			</volist>
+		</ul>
+		<a href="{:U('mInfo',array('anid'=>$info['id']))}" class="bd_list_more"><span>全部目录</span></a>
+	</div>
+	<div class="main_recommend">
+    <div class="main_recommend_tit">
+        <a href="javascript:;" class="main_recommend_but j_recommend_refresh" id="guess_btn" onclick="loadRecommend()">换一换</a>
+        <h2>主编推荐</h2>
+    </div>
+    <div class="i_images_list">
+        <ul class="i_images_ul">
+
+		 <foreach name="guess" item="vo">
+             <li class="section-block">
+                <a href="{:U('info',array('id'=>$vo['id']))}" class="section-data"  data-zone="主编推荐">
+                    <div class="i_images_img"><img alt="" src="{$vo.selectpic}" data-original="{$vo.selectpic}" /></div>
+                    <h3>{$vo.title}</h3>
+                </a>
+            </li>
+         </foreach>         
+         </ul>
+    </div>
+</div>
+</div>
+ </div>
+<style>
+.bd_but_box .buts_2{background-color:#fe7271;}
+.bd_but_box .disabled{background-color:#fad2d3;}
+</style>
+<div class="bd_but_box">
+<if condition="$collect">                   
+	<a href="javascript:;" class="disabled" style="width:50%;float:left;">已在书架</a>
+	<else />
+	<a href="javascript:;" id="joinSc" class="buts_2" style="width:50%;float:left;">加入书架</a>
+</if>
+<?php
+	$read = M('readhistory')->where(array('user_id'=>$user['id'],'anid'=>$info['id']))->order('chaps desc')->find();
+	
+?>
+<if condition="$read">   
+<a href="{:U('readAnime',array('anid'=>$info['id'],'chaps'=>$read['chaps']))}" class="buts_1" style="width:50%;float:left;">继续阅读</a>
+	<else />
+	<a href="{:U('readAnime',array('anid'=>$info['id'],'chaps'=>1))}" class="buts_1" style="width:50%;float:left;">开始阅读</a>
+</if>
+	
+</div>
+
+<script type="text/javascript" src="__PUBLIC__/home/js/zepto.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/home/js/zepto.cookie.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/home/js/zepto.picLazyLoad.min.js"></script>			
+<script type="text/javascript" src="__PUBLIC__/home/js/template5_common.js"></script>
+<script type="text/javascript">
+    $(function(){
+        $('.bd_description_box a').click(function(){
+            $(this).parent().removeClass('bd_description_open');
+        });
+    
+    });
+	$('#joinSc').click(function () {
+		if($(".bd_but_box a").hasClass('disabled')) return;
+		$("#joinSc").addClass('disabled');
+		$(this).html('已在书架');
+		$.post("{:U('Ajax/collect')}", { id: "{$info.id}" },function(d){
+			
+			if(d){
+				bh_msg_tips(d.info);
+			}
+			
+			
+		});
+	});
+	 function loadRecommend() {
+        location.reload();
+        /*  $.post("/search/ewq", {recommend_ids : 0,category_id : '8,15', book_id : 230  },function (r) {
+              $('#guess_list').html(r);
+          },'html') */
+    }
+	 function bh_msg_tips(msg) {
+        var oMask = document.createElement("div");
+        oMask.id = "bh_msg_lay";
+        oMask.style.position = "fixed";
+        oMask.style.left = "0";
+        oMask.style.top = "50%";
+        oMask.style.zIndex = "100";
+        oMask.style.textAlign = "center";
+        oMask.style.width = "100%";
+        oMask.innerHTML = "<span style='background: rgba(0, 0, 0, 0.65);color: #fff;padding: 10px 15px;border-radius: 3px; font-size: 14px;'>" + msg
+            + "</span>";
+        document.body.appendChild(oMask);
+        setTimeout(function () {
+            $("#bh_msg_lay").remove();
+        }, 2000);
+    }
+</script>		

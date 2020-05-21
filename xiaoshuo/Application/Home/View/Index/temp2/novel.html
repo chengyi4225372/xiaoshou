@@ -1,0 +1,193 @@
+<include file="include/header" title="{$title}" />
+<link href="__PUBLIC__/home/css/index.css" rel="stylesheet">
+<style>
+.home-hottag-menu {
+
+    height: 50px;
+    bottom: 0;
+    display: table;
+    width: 100%;
+    padding: 0;
+    table-layout: fixed;
+    border-top: 0;
+    border-bottom: 0;
+    -webkit-touch-callout: none;
+    z-index: 199;
+    margin-top: 10px;
+	background-color: #fff;
+}
+}
+.box {
+	width: 100%;
+	background-color: #fff;
+}
+.home-hottag-menu .home-hottag-item {
+	display: table-cell;
+	width: 1%;
+	text-align: center;
+	vertical-align: middle;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	color: #929292;
+}
+p {
+	font-size: 14px;
+	margin-top: 0;
+	margin-bottom: 10px;
+	color: #8f8f94;
+}
+.box img{ width: 60px;height: 60px;}
+</style>
+<div class="header">
+	<div class="search">
+		<img src="__PUBLIC__/home/images/f2.png" />
+		<input type="text" id="keyword" placeholder="搜索书名..." />
+		<a href="javascript:;" id="search">搜索</a>
+	</div>
+	<div class="tabs">
+		<a href="{:U('Index/rank',array('order'=>'time','btype'=>2))}" class="active">新书</a>
+		<a href="{:U('Index/rank',array('order'=>'sex1','btype'=>2))}">男生</a>
+		<a href="{:U('Index/rank',array('order'=>'sex2','btype'=>2))}">女生</a>
+	</div>
+</div>
+
+<script>
+	$('#search').click(function(){
+		var keyword = $('#keyword').val();
+		if(keyword !=""){
+			location.href="{:U('iSearch')}&keyword="+keyword;
+		}
+	});
+</script>
+
+<div class="content" style="margin-bottom:0;">
+	<div class="banner">
+		<div class="swiper-container">
+			<div class="swiper-wrapper">
+				<foreach name="_xsBanner" item="v">
+					<div class="item swiper-slide">
+						<a href="{$v.url}">
+							<img class="slide_loading" src="{$v.pic}">
+						</a>
+					</div>
+				</foreach>
+			</div>
+		</div>
+	</div>
+<!-- 	<div class="nav">
+		<ul>
+			<li>
+				<a href="{:U('Index/rank',array('btype'=>2))}">
+					<img src="__PUBLIC__/home/images/phb.png" />
+					<span>排行榜</span>
+				</a>
+			</li>
+			<li>
+				<a href="{:U('Index/collectHistory')}">
+					<img src="__PUBLIC__/home/images/ydjl.png" />
+					<span>记录</span>
+				</a>
+			</li>
+			<li>
+				<a href="{:U('Index/moreList',array('field'=>'isfw','value'=>2,'btype'=>2))}">
+					<img src="__PUBLIC__/home/images/mfyd.png" />
+					<span>限免</span>
+				</a>
+			</li>
+			<li>
+				<a href="{:U('Index/charge')}">
+					<img src="__PUBLIC__/home/images/czhi.png" />
+					<span>充值</span>
+				</a>
+			</li>
+			<li>
+				<a href="{:U('Index/bookType',array('btype'=>2))}">
+					<img src="__PUBLIC__/home/images/shuk.png" />
+					<span>书库</span>
+				</a>
+			</li>
+		</ul>
+	</div>	 -->
+	<div class="home-hottag-menu">
+		<div class="box">
+			<foreach name="middle" item="v">
+				<a class="home-hottag-item" onclick="location.href='http://{$serviceUrl}/{$v.url}'">
+					<img class="home-menu-img2" src="{$v.img}" />
+					<p>{$v.name}</p>
+				</a>
+			</foreach>
+		</div>
+	</div>
+	<if condition="$history">
+	<div class="history">
+		<div class="title">阅读记录</div>
+		<div class="items swiper-container">
+			<div class="swiper-wrapper">
+				<foreach name="history" item="v">
+				<a href="{:U('Index/readAnime',array('anid'=>$v['anid'],'chaps'=>$v['chaps']))}">
+					<div class="item swiper-slide">
+						<img class="lazy" src="{$v.selectpic}" style="background: rgb(238, 238, 238); display: block;">
+						<div class="txt">
+							<h1>{$v.title}<span>阅读到第{$v.chaps}章</span></h1>
+							<div class="remark">
+								{$v.remark}
+							</div>
+							<a href="{:U('Index/readAnime',array('anid'=>$v['anid'],'chaps'=>$v['chaps']))}" class="goto">继续阅读</a>
+						</div>
+					</div>
+				</a>
+				</foreach>
+			</div>
+		</div>
+	</div>
+	</if>
+	
+	
+	<foreach name="list" item="v">
+	<div class="pind">
+		<div class="title">{$v.name}<a href="{:U('Index/moreList',array('field'=>'areas','value'=>$v['sid'],'btype'=>2))}">更多&nbsp;></a></div>
+		<div class="items">
+			<ul>
+				<foreach name="v['list']" item="vv">
+					<li>
+						<a href="{:U('Index/info',array('id'=>$vv['id']))}">
+							<img src="{$vv.selectpic}" />
+							<span>{$vv.title}</span>
+						</a>
+					</li>
+				</foreach>
+			</ul>
+		</div>
+	</div>
+	</foreach>
+</div>
+
+<div class="bm-box erweima">
+	<if condition="$mch">
+		<img src="{$mch['qrcode']}">
+		<p>版权所有，侵权必究！<br>官方QQ：{$mch['qq']}<br>官方微信号：{$mch['weixin']}</p>
+	<else />
+		<img src="{$_site['qrcode']}">
+		<p>版权所有，侵权必究！<br>官方QQ：{$_site['qq']}<br>官方微信号：{$_site['weixin']}</p>
+	</if>
+</div>
+
+<include file="include/footer2" />
+
+<script>
+	$(function () {
+        var swiper = new Swiper('.swiper-container', {
+            autoplay: {
+                delay: 3000,
+                disableOnInteraction: false,
+            },
+        });
+		var myswiper = new Swiper('.swiper-container-ting', {
+			slidesPerView: 3,
+			pagination: {
+				el: '.swiper-pagination',
+				clickable: true,
+			},
+		});
+    });
+</script>

@@ -1,0 +1,22 @@
+<include file="include/header" title="{$title}" />
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/home/css/footer4.css">
+<div style="font-size: .4rem;background: #ff730b;color: #fff;padding: .4rem;" id="msg">
+	<p>海报推广赚书币步骤</p>
+	<p>1、点击下面海报图片保存到相册</p>
+	<p>2、把保存好的海报图片发送到朋友圈</p>
+	<p>3、把保存好的海报图片群发给好友</p>
+</div>
+<div class="qrcode-main" style="z-index:9999">
+	<img src="{$img}" id="qrcode" style=" width:100%" />
+</div>
+<script>
+	$(document).ready(function(d){
+		var h = $(window).height();
+			footer = $('#myfooter').height();
+			msg = $('#msg').height();
+			img_h = h - msg - footer - 30;
+		$("#qrcode").height(img_h+"px");
+	});
+</script>
+<div style="height:50px;"></div>
+<include file="include/footer4" />

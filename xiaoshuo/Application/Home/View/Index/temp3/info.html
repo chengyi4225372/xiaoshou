@@ -1,0 +1,584 @@
+<include file="include/header3" title="{$title}"/>
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/home/css/template3/style3.css">
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/layer/skin/default/layer.css">
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/home/css/template3/book.css"/>
+<script src="__PUBLIC__/layer/layer.js"></script>
+<style>
+    .action .chapter_all{
+        width: 94%;
+        padding: 8px 0 8px 0;
+        font-size: 15px;
+        display: block;
+        text-align: center;
+        background: #f2f1f1;
+        margin: 0 auto;
+        border-radius: 20px;
+        margin-top: 30px;
+    }
+</style>
+<body>
+<div class="bookview taphref">
+    <div class="book-bg l-book-top">
+        <div class="wd-header">
+            <div class="hd">
+                <div class="l-top-bg"></div>
+                <img src="{$info.infopic}"/>
+            </div>
+            <div class="ft">
+                <a class="ft-home" href=""><i class="icon-source-list icon-home l-home"></i></a>
+                <div class="ft-title  mui-ellipsis"><span class="overhidden">{$info.title}</span></div>
+
+                <div class="ft-content">
+                    <!--<h1> 131.11万</h1>-->
+                    <div class="ft-content-follow">
+                        <if condition="$info['btype'] eq 1">
+                            <span>漫	画</span>
+                            <else/>
+                            <span>小说</span>
+                        </if>
+                        <foreach name="cates" item="v" key="k">
+                            <span>{$cArr[$v]}</span>
+                        </foreach>
+                    </div>
+
+                    <!--<div class="l-book-count">-->
+                    <!--<span class="l-detail-span">连载 - </span>-->
+                    <!--更至15话-->
+                    <!--</div>-->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="book-content">
+        <div class="book-content-table">
+            <div id="segmentedControl" class="mui-segmented-control l-book">
+                <a class="mui-control-item l-detail mui-active" href="#item1">详情</a>
+                <a class="mui-control-item l-category" href="#item2">目录</a>
+            </div>
+        </div>
+        <div class="book-content-class">
+            <div id="item1" class="mui-control-content mui-active ">
+                <div id="m-intro" class="book-intro l-book-info">
+                    <p>{$info.remark}</p>
+                </div>
+
+                <div class="book-date" style="display:none">
+                    <span>人气值<p>{$info.hots}万</p></span>
+                    <span>收藏值<p>{$info.likes}人</p></span>
+                    <span>评论值<p>{$info.comments}人</p></span>
+                </div>
+
+                <!--打赏名人榜-->
+                <div id="gift-top5" style="width: 100%;">
+
+                </div>
+                <!--精彩评论-->
+                <div class="community-detail-comment">
+                    <div class="community-detail-comment-title">
+                        <i id="community-detail-comment-new">精彩评论</i>
+                        <div class="mod-commentLink"></div>
+                    </div>
+                    <if condition="$comments">
+                        <dl class="community-detail-comment-dl">
+                            <foreach name="comments" item="v">
+                                <dd class="community-detail-comment-dd">
+                                    <div class="cdc-img">
+                                        <img src="{$v.headimg}"/>
+                                    </div>
+                                    <div class="cdc-right">
+                                        <div class="cdc-author-right   support-btn " data-post-id="105961">
+                                            <span class="support_count">9</span><i
+                                                class="icon-source-list icon-thumb "></i>
+                                        </div>
+                                        <div class="host-content" onclick="hostContent(this)" pid="" baseid=""
+                                             username="">
+                                            <div class="cdc-author">
+                                                <div class="cdc-author-left">
+                                                    <div class="cdc-author-name authorname">{$v.nickname}</div>
+                                                    <div class="cdc-author-time l-comment-icon">
+                                                        {$v.create_time|date="Y-m-d H:i:s",###}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="cdc-content">{$v.content}</div>
+                                        </div>
+
+                                        <div class="cdc-content-reply  cdc-content-reply-105961" style="display: none;">
+                                            <dl class="cdc-reply-dl">
+                                            </dl>
+                                        </div>
+
+                                    </div>
+                                </dd>
+                            </foreach>
+                        </dl>
+
+                        <else/>
+                        <span class="comment-more">暂无评论~</span>
+                    </if>
+                </div>
+
+                <div class="replace-title">
+                <div class="replace-titleText"><i>猜你喜欢</i></div>
+               <div class="replace-titleIcon" id="guess_btn" onclick="loadRecommend()">再猜一下<i class="icon-source-list icon-refresh"></i></div> 
+                </div>
+                <div class="replace-content">
+                <ul class="mui-table-view mui-grid-view" id="guess_list">
+                    <foreach name="guess" item="vo">
+                    <li class="mui-table-view-cell mui-col-xs-4">
+                        <div class="replace-img">
+                            <a href="{:U('info',array('id'=>$vo['id']))}"><img src="{$vo.selectpic}" /></a>
+                        </div>
+                        <div class="replace-text mui-ellipsis">{$vo.title}</div>
+                    </li>
+                    </foreach>
+
+                </ul>
+                </div>
+            </div>
+            <div id="item2" class="mui-control-content">
+
+                <if condition="$info['btype'] eq 1">
+                <!--漫画-->
+                <div class="order">
+                    <span><strong>连载中</strong><span class="l-order-dot">●</span>{:getZd('iswz',$info['iswz'])} <span>{$info.allchapter}</span></span>
+                    <!--<div id="chapter-list-order" mode="0">-->
+                    <!--<span class="order-name">正序</span>-->
+                    <!--<i class="icon-source-list icon-b-order"></i>-->
+                    <!--</div>-->
+                </div>
+
+
+                <ul id="sort-list" class="book-chapter-list">
+                    <div class="list" id="html_box">
+                        <?php
+				$paychapter = $info['paychapter'];
+				$chaps = 15;
+				if($info['allchapter']<15){
+					$chaps = $info['allchaps'];
+				}
+				//查询是否已读
+				for($i=1;$i<=$chaps;$i++){
+					    $read = M('readhistory')->where(array('user_id'=>$user['id'],'anid'=>$info['id'],'chaps'=>$i))->find();
+                        $chaps = M('anime_chapter')->where(array('anid'=>$info['id'],'chaps'=>$i))->find();
+
+                        if($chaps['coverpic']){
+                        $imgs[0] = $chaps['coverpic'];
+                        }else{
+                        $imgs = explode(",",$chaps['info']);
+                        }
+
+                        if($i>=$paychapter){
+                        ?>
+
+                        <li class="<if condition="!$read">lock</if>">
+                        <div class="orderid" data-chapter="1"></div>
+                        <a class="overhidden" onclick="window.location.href = 'javascript:chooseChaps({$info['id']},{$i});'">
+                            {$chaps['title']}
+                            <if condition="!$read">
+                                <span style="float:right;margin-right:0.5rem;color:#ff730a;font-size:0.9em;">{$info.money|intval} 书币</span>
+                            </if>
+                        </a>
+                        </li>
+                        <?php
+					}else{
+						?>
+
+                        <li>
+                            <div class="orderid" data-chapter="1"></div>
+                            <p class="overhidden"
+                               onclick="window.location.href = 'javascript:chooseChaps({$info['id']},{$i});'">
+                                {$chaps['title']}
+                            </p>
+                        </li>
+                        <?php
+					}
+				}
+			?>
+
+                    </div>
+                </ul>
+            <else />
+
+                
+            <div class="order">
+                <span><strong>连载中</strong><span class="l-order-dot">●</span>{:getZd('iswz',$info['iswz'])} <span>{$info.allchapter}</span></span>
+                <!--<div id="chapter-list-order" mode="0">-->
+                <!--<span class="order-name">正序</span>-->
+                <!--<i class="icon-source-list icon-b-order"></i>-->
+                <!--</div>-->
+            </div>
+
+            <ul id="sort-list" class="book-chapter-list">
+                <div class="list" id="html_box">
+                    <?php
+				$paychapter = $info['paychapter'];
+				$chaps = 15;
+				if($info['allchapter']<15){
+					$chaps = $info['allchaps'];
+				}
+				//查询是否已读
+				for($i=1;$i<=$chaps;$i++){
+					$read = M('readhistory')->where(array('user_id'=>$user['id'],'anid'=>$info['id'],'chaps'=>$i))->find();
+                    if($i>=$paychapter){
+                    ?>
+
+                    <li class="<if condition="!$read">lock</if>">
+                    <div class="orderid" data-chapter="1"></div>
+                    <a class="overhidden" onclick="window.location.href = 'javascript:chooseChaps({$info['id']},{$i});'">
+                        {$i} 章
+                        <if condition="!$read">
+                            <span style="float:right;margin-right:0.5rem;color:#ff730a;font-size:0.9em;">{$info.money|intval} 书币</span>
+                        </if>
+                    </a>
+                    </li>
+                    <?php
+					}else{
+						?>
+
+                    <li>
+                        <div class="orderid" data-chapter="1"></div>
+                        <a class="overhidden"
+                           onclick="window.location.href = 'javascript:chooseChaps({$info['id']},{$i});'">
+                            {$i} 章
+                        </a>
+                    </li>
+                    <?php
+					}
+				}
+			?>
+
+                </div>
+            </ul>
+			<div class="action">
+                <a href="javascript:void(0)" class="btn show-all chapter_all">查看更多章节 <i class="icon-arrow"></i></a>
+            </div>
+            </if>
+            </div>
+        </div>
+        <div class="book-footer">
+            <if condition="$collect">
+                <a class="btn-item btn-sub collect_text <if condition='$collect'>is-active</if>"><i class="icon-source-list icon-collect"></i>已收藏</a>
+             <else />
+               <a class="btn-item btn-sub collect_text"><i class="icon-source-list icon-collect"></i>加入收藏</a>
+            </if>
+            <span class="btn-item btn-read" onclick="window.location.href = '{:U('Index/readAnime',array('anid'=>$info['id'],'chaps'=>1))}'">立即阅读</a></span>
+            <span class="btn-item btn-sub" onclick="$('.prize').slideDown();"><i class="icon-source-list icon-gift"></i>打赏</span>
+        </div>
+    </div>
+    <style>
+	.prize .items ul {
+       padding: 5px;
+       display: inline-block;
+     }
+	.prize .items {
+      position: absolute;
+      top: 25%;
+      left: 10%;
+      background: #fff;
+      border-radius: 10px;
+      padding-bottom: .9rem;
+    }
+	.prize .items ul li span {
+       display: block;
+       width: 70%;
+       margin: .2rem 15%;
+       font-size: 14px;
+       text-align: center;
+       line-height: 35px;
+       height: 35px;
+       border: 1px solid #ddd;
+       border-radius: .5rem;
+    }
+	.prize .items .title {
+  
+       line-height: 40px;
+       font-size: 14px;
+       text-align: center;
+       border-bottom: 1px solid #ddd;
+       height: 40px;
+    }
+	</style>
+
+    <div class="prize">
+        <div class="msk" onclick="$('.prize').slideUp();"></div>
+        <div class="items">
+            <div class="title">请选择打赏金额</div>
+            <ul>
+                <foreach name="_prize" item="v" key="k">
+                    <if condition="$k eq 1">
+                        <li _money="{$v}"><span class="active">{$v}元</span></li>
+                        <else/>
+                        <li _money="{$v}"><span>{$v}元</span></li>
+                    </if>
+                </foreach>
+            </ul>
+            <div class="">
+                <button class="aBtn" onclick="postPrize();" style="margin-right: 10%; font-size: 14px;">确定</button>
+                <button class="aBtn cBtn" onclick="$('.prize').slideUp();" style="margin-left: 10%; font-size: 14px;">取消</button>
+            </div>
+        </div>
+    </div>
+	
+	<!-- 评论框 -->
+<div class="comment-mod" style="display: none" >
+    <div class="send">
+
+        <div class="comment-footer-btn">
+            <span class="comment-cancel">取消</span>
+            发表评论
+            <span href="javascript:;" id="send-comment-btn" class="btn">发布</span>
+        </div>
+        <input type="hidden" name="anid"  id="anid" value="{$info.id}" />
+        <input type="hidden" name="cid"  id="cid" value="{$_GET['id']}" />
+        <div class="ttxt focus-text" autofocus="autofocus" contenteditable="true" placeholder="我也要说几句..." style="height: 70px;width: 92%; border-radius: 5px; margin: 10px auto; padding: 8px; -webkit-user-select:text;background: #f4f4f4;">
+            <div class="comment-notice">我也要说几句...</div>
+        </div>
+
+        <span href="javascript:;" class='faces'></span>
+
+    </div>
+    <div class="face"></div>
+</div>
+
+</div>
+
+<script>
+    var money = "{$_prize[1]}";
+    $('.prize .items ul li').click(function () {
+        $('.prize .items ul li').find('span').removeClass('active');
+        $(this).find('span').addClass('active');
+        money = $(this).attr("_money");
+    });
+
+    function postPrize() {
+        layer.load(2);
+        $.post("{:U('Ajax/postPrize')}", {money: money, anid: "{$info['id']}"}, function (d) {
+            if (d) {
+                console.log(d.url);
+                layer.closeAll();
+                if (d.status) {
+                    location.href = d.url;
+                } else {
+                    layer.msg(d.info);
+                }
+            } else {
+                layer.closeAll();
+                alert('请求失败！');
+            }
+        })
+    }
+
+</script>
+
+<script type="text/javascript">
+    var page = 1;
+    var isCks = "{$_GET['isCks']}";//是否是点击目录返回
+    var btype = "{$info.btype}";//漫画小说类型
+    var wait = true;//是否加载更多
+    function getChaps() {
+        bh_msg_tips('正在加载中...');
+        $.post("{:U('Ajax/loadChaps3')}", {id: "{$info['id']}", page: page}, function (d) {
+            if (d) {
+                $('#bh_msg_lay').hide();
+                if (d.status == 1) {
+                    bh_msg_tips(d.info);
+                } else if (d.status == 2) {
+                    $('.show-all').hide();
+                    $('#html_box').append(d.info);
+                } else if (d.status == 3) {
+                    $('#html_box').append(d.info);
+                } else {
+                    bh_msg_tips('加载失败！');
+                }
+            } else {
+                $('#bh_msg_lay').hide();
+                bh_msg_tips('请求失败！');
+            }
+        })
+    }
+
+    //点击章节
+    function chooseChaps(anid, chaps) {
+        $.post("{:U('Ajax/nextChaps')}", {anid: anid, chaps: chaps}, function (d) {
+            if (d) {
+                console.log(d);
+                if (d.status == 1) {
+                    $('.mask-box').show();
+                    $('.modal').show();
+                } else if (d.status == 2) {
+                    location.href = d.url;
+                } else {
+                    alert("异常错误！");
+                }
+            } else {
+                alert("请求失败！");
+            }
+        });
+    }
+
+
+    $(function () {
+        $('.bm-tabs .item a').click(function () {
+            var p_tabs = $(this).parents('.bm-tabs');
+            p_tabs.find("div a").removeClass("active");
+            $(this).addClass("active");
+            var type = $(this).attr('type');
+            if (type == 'info') {
+                $('#book-info').show();
+                $('#other-box').show();
+                $('#chapters').hide();
+                $('#xji').show();
+            } else {
+                $('#book-info').hide();
+                $('#other-box').hide();
+                $('#chapters').show();
+                $('#xji').hide();
+                //漫画下拉进行加载
+                if (btype == "1") {
+                    $(window).bind("scroll", function (event) {
+                        if (!wait) return;
+                        var top = document.documentElement.scrollTop + document.body.scrollTop;
+                        var textheight = $(document).height();
+                        if (textheight - top - $(window).height() <= 100) {
+                            page++;
+                            getMore();
+                        }
+                    });
+                }
+            }
+        });
+
+        if (isCks == 1) {
+            $('.bm-tabs .item a').click();
+        }
+
+
+        $('.collect_text').click(function () {
+            var is_gray_ = $(this).hasClass("is-active");
+            $.post("{:U('Ajax/collect')}", {id: "{$info.id}"});
+            if (is_gray_) {
+                $(this).removeClass("is-active");
+                $(this).html('<i class="icon-source-list icon-collect"></i>加入收藏');
+                // $(this).html('<svg width="10" height="10" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path fill="#fff" d="M20 8h-8V0H8v8H0v4h8v8h4v-8h8V8"/></svg>收藏');
+            }
+            else {
+                $(this).addClass("is-active");
+                $(this).html('<i class="icon-source-list icon-collect"></i>已收藏');
+            }
+        });
+
+        //查看全部章节
+        $('.show-all').click(function () {
+            getChaps();
+            page++;
+        });
+
+    });
+
+    //查看更多章节
+    function getMore() {
+        $.post("{:U('Ajax/loadMoreChaps')}", {id: "{$info['id']}", page: page}, function (d) {
+            if (d) {
+                console.log(d);
+                if (d.status) {
+                    $('#allchaps').append(d.info);
+                } else {
+                    wait = false;
+                }
+            } else {
+                bh_msg_tips('请求失败！');
+                wait = true;
+            }
+        })
+    }
+
+    function bh_msg_tips(msg) {
+        var oMask = document.createElement("div");
+        oMask.id = "bh_msg_lay";
+        oMask.style.position = "fixed";
+        oMask.style.left = "0";
+        oMask.style.top = "50%";
+        oMask.style.zIndex = "100";
+        oMask.style.textAlign = "center";
+        oMask.style.width = "100%";
+        oMask.innerHTML = "<span style='background: rgba(0, 0, 0, 0.65);color: #fff;padding: 10px 15px;border-radius: 3px; font-size: 14px;'>" + msg
+            + "</span>";
+        document.body.appendChild(oMask);
+        setTimeout(function () {
+            $("#bh_msg_lay").remove();
+        }, 2000);
+    }
+  $(".mod-commentLink").click(function () {
+        ttxt_placeholer = '我也要说几句...';
+        $('.focus-text').html("<div class=comment-notice>" + ttxt_placeholer + "</div>");
+        $(".comment-mod").show();
+        $(".community-footer-text").focus();
+        $('.focus-text').removeAttr('pid');
+        $('.focus-text').removeAttr('baseid');
+        $('.focus-text').removeAttr('post_user_pnickname');
+        $('.focus-text').removeClass('reply');
+        $('.focus-text').attr('placeholder','我也要说几句...');
+        $('.send textarea').val('');
+    });
+    // 取消发帖
+    $(".comment-cancel").click(function () {
+        $(".comment-mod").hide();
+        $('.send .faces').removeClass('on');
+        $(".face").hide();
+    });
+	
+    var ttxt_placeholer = '';
+    $('.ttxt').on('click',function(){
+        ttxt_placeholer = $(".comment-notice").text();
+        $(".comment-notice").remove();
+    });
+    $(".ttxt").on('blur', function () {
+        if (!$.trim($(this).html()) && ttxt_placeholer) {
+            $(this).html("<div class=comment-notice>" + ttxt_placeholer + "</div>");
+        }
+    });
+
+
+    $('.send #send-comment-btn').on('click',function(){
+        if ($('.ttxt').children(".comment-notice").length ){
+            alert('发布内容不能为空');
+            $('.ttxt').focus();
+            return false;
+        }
+        var anid = $('#anid').val();
+        var cid  = $('#cid').val();
+        // 检测发布条件
+        $.post("{:U('Ajax/commentsAdd')}", {anid:anid,cid:cid,content :　$('.focus-text').html()}, function (r) {
+            if (r.status == 1) {
+                mui.toast('您的评论需要管理员审核之后才能显示出来，请稍等！');
+                setTimeout(function () {
+                     location.reload();
+                    // window.history.go(-1);
+                }, 1200)
+
+            }else {
+                mui.toast(r.info);
+            }
+        },'JSON');
+    });
+	window.shareData = {
+		img: "{$info['coverpic']|complete_url}", 
+		link: "<?php echo complete_url(U('info',array('id' => $info['id'])));?>",
+		title: "{$info['sharetitle']}",
+		desc: "{$info['sharedesc']}",
+	};	
+	
+	  //loadRecommend();
+    function loadRecommend() {
+	 location.reload();
+      /*  $.post("/search/ewq", {recommend_ids : 0,category_id : '8,15', book_id : 230  },function (r) {
+            $('#guess_list').html(r);
+        },'html') */
+    }
+</script>
+
+
+</body>
+</html>

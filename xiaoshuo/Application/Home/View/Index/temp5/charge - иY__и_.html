@@ -1,0 +1,187 @@
+<include file="include/header4" title="{$title}" />
+<link href="__PUBLIC__/home/css/template3/home.css" rel="stylesheet">
+<link href="__PUBLIC__/home/css/template3/person.css" rel="stylesheet">
+<style>
+body{background:#f7f7f7}
+.active .container .voucher-card{
+        border-color: #ff730b;
+        background: #fdf2e9;
+    }
+.w-header{height：40px;}
+.mui-t{ padding: 12px;}
+.voucher-List{margin-top: 10px }
+
+.y-voucher-top{margin: 0 auto;}
+ .voucher-card {
+    border: 2px solid #dedede;
+    width: 100%;
+    padding-top: 1px;
+    background: #ffffff;
+    border-radius: 5px;
+    text-align: center;
+    line-height: 20px;
+    margin-bottom: 10px;
+}
+#y-voucher-card {
+    display: flex;
+    padding-top: 1px;
+}
+.voucher-cue {
+    margin: 20px 15px 0;
+}
+.voucher-card .more-get-money {
+    line-height: 20px;
+    height: 26px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #ff8827;
+    background-repeat: no-repeat;
+    background-position: right bottom;
+    background-size: auto 70%;
+}
+</style>
+<div class="mui-content cor-content y-mui-content">
+	<header class="mui-bar mui-bar-nav w-header">
+		<div class="mui-t">当前金额：<lable style="color: #ff8827;">0</lable>书币</div>
+	</header>
+	<div class="mui-content w-content">
+
+        <div class="voucher-List" style="padding: 15px 15px 10px 15px;">
+		<div style="margin-bottom:15px;">请选择充值金额 <lable style=" color: #ff8827;">1元=100书币</lable></div>
+		<div style="">
+            <ul class="mui-table-view mui-grid-view">
+			
+            <foreach name="_charge" item="v" key="k">
+                <if condition="$v['isopen']">
+                    <if condition="$v['isover'] eq 1">
+              <!--           <div class="first-charge-notic select-pay item" data-id="{$k}">
+                            <a href="javascript:void(0);" class="container">
+                                <div class="voucher-card" id="y-voucher-card">
+                                    <div class="y-voucher-left"><img
+                                            src="__PUBLIC__/home/images/template3/y-yearvip.png"></div>
+                                    <div class="y-voucher-right">
+                                        <div class="voucher-Discount" id="y-voucher-Discount">{$v.money}元</div>
+                                        <div class="voucher-money">终生VIP会员！</div>
+                                        <div class="more-get-money" id="y-more-get-money">&nbsp;&nbsp;&nbsp;终生免费看！</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div> -->
+
+
+                        <elseif condition="$v['isyear'] eq 1"/>
+                        <div class="first-charge-notic select-pay item" data-id="{$k}">
+                            <a href="javascript:void(0);" class="container">
+                                <div class="voucher-card" id="y-voucher-card">
+                      
+									<div class="y-voucher-top">
+									   <img src="__PUBLIC__/home/img/year.png">
+									   <p>一年内全站书籍免费看</p>
+									</div>
+								
+                                </div>
+                            </a>
+                        </div>
+
+                        <elseif condition="$v['ishalf'] eq 1"/>
+                        <div class="first-charge-notic select-pay item" data-id="{$k}">
+                            <a href="javascript:void(0);" class="container">
+                                <div class="voucher-card" id="y-voucher-card">
+                                    <div class="y-voucher-left"><img
+                                            src="__PUBLIC__/home/images/template3/y-yearvip.png"></div>
+                                    <div class="y-voucher-right">
+                                        <div class="voucher-Discount" id="y-voucher-Discount">{$v.money}元</div>
+                                        <div class="voucher-money">半年VIP会员！</div>
+                                        <div class="more-get-money" id="y-more-get-money">&nbsp;&nbsp;&nbsp;半年时间免费看！
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <else/>
+                     
+                            <li class="mui-table-view-cell select-pay select-pay2 mui-col-xs-6 item" data-id="{$k}">
+                                <a href="javascript:void(0);" class="container">
+                                    <div class="voucher-card">
+									
+										
+
+                                        <div class="voucher-Discount">{$v.money}元</div>
+                                        <div class="voucher-money">
+                                            {$v['money']*$v['lv']}
+                                            <if condition="$v['smoney'] gt 0">
+                                                +{$v['smoney']*$v['lv']}
+                                            </if>
+                                            书币
+                                        </div>
+                                        <div class="more-get-money">
+                                            送
+                                            <if condition="$v['smoney'] gt 0">{$v['smoney']}</if>
+                                            元
+                                        </div>
+										<div class="<if condition="$v['ishot']">label-hot</if>"></div>
+                                    </div>
+                                </a>
+                            </li>
+                      
+                    </if>
+                </if>
+            </foreach>
+            </ul>
+            </div>
+
+		<div class="click-pay" onclick="payment()" style="background-color: #ff7c3d; border:none;width: 100%;color: #ffffff; height: 50px;line-height: 50px;margin:18px auto;text-align: center;border-radius: 6px;">确定充值</div>
+		<div class="voucher-cue">
+		      <p>* 阅读币属于虚拟商品，一经购买不得退换</p>
+		      <p>充值后阅读币到账可能有延迟，1小时内未到账请与客服联系。</p>
+		      <p>工作时间：周一到周五9：30-20：30，周六周日 9：30-18：30</p>   
+		</div>
+	 </div>
+	</div>
+
+</div>
+<include file="include/footer4" />
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/layer/skin/default/layer.css">
+<script src="__PUBLIC__/layer/layer.js"></script>
+<script>
+    var cid = 0;
+    $(function () {
+        $('.container').on('click', function (e) {
+            //alert('111');
+            if ($(this).parent().hasClass('active')) return;
+            $('.item').removeClass('active');
+            $(this).parent().addClass('active');
+        });
+    });
+
+
+
+    function payment(){
+        layer.closeAll();
+        $('.item').each(function(){
+            if($(this).hasClass('active')){
+                cid = $(this).attr('data-id');
+                return;
+            }
+        });
+        console.log(cid);
+        if(cid == 0 || !cid){
+            layer.msg('请选择充值金额！');
+            return false;
+        }
+        layer.load(2);
+        $.post("{:U('Ajax/charge')}",{cid:cid,anid:"{$_GET['anid']}"},function(d){
+            layer.closeAll();
+            if(d){
+                if(d.status){
+                    location.href = d.url;
+                }else{
+                    layer.msg(d.info);
+                }
+            }else{
+                layer.msg('非法请求！');
+            }
+        });
+    }
+</script>

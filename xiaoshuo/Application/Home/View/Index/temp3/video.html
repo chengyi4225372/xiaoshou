@@ -1,0 +1,116 @@
+<include file="include/header" title="{$title}" />
+<style>
+.banner-bottom {
+    margin-top: -7.5%;
+    width: 100%;
+    z-index: 190;
+    position: relative;
+}
+.banner-bottom img {
+    z-index: 190;
+    width: 100%;
+}
+.vd-nav {
+    width: 100%;
+    border-bottom: 10px solid #EFEFF4;
+    display: flex;
+    padding-bottom: .5rem;
+    z-index: 190;
+    position: relative;
+    margin-top: -40px;
+}
+</style>
+<link rel="stylesheet" href="__PUBLIC__/home/css/template3/nav.css">
+<!-- <div class="navbar flt">
+	<nav class="tab-box">
+	<div class="item">
+		<a href="{:U('Index/index')}">漫画</a>
+	</div>
+	<div class="item">
+		<a href="{:U('Index/novel')}">小说</a>
+	</div>
+	<div class="item">
+		<a href="{:U('Index/index')}" class="active">视频</a>
+	</div>
+	</nav>
+
+</div> -->
+<div id="banner-container">
+	<div class="portal-slick slick-initialized slick-slider">
+		<div aria-live="polite" class="slick-list draggable" tabindex="0">
+			<div class="swiper-container swiper-container-horizontal swiper-container-ios swiper-container-wp8-horizontal">
+				<div class="swiper-wrapper">
+					<foreach name="_vdBanner" item="v">
+						<div class="item swiper-slide">
+							<a href="{$v.url}">
+								<img class="slide_loading" src="{$v.pic}">
+							</a>
+						</div>
+					</foreach>
+				</div>
+				<div class="swiper-pagination swiper-pagination-bullets swiper-pagination-bullets-dynamic" ></div>
+			</div>
+		</div>
+	</div>
+</div>	
+	<div class="banner-bottom">
+		<img src="__PUBLIC__/home/images/template3/home-banner-bottom.png">
+	</div>
+<script>
+	$(function () {
+        var swiper = new Swiper('.swiper-container', {
+            autoplay: {
+                delay: 3000,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                dynamicBullets: true,
+            },
+        });
+    });
+</script>
+
+<div class="vd-nav">
+	<ul>
+		<foreach name="_vdStore" item="v" key="k">
+		<li>
+			<a href="{:U('vlists',array('cates'=>$k))}">
+				<img src="{$v.pic}" />
+				<span>{$v.name}</span>
+			</a>
+		</li>
+		</foreach>
+	</ul>
+</div>
+
+<div class="vd-content">
+	<foreach name="list" item="v">
+	<div class="vd-items">
+		<a href="{:U('vlists',array('areas'=>$v['aid']))}">
+			<div class="title">{$v.name}<span>查看全部&nbsp;></span></div>
+		</a>
+		<ul>
+			<foreach name="v['list']" item="vv">
+			<a href="{:U('vinfo',array('id'=>$vv['id']))}">
+				<li>
+					<img src="{$vv.coverpic}" />
+					<div class="txt">
+						<h1>{$vv.title}</h1>
+						<span>{$vv.remark}</span>
+						<p>
+							{$vv.reads}人阅读
+							<if condition="$vv['isfw'] eq 1">
+							<i>￥{$vv.money}&nbsp;书币</i>
+							</if>
+						</p>
+					</div>
+				</li>
+			</a>
+			</foreach>
+		</ul>
+	</div>
+	</foreach>
+</div>
+
+<include file="include/footer3" />

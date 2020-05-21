@@ -1,0 +1,122 @@
+<include file="include/header5" title="{$title}" />
+
+<link href="__PUBLIC__/home/css/template5_pay.css" rel="stylesheet" type="text/css">
+<div class="body_sytle">
+    <div class="re_head_box">
+        <div class="re_user_info_box">
+            <div class="re_user_info">
+                <em>ID：<span>hx{$user.id}</span></em><span class="line-css">|</span>
+                <strong>您的当前余额：<span>{$user.money}书币</span></strong>
+            </div>
+        </div>
+    </div>
+    <div class="re_main_box">
+                <div class="re_list_box">
+            <div class="re_list_tit">
+                <h2>请选择充值金额<span>（1元=100书币）</span></h2>
+            </div>
+            <ul class="re_list_ul">
+			<foreach name="_charge" item="v" key="k">
+		<if condition="$v['isopen']">
+			<if condition="$v['isover'] eq 1">
+
+				<li class="">
+                <a href="javascript:;" data-goods-money="{$v.money}元" data-id="{$k}">
+                    <strong>终生VIP会员</strong>
+                    <em>￥{$v.money}元</em>
+                 
+					<b>终生免费看！</b>
+                </a>
+                </li>
+			<elseif condition="$v['isyear'] eq 1" />
+				
+				<li class="" style="width:100%;text-align: center;">
+                <a href="javascript:;" data-goods-money="{$v.money}元" data-id="{$k}">
+                    <img src="__PUBLIC__/home/img/year.png" style="width: 150px;margin: 0 auto;">
+					<i>VIP充值</i>  
+					<b>一年内全站书籍免费看</b>
+                </a>
+                </li>
+			<elseif condition="$v['ishalf'] eq 1" />
+				
+			
+				<li class="">
+                <a href="javascript:;" data-goods-money="{$v.money}元" data-id="{$k}">
+                    <strong>半年VIP会员</strong>
+                    <em>￥{$v.money}元</em>
+                 
+					<b>半年时间免费看！</b>
+                </a>
+                </li>
+             <else />
+				<li class="<if condition="$v['ischoose']">hover</if>" >
+                <a href="javascript:;" data-goods-money="{$v.money}元" data-id="{$k}">
+                    <strong>{$v.money}元</strong>
+                    <em>{$v['money']*$v['lv']}
+								<if condition="$v['smoney'] gt 0">
+									+{$v['smoney']*$v['lv']}
+								</if>书币</em>
+                    <if condition="$v['ischoose']"><i>新人专享</i></if>
+					<b>多送<if condition="$v['smoney'] gt 0">
+									{$v['smoney']}
+								</if>元</b>
+                </a>
+                </li>
+			</if>
+		</if>
+	</foreach>
+                            </ul>
+            <div class="re_but_box">
+                <a href="javascript:;" id="pay_btn"  data-money="50" data-cid="2" >立即充值：50元</a>
+            </div>
+        </div>
+    </div>
+    <div class="js_loading"><strong></strong></div>
+    <div class="re_rule_box">
+        <p>温馨提示：</p>
+        <p>1. 充值获得的书币仅限在本公司书城使用。</p>
+        <p>2. 若是发现充值未到账，请先确认你登录的账号与充值的账号是否一致。</p>
+        <p>3. 充阅读币属于虚拟商品，一经购买不得退换。</p>
+    </div>
+</div>
+<script type="text/javascript" src="__PUBLIC__/home/js/zepto.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/home/js/zepto.cookie.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/home/js/zepto.picLazyLoad.min.js"></script>			
+<script type="text/javascript" src="__PUBLIC__/home/js/template5_common.js"></script>
+<script>
+ $('.re_list_ul a').click(function () {
+        var $this = $(this),
+		cid = $this.data('id'),
+        goodsMoney = $this.data('goods-money');
+        $this.parent().addClass('hover').siblings('li').removeClass('hover');
+        var but = $('#pay_btn');
+		but.data('cid', cid);
+        but.data('money', goodsMoney);
+        but.text('立即充值：' + goodsMoney);
+    });
+	
+$('.re_but_box a').click(function () {
+
+		
+        var $this = $(this),
+        cid = $this.data('cid'),
+        smoney = $this.data('money');
+		if(cid == 0 || !cid){
+			return false;
+		}
+        $('.js_loading').show();
+		$.post("{:U('Ajax/charge')}",{cid:cid,anid:"{$_GET['anid']}"},function(d){
+			if(d){
+				if(d.status){
+					location.href = d.url;
+				}else{
+					 $('.js_loading').hide();
+				}
+			}else{
+				 $('.js_loading').hide();
+			}
+		});
+})
+</script>
+</body>
+</html>

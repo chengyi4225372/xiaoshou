@@ -1,0 +1,106 @@
+<include file="include/header" title="{$title}" />
+<style>
+    .books-classify {
+            overflow:hidden;
+            padding: 0 .32rem;
+        }
+        .books-classify>div {
+            overflow:hidden;
+            border-bottom: 1px solid #eee;
+        }
+        .bcigy-item {
+            float: left;
+            width:33.3%;
+            height:16px;
+            line-height: 16px;
+            text-align: center;
+            color:#666;
+            font-size: 14px;
+            border-right: 1px solid #eee;
+            box-sizing: border-box;
+            margin: 10px 0;
+        }  
+        .bcigy-item:nth-child(3n) {
+            border-right: none;
+        } 
+        .bcigy-sel {
+            color: #ff5420;
+        }
+</style>
+<div class="rt-bar">
+	<div class="row">
+		<div class="col icon">
+			<a href="javascript:history.go(-1);">
+			<svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 40 40"><path d="M29.56 39.47a2 2 0 0 1-1.38-.56L8.45 20 28.17 1.09A2 2 0 1 1 30.94 4L14.23 20l16.71 16a2 2 0 0 1-1.38 3.44z" fill="#ff730a"></path></svg>
+			</a>
+		</div>
+		<div class="col title" style="margin-right: 1.333rem;">
+			人气榜
+		</div>
+	</div>
+</div>
+<div class="books-classify">
+	<div>
+		<div class="bcigy-item" _order="hots" onclick="location.href=&#39;{:U('rank',array('order'=>'hots','btype'=>$_GET['btype']))}&#39;">
+			人气榜
+		</div>
+		<div class="bcigy-item" _order="time" onclick="location.href=&#39;{:U('rank',array('order'=>'time','btype'=>$_GET['btype']))}&#39;">
+			最新上架
+		</div>
+		<div class="bcigy-item" _order="overs" onclick="location.href=&#39;{:U('rank',array('order'=>'overs','btype'=>$_GET['btype']))}&#39;">
+			完结榜
+		</div>
+	</div>
+	<div>
+		<div class="bcigy-item" _order="free" onclick="location.href=&#39;{:U('rank',array('order'=>'free','btype'=>$_GET['btype']))}&#39;">
+			免费榜
+		</div>
+		<div class="bcigy-item" _order="sex1" onclick="location.href=&#39;{:U('rank',array('order'=>'sex1','btype'=>$_GET['btype']))}&#39;">
+			男生榜
+		</div>
+		<div class="bcigy-item" _order="sex2" onclick="location.href=&#39;{:U('rank',array('order'=>'sex2','btype'=>$_GET['btype']))}&#39;">
+			女生榜
+		</div>
+	</div>
+</div>
+<div class="books-res" id="html_box" name="top">
+	<foreach name="list" item="v">
+	<div class="item">
+		<a href="{:U('info',array('id'=>$v['id']))}" class="link">
+			<div class="cover">
+				<img width="63" height="84" class="" src="{$v.coverpic}" style="background: rgb(238, 238, 238); display: block;">
+			</div>
+			<div class="body">
+				<div class="title">
+					{$v.title}
+				</div>
+				<div class="author">
+					作者：{$v.author}
+				</div>
+				<div class="text">
+					{$v.remark}
+				</div>
+				<div class="bottom">
+					<span class="col"><i class="icon-gray-hot"></i> {$v.hots}</span>
+					<span class="col"><i class="icon-hand"></i> {$v.likes}</span>
+				</div>
+			</div>
+		</a>
+		<div class="action">
+			<a href="{:U('info',array('id'=>$v['id']))}" class="btn">阅读</a>
+		</div>
+	</div>
+	</foreach>
+</div>
+<script>
+$(function(){
+	var order = "{$_GET['order']}"?"{$_GET['order']}":"hots";
+	$('.bcigy-item').each(function(){
+		if($(this).attr("_order") == order){
+			$('.bcigy-item').removeClass("bcigy-sel");
+			$(this).addClass("bcigy-sel");
+		}
+	});
+});
+</script>
+<include file="include/footer" />

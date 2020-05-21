@@ -1,0 +1,87 @@
+<section class="content-header">
+<div>
+	<ol class="breadcrumb" style="background: none; margin-bottom: 0px;">
+		<li><a href="{:U('Index/index')}" style="color: #333;"><i class=" fa fa-home"></i> Home</a></li>
+		<li class="active">公众号信息</li>
+		<li class="active">公众号接入</li>
+	</ol>
+</div>
+</section>
+<!-- Main content -->
+<section class="content">
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box">
+			<div class="nav-tabs-custom">
+				<div class="tab-content">
+					<!-- /.tab-pane -->
+					<div class="tab-pane active" id="tab_2">
+						<div class="row">
+							<div class="col-xs-12">
+								<div class="alert alert-info">
+								注意: 接入公众号必须是"认证服务号"
+								</div>
+								<div class="form-horizontal">
+									<h4 class="col-xs-10">公众号设置
+									<small>(微信后台 &gt; 公众号设置 &gt; 功能设置)</small>
+									</h4>
+									<div class="form-group">
+										<label class="control-label col-sm-3">业务域名</label>
+										<div class="col-sm-6">
+											<p class="form-control-static">
+											{$_site['url']}
+											</p>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="control-label col-sm-3">JS接口安全域名</label>
+										<div class="col-sm-9 form-control-static">
+										{$_site['url']}
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="control-label col-sm-3">网页授权域名</label>
+										<div class="col-sm-9 form-control-static">
+										{$_site['url']}
+										</div>
+									</div>
+									<h4 class="col-xs-10">公众号回复
+									<small>(微信后台 &gt; 基本配置)</small>
+									</h4>
+									<div class="form-group">
+										<label class="control-label col-sm-3">URL(服务器地址):</label>
+										<div class="col-sm-9 form-control-static">
+											http://{$_site['url']}/index.php?c=Api
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="control-label col-sm-3">Token(令牌):</label>
+										<div class="col-sm-9 form-control-static">
+										{:encode(0)}
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="control-label col-sm-3">EncodingAESKey(消息加解密密钥):</label>
+										<div class="col-sm-9 form-control-static">
+										随机生成
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="control-label col-sm-3">消息加解密方式:</label>
+										<div class="col-sm-9 form-control-static">
+										明文模式
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- /.tab-content -->
+			</div>
+		</div>
+		<!-- PAGE CONTENT ENDS -->
+	</div>
+	<!-- /.col -->
+</div>
+</section>

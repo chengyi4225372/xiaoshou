@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html data-dpr="1" style="font-size: 37.5px;">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="viewport" content="designWidth=750,width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>{$titles}</title>
+<link href="__PUBLIC__/home/css/swiper.min.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/home/css/style.min.css">
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/layer/skin/default/layer.css">
+<script src="__PUBLIC__/home/js/jquery-1.7.min.js"></script>
+<script src="__PUBLIC__/home/js/swiper.min.js"></script>
+<script src="__PUBLIC__/home/js/mui.min.js"></script>
+<script src="__PUBLIC__/layer/layer.js"></script>
+</head>
+<style>
+.header {
+    height: 1.2rem;
+    line-height: 1.2rem;
+    position: fixed;
+    text-align: center;
+    font-size: .4rem;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background: #3F51B5;
+    color: #fff;
+    z-index: 99;
+}
+.header img {
+    position: absolute;
+    left: .2rem;
+    width: .7rem;
+    height: .7rem;
+    top: .25rem;
+}
+.pay-tips {
+	font-size: .6rem;
+    line-height: 1rem;
+    color: #F44336;
+    text-align: center;
+}
+.pay-info {
+    padding: .2rem .5rem;
+	text-align:center;
+}
+p{
+    margin: .5rem 0 0 0;
+	font-size:.35rem;
+}
+.pay-loading{
+    text-align:center;
+	font-size: .4rem;
+}
+.pay-loading img {
+    width: .25rem;
+    height: .25rem;
+}
+.pay-repay {
+    padding: 1rem .5rem;
+    display: none;
+}
+.pay-repay a {
+    display: block;
+    background: #3F51B5;
+    color: #fff;
+    text-align: center;
+    height: 1.1rem;
+    line-height: 1.1rem;
+    border-radius: 5px;
+    font-size: .4rem;
+}
+</style>
+<body style="font-size: 12px;" class="mui-ios mui-ios-11 mui-ios-11-0">
+<div class="header">
+	<img src="__PUBLIC__/home/images/back.png" onclick="history.go(-1);" />
+	在线充值安全支付
+</div>
+<div class="pay-main" style="margin-top:1.3rem;">
+	<div class="pay-tips">正在支付</div>
+	<div class="pay-info">
+		<p>在线充值支付,金额：￥{$order['money']}元</p>
+		<p>订单编号：{$_GET['sn']}</p>
+	</div>
+	<div class="pay-loading">
+		<img src="__PUBLIC__/home/images/loading.gif" />
+		正在支付请稍后...
+	</div>
+	<div class="pay-repay">
+		<a href="javascript:;" onclick="callpay()">重新支付</a>
+	</div>
+</div>
+<script type="text/javascript">
+	//调用微信JS api 支付
+	function jsApiCall(){
+		WeixinJSBridge.invoke(
+			'getBrandWCPayRequest',
+			{$jsApiParameters},
+			function(res){
+				if(res.err_msg == "get_brand_wcpay_request:ok"){
+					layer.alert('支付成功！',function(){
+						location.href= "{$return_url}";
+					});
+				}else if(res.err_msg == "get_brand_wcpay_request:cancel"){
+					$(".pay-loading").hide();
+					$(".pay-repay").show();
+				}else{
+					layer.msg('支付失败，请重试！');
+					$(".pay-loading").hide();
+					$(".pay-repay").show();
+				}
+			}
+		);
+	}
+
+	function callpay(){
+		if (typeof WeixinJSBridge == "undefined"){
+		    if( document.addEventListener ){
+		        document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
+		    }else if (document.attachEvent){
+		        document.attachEvent('WeixinJSBridgeReady', jsApiCall); 
+		        document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
+		    }
+		}else{
+		    jsApiCall();
+		}
+	}
+	setTimeout(callpay,2000)
+</script>

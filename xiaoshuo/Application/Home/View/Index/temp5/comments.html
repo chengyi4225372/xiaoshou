@@ -1,0 +1,91 @@
+<include file="include/header" title="{$info.title} - 评论" />
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/home/css/mui.css">
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/home/css/common.css">
+<div class="comment">
+	<ul class="mui-table-view">
+		<li class="mui-table-view-cell mui-media">
+		<img class="mui-media-object mui-pull-left cover" src="{$info.coverpic}">
+		<div class="mui-media-body">
+                    {$info.title}
+			<button onclick="showComment()" class="mui-pull-right comment-btn">评论</button>
+			<p>
+                        {$info.author} &nbsp;&nbsp;
+				<span>{$info.comments}</span>人评论
+			</p>
+		</div>
+		</li>
+	</ul>
+	<ul class="mui-table-view data-ul">
+		<li class="mui-table-view-cell mui-media">最新评论</li>
+		<if condition="$list">
+		<foreach name="list" item="v">
+		<li class="mui-table-view-cell mui-media">
+			<a href="{:U('Index/comments',array('cid'=>$v['id']))}">
+				<img class="mui-media-object mui-pull-left" src="{$v.headimg}" style="margin-top:12px;" />
+				<div class="mui-media-body">
+								  
+					<p>{$v.create_time|date="Y-m-d H:i:s",###}</p>
+					<p>
+						{$v.content}
+					</p>
+				</div>
+			</a>
+		</li>
+		</foreach>
+		<else />
+			<li class="mui-table-view-cell" style="text-align: center; font-size: 14px;">暂无评论！</li>
+		</if>
+	</ul>
+</div>
+<div class="layer-out">
+	<div class="layer-in">
+		<form>
+			<input type="hidden" name="anid" value="{$info.id}" />
+			<input type="hidden" name="cid" value="{$_GET['id']}" />
+			<textarea id="content" rows="4" placeholder="请输入评论" name="content"></textarea>
+			<input class="mui-btn" onclick="hideComment()" value="关闭" type="button">
+			<input style="cursor: pointer;" onclick="submitForm()" class="mui-btn mui-btn-success" value="评论" type="button">
+		</form>
+	</div>
+</div>
+<script>
+	function showComment() {
+		$(".layer-out").show();
+	}
+	function hideComment() {
+		$(".layer-out").hide();
+	}
+	var wait = false;
+	function submitForm() {
+		if (wait) {
+			return false;
+		}
+		if ($('#content').val() == '') {
+			return false;
+		}
+		wait = true;
+		setTimeout(function () {
+			wait = false;
+		}, 3000);
+		var formData = $('.layer-in form').serialize();
+		$.post("{:U('Ajax/commentsAdd')}", formData, function (data) {
+			hideComment();
+			wait = false;
+			if (data.status == 1) {
+				$('#content').val("");
+				layer.open({
+					content: '<h5 style="text-align:center;color:#333333; margin-bottom:10px;">温馨提示</h5><span style="font-size:14px;color:#888888;">您的评论需要管理员审核之后才能显示出来，请稍等</span>',
+					btn: '好的',
+					one: function (index) {
+						layer.close(index);
+					}
+				});
+			} else {
+				location.reload();
+			}
+		});
+		return false;
+	}
+</script>
+</body>
+</html>

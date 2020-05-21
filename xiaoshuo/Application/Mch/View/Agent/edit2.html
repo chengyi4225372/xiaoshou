@@ -1,0 +1,192 @@
+
+<section class="content-header">
+	<div>
+		<ol class="breadcrumb" style="background: none; margin-bottom: 0px;">
+			<li>
+				<a href="{:U('Index/index')}" style="color: #333;">
+					<i class=" fa fa-home"></i>&nbsp;Home
+				</a>
+			</li>
+			<li class="active">代理信息</li>
+			<li class="active"><if condition="$_GET['id']">修改代理信息<else />添加代理信息</if></li>
+		</ol>
+	</div>
+
+</section>
+	<!-- Main content -->
+<section class="content">
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="box box-primary">
+				<form id="main-form" class="form-horizontal" style="margin-top:30px" method="post">
+					<div class="form-group">
+						<label class="control-label col-sm-3">公众号名称</label>
+						<div class="col-sm-6">
+							<input type="text" name="title" class="form-control col-sm-9" value="{$info.title}" required="">
+							<p class="help-block help-block-error col-sm-12 col-xs-10" style="color:red;padding-left:0">
+								注意: 上线后请不要更改公众号，否则会影响先前的粉丝，如需换号请申请开新号
+							</p>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-3">用户名</label>
+						<div class="col-sm-6">
+							<input type="text" name="username" class="form-control col-sm-9" value="{$info.username}" required="">
+							<p class="help-block help-block-error col-sm-7 col-xs-10"></p>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-3">登录密码</label>
+						<div class="col-sm-6">
+							<input type="text" name="pass" class="form-control col-sm-9" value="{$info.tpass}" required="">
+							<p class="help-block help-block-error col-sm-7 col-xs-10"></p>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-3">代理名称</label>
+						<div class="col-sm-6">
+							<input type="text" name="name" class="form-control col-sm-9" value="{$info.name}" required="">
+							<p class="help-block help-block-error col-sm-7 col-xs-10"></p>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-3">手机号</label>
+						<div class="col-sm-6">
+							<input type="text" name="mobile" class="form-control col-sm-9" value="{$info.mobile}" required="">
+							<p class="help-block help-block-error col-sm-7 col-xs-10"></p>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-3">支付方式</label>
+						<div class="col-sm-6">
+							<select class="form-control col-sm-9" name="paymodel" default="{$info['paymodel']}">
+								<option value="">请选择</option>
+								<option value="1">微信支付</option>
+								<option value="2">PAYSAPI支付</option>
+								<option value="3">支付宝支付</option>
+							</select>
+							<p class="help-block help-block-error col-sm-7 col-xs-10">{$_site['paymsg']}</p>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-3">代理QQ</label>
+						<div class="col-sm-6">
+							<input type="text" name="qq" class="form-control col-sm-9" value="{$info.qq}" required="">
+							<p class="help-block help-block-error col-sm-7 col-xs-10"></p>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-3">代理微信</label>
+						<div class="col-sm-6">
+							<input type="text" name="weixin" class="form-control col-sm-9" value="{$info.weixin}" required="">
+							<p class="help-block help-block-error col-sm-7 col-xs-10"></p>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-3">收款方式</label>
+						<div class="col-sm-6">
+							<select class="form-control col-sm-9" id="balance" name="balancemodel" default="{$info['balancemodel']}" onchange="chooseBalance()">
+								<option value="">请选择</option>
+								<option value="1">银行卡收款</option>
+								<option value="2">支付宝收款</option>
+							</select>
+							<p class="help-block help-block-error col-sm-7 col-xs-10"></p>
+						</div>
+					</div>
+					
+					<div class="form-group balance1" style="display:none;">
+						<label class="control-label col-sm-3">结算收款人</label>
+						<div class="col-sm-6">
+							<input type="text" name="bankname" class="form-control col-sm-9" value="{$info.bankname}" />
+							<p class="help-block help-block-error col-sm-7 col-xs-10" style="color:red;padding-left:0;"></p>
+						</div>
+					</div>
+					<div class="form-group balance1" style="display:none;">
+						<label class="control-label col-sm-3">结算银行</label>
+						<div class="col-sm-6">
+							<input type="text" name="bank" class="form-control col-sm-9" value="{$info.bank}" />
+							<p class="help-block help-block-error col-sm-7 col-xs-10" style="color:red;padding-left:0;"></p>
+						</div>
+					</div>
+					<div class="form-group balance1" style="display:none;">
+						<label class="control-label col-sm-3">结算银行卡号</label>
+						<div class="col-sm-6">
+							<input type="text" name="bankno" class="form-control col-sm-9" value="{$info.bankno}" />
+							<p class="help-block help-block-error col-sm-7 col-xs-10" style="color:red;padding-left:0;"></p>
+						</div>
+					</div>
+					
+					<div class="form-group balance2" style="display:none;">
+						<label class="control-label col-sm-3">支付宝姓名</label>
+						<div class="col-sm-6">
+							<input type="text" name="zfbname" class="form-control col-sm-9" value="{$info.zfbname}" />
+							<p class="help-block help-block-error col-sm-7 col-xs-10" style="color:red;padding-left:0;"></p>
+						</div>
+					</div>
+					<div class="form-group balance2" style="display:none;">
+						<label class="control-label col-sm-3">支付宝账号</label>
+						<div class="col-sm-6">
+							<input type="text" name="zfbno" class="form-control col-sm-9" value="{$info.zfbno}" />
+							<p class="help-block help-block-error col-sm-7 col-xs-10" style="color:red;padding-left:0;"></p>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="control-label col-sm-3">返额比例</label>
+						<div class="col-sm-6">
+							<input type="text" name="lv" class="form-control col-sm-9" value="{$info.lv}" required="">
+							<p class="help-block help-block-error col-sm-7 col-xs-10" style="color:red;padding-left:0;">单位：%，填写 0 到 {$mch['lv']} 之间的数字，设置比例不能超过{$mch['lv']}%</p>
+						</div>
+					</div>	
+					<div class="form-group">
+						<label class="control-label col-sm-3">二维码地址</label>
+						<div class="col-sm-6">
+							<iframe src="{:U('Index/upload', 'event=setPic&url='.$info['qrcode'])}" scrolling="no" style="width:200px;height:200px;border: none;display:block"></iframe>
+							<input type="hidden" name="qrcode" id="qrcode" value="{$info['qrcode']}" class="smallinput" />
+							<script>
+							function setPic(url){
+								document.getElementById('qrcode').value = url;
+							}
+							</script>
+							<p class="help-block help-block-error col-sm-7 col-xs-10">点击图片可进行更换</p>
+						</div>
+					</div>					
+					<div class="box-footer">
+						<div class="form-group">
+							<div class="col-sm-offset-3 col-sm-9">
+								<input type="hidden" name="id" value="{$_GET['id']}" />
+								<input type="hidden" name="type" value="2" />
+								<button type="button" id="ajaxBtn" class="btn btn-primary">保存</button>
+								<button type="button" class="btn btn-inverse" style="margin-left:20px;" onclick="history.go(-1)">返回</button>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</section>
+<script>
+	$(function(){
+		var balance = $('#balance option:selected').val();
+		if(balance == 1){
+			$('.balance1').show();
+		}else if(balance == 2){
+			$('.balance2').show();
+		}
+	});
+	
+	function chooseBalance(){
+		var val = $('#balance option:selected').val();
+		if(val == 1){
+			$('.balance1').show();
+			$('.balance2').hide();
+		}else if(val == 2){
+			$('.balance2').show();
+			$('.balance1').hide();
+		}else{
+			$('.balance1').hide();
+			$('.balance2').hide();
+		}
+	}
+</script>

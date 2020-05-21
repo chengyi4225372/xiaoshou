@@ -1,0 +1,182 @@
+
+<section class="content-header">
+	<div>
+		<ol class="breadcrumb" style="background: none; margin-bottom: 0px;">
+			<li><a href="{:U('Index')}" style="color: #333;"><i class=" fa fa-home"></i> Home</a></li>
+		</ol>
+	</div>
+</section>
+<section class="content">
+    <div class="row">
+        <div class="col-xs-4">
+            <div class="well" style="height: 129px;padding: 10px 19px;min-width: 370px;">
+                <img src="{$info.headimg}" alt="" style="width: 90px;margin-top: 10px;float: left;">
+                <div style="float: left; margin-left: 10px;">
+                    <h4>{$info.nickname}<if condition="$info['subscribe'] neq 1">(未关注)</if></h4>
+                    <h5>会员ID:{$info.id}</h5>
+                    <h5>注册时间: {$info.join_time|date="Y-m-d H:i:s",###}</h5>
+					<h5>
+						<if condition="$info['viptime'] gt 0">
+							VIP: {$info.viptime|date="Y-m-d H:i:s",###}
+						<elseif condition="$info['viptime'] lt 0" />
+							VIP: 终生VIP
+						</if>
+					</h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-2 text-center">
+            <div class="well" style="min-width: 160px">
+                <h4>总充值</h4>
+                <div class="text-primary" style="font-size:32px;margin:5px 0">
+                    ¥<span>{$info.charge_total}</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-2 text-center">
+            <div class="well" style="min-width: 160px">
+                <h4>阅读币余额</h4>
+                <div class="text-primary" style="font-size:32px;margin:5px 0">
+                    <span id="balance-dom">{$info.money}</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-2 text-center">
+            <div class="well" style="min-width: 160px">
+                <h4>总获得阅读币</h4>
+                <div class="text-primary" style="font-size:32px;margin:5px 0">
+                    <span>{$allmoney|default="0.00"}</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-2 text-center">
+            <div class="well" style="min-width: 160px">
+                <h4>总消费阅读币</h4>
+                <div class="text-primary" style="font-size:32px;margin:5px 0">
+                    <span>{$usemoney|default="0.00"}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box nav-tabs-custom detail">
+                <ul class="nav nav-tabs">
+                    <li class="recharge_record_tab" data-type="1"><a href="{:U('detail',array('id'=>$_GET['id'],'type'=>1))}">充值记录</a></li>
+                    <li class="expense_record_tab" data-type="2"><a href="{:U('detail',array('id'=>$_GET['id'],'type'=>2))}">消费记录</a></li>
+                    <li class="gain_record_tab" data-type="3"><a href="{:U('detail',array('id'=>$_GET['id'],'type'=>3))}">签到记录</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane" id="pane1">
+                        <div class="form-group" style="width: 150px;">
+                            <select class="form-control recharge_record" name="status" id="status" default="{$_GET['status']}">
+                                <option value="" selected="">全部状态</option>
+                                <option value="1">未支付</option>
+                                <option value="2">已支付</option>
+                            </select>
+                        </div>
+                        <table class="table table-bordered table-hover table-striped">
+                            <tbody>
+                                <tr>
+                                    <th>订单名称</th>
+                                    <th>订单类型</th>
+                                    <th>书本名称</th>
+                                    <th>充值金额(元)</th>
+                                    <th>付款状态</th>
+                                    <th>创建时间</th>
+                                </tr>
+								<foreach name="list" item="v">
+									<tr>
+										<td>{$v.sn}</td>
+										<td>
+											<if condition="$v['isyear'] eq 1">
+												年费订单
+											<elseif  condition="$v['isover'] eq 1" />
+												终生订单
+											<else />
+												普通订单
+											</if>
+										</td>
+										<td>{$v.name}</td>
+										<td>{$v.money}</td>
+										<td>
+											<if condition="$v['status'] eq 1">
+												未支付
+											<else />
+												已支付
+											</if>
+										</td>
+										<td>{$v.create_time|date="Y-m-d H:i:s",###}</td>
+									</tr>
+								</foreach>
+                            </tbody>
+                        </table>
+                        <div class="page">{$page|default="<p style='text-align:center'>暂时没有数据</p>"}</div>                        
+                    </div>
+                    <div class="tab-pane" id="pane2">
+                        <div class="tab-content">
+                            <table class="table table-bordered table-hover table-striped">
+                                <tbody>
+                                    <tr>
+                                        <th>消费时间</th>
+                                        <th>类型</th>
+                                        <th>书本名称</th>
+										<th>章节名称</th>
+                                        <th>消费书币</th>
+                                    </tr>
+									<foreach name="list" item="v">
+										<tr>
+											<td>{$v.create_time|date="Y-m-d H:i:s",###}</td>
+											<td>{:get_finance_action($v['action'])}</td>
+											<td>{$v.name|default="/"}</td>
+											<td>{$v.chapsname|default="/"}</td>
+											<td>{$v.value}</td>
+										</tr>
+									</foreach>	
+                                </tbody>
+                            </table>
+							<div class="page">{$page|default="<p style='text-align:center'>暂时没有数据</p>"}</div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="pane3">
+                        <table class="table table-bordered table-hover table-striped">
+                            <tbody>
+                                <tr>
+                                    <th>获得时间</th>
+                                    <th>阅读币</th>
+                                </tr>
+								<foreach name="list" item="v">
+									<tr>
+										<td>{$v.create_time|date="Y-m-d H:i:s",###}</td>
+										<td>{$v.money}</td>
+									</tr>
+								</foreach>
+                            </tbody>
+                        </table>
+                        <div class="page">{$page|default="<p style='text-align:center'>暂时没有数据</p>"}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+	$(function(){
+		var type = "{$_GET['type']}"?"{$_GET['type']}":1;
+		$('.nav li').each(function(){
+			var index = $(this).index();
+				_type = index+1;
+			if(_type == type){
+				$(this).addClass('active');
+				$('.tab-content .tab-pane').eq(index).addClass('active');
+			}
+		})
+	});
+	
+	$('#status').on('change',function(){
+		var status = $('#status option:selected').val();
+		location.href="{:U('detail',array('type'=>1))}&status="+status+"&id="+"{$_GET['id']}";
+	})
+</script>

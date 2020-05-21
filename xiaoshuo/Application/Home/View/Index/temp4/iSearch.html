@@ -1,0 +1,175 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0,user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>搜索</title>
+    <script type="text/javascript">
+             
+        (function (doc) {
+            var docEl = doc.documentElement,
+                recalc = function () {
+                    var clientWidth = docEl.clientWidth;
+                    if (!clientWidth) return;
+                    if (clientWidth > 414) {
+                        //docEl.style.fontSize = '115px';
+						docEl.style.fontSize = '110.4px';
+                    } else {
+                        //docEl.style.fontSize = 100 * (clientWidth / 360) + 'px';
+                        docEl.style.fontSize = 100 * (clientWidth / 375) + 'px';
+                    }
+                };
+            recalc();
+        })(document);
+       
+    </script>
+    
+<!-- 这里引入css -->
+<link href="__PUBLIC__/home/css/template5_common.css" rel="stylesheet" type="text/css">
+<link href="__PUBLIC__/home/css/template5_search_body.css" rel="stylesheet" type="text/css">
+</head>
+<body >
+
+<!-- 这是正文  -->
+<div class="new_search_input_fixed">
+    <div class="new_search_input_box">
+        <div class="new_search_input">
+            <div class="new_search_input_search">
+                <input type="search" placeholder="搜索" autocomplete="off"/>
+            </div>
+            <a href="javascript:;"></a>
+        </div>
+		<a href="javascript:;" class="new_search_return"></a>
+        <!-- <a href="javascript:;" class="new_search_but">搜索</a> -->
+
+        <div class="new_search_tips_list">
+            <ul class="new_search_tips_list_ul">
+                <li><span>楚乔传</span></li>
+                <li><span>夏至未至</span></li>
+                <li><span>醉玲珑</span></li>
+                <li><span>三生三世</span></li>
+                <li><span>全职高手</span></li>
+                <li><span>我的前半生</span></li>
+                <li><span>恶魔少爷别吻我</span></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+<div class="search_list_content">
+
+
+    <div class="ns_list_main_box">
+        <div class="ns_list_main_search_loading">
+            <div class="ns_list_main_search_loading_img"><img src="__PUBLIC__/home/img/icon/search_icon_4_1.gif" style="height: 1.05rem; width: auto;" /></div>
+            <div class="ns_list_main_search_loading_null">
+                <img src="__PUBLIC__/home/img/icon/search_icon_3.png" style="height: 1.05rem; width: auto;" />
+                <p>没有搜到<span class="j_keyword col_pink"></span>相关书箱</p>
+            </div>
+        </div>
+        
+
+        <div class="ns_list_main ns_list_hot" style="display: block;">
+            <div class="ns_list_tit">
+				<a href="javascript:;" class="ns_list_hot_but" style="display: none;">换一换</a>
+                <h2>热门搜索</h2>
+            </div>
+            <div class="ns_list_box">
+                <ul>
+					<foreach name="list" item="v">
+						<li><a href="{:U('info',array('id'=>$v['id']))}"><span>{$v.title}</span></a></li>
+					</foreach>
+                </ul>
+            </div>
+        </div>
+
+
+        <div class="ns_list_main ns_list_main_local">
+            <div class="ns_list_tit">
+                <a href="javascript:;" class="ns_icon_del">全部删除</a>
+                <h2>历史搜索</h2>
+            </div>
+            <div class="ns_list_box">
+                <ul>
+                   
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="new_search_tips_body">
+        <ul class="i_images_text_ul nst_list_ul">
+		
+           
+        </ul>
+        <div class="loading_box"></div> 
+    </div>
+
+
+ <!-- 精彩推荐 star -->
+    <div class="ns_list_main ns_list_recommend">
+    
+    <div class="ns_list_tit">
+        <a href="javascript:;" class="ns_list_recommend_but ns_icon_refresh" onclick="loadRecommend()">换一换</a>
+        <h2>精彩推荐</h2>
+    </div>
+
+    <div class="i_images_text_list">
+        <ul class="i_images_text_ul">
+			 <volist name="guess" id="vo">
+           
+            
+          
+           <li class="section-block">
+                <a href="{:U('info',array('id'=>$vo['id']))}" class="section-data" data-zone="精彩推荐">
+                    <div class="i_images_img"><img alt="" src="{$vo.selectpic}" data-original="{$vo.selectpic}" /></div>
+                    <div class="i_images_txt_box">
+                        <h3>{$vo.title}</h3>
+                        <p>{$vo.remark}</p>
+                        <div class="i_images_txt_other">
+                            <strong><i style="color: #ffc701;">连载中</i><b>都市</b>
+                            </strong>
+                            <em>77238人在追</em>
+                        </div>
+                    </div>
+                </a>
+            </li>
+             </volist>      
+        </ul>
+    </div>
+</div>
+
+   
+
+
+</div>
+
+
+
+<!-- 这里引入底部footer -->
+<script type="text/javascript" src="__PUBLIC__/home/js/zepto.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/home/js/zepto.cookie.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/home/js/zepto.picLazyLoad.min.js"></script>			
+<script type="text/javascript" src="__PUBLIC__/home/js/template5_common.js"></script>
+
+<!-- 这里引入js -->
+<script type="text/javascript" src="__PUBLIC__/home/js/template5_search.js"></script>
+<script type="text/javascript">
+    $(function(){
+        $('.bd_description_box a').click(function(){
+            $(this).parent().removeClass('bd_description_open');
+        });
+        var ohyhopen = true;
+    });
+	 function loadRecommend() {
+        location.reload();
+
+    }
+</script>
+
+</body>
+</html>

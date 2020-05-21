@@ -1,0 +1,223 @@
+<include file="include/header" title="{$title}"/>
+<div class="navbar flt">
+	<nav class="tab-box">
+		<div class="item">
+			<a href="{:U('collectHistory')}" class="">书签</a>
+		</div>
+		<div class="item">
+			<a href="{:U('readHistory')}" class="active">历史</a>
+		</div>
+	</nav>
+	<div class="action">
+		<a href="javascript:void(0);" class="btn" id="edit_shelf_btn">
+			<div id="niubi">
+				<svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 48 48">
+				<path d="M38.5 18v20a4.5 4.5 0 0 1-4.5 4.5H14A4.5 4.5 0 0 1 9.5 38V18h-3v20a7.51 7.51 0 0 0 7.5 7.5h20a7.51 7.51 0 0 0 7.5-7.5V18zM18.5 6.42a.87.87 0 0 1 .72-.92h9.46a.9.9 0 0 1 .81 1v4H40v-3h-7.5v-.92a3.9 3.9 0 0 0-3.72-4.08h-9.65a3.86 3.86 0 0 0-3.63 4v1H8v3h10.5z" fill="#fff">
+				</path>
+				<path fill="#fff" d="M30.5 24h3v13h-3zM23.5 27h3v10h-3zM15.5 24h3v13h-3z"></path>
+				</svg>
+			</div>
+			<div id="bibibi" style="display:none;">
+				取消
+			</div>
+		</a>
+	</div>
+</div>
+<div class="bs-box" style="margin-bottom: 0px;bottom: 1.333rem;">
+	<div class="column-list" id="shelf-container">
+	
+	</div>
+</div>
+
+<div class="common-ne" style="display:none">
+	<div class="subject">您还没有历史记录</div>
+	<div class="action">
+		<a href="{:U('Index/index')}" class="btn">去找几本漫画小说看看</a>
+	</div>
+</div>
+
+<div class="editable-bar" id="d_layer" style="display:none;">
+	<div class="row">
+		<div class="cp-box">
+			<input type="checkbox" name="select_all" class="select_all" id="select_all">
+			<div class="text">
+				<i></i>全选
+			</div>
+		</div>
+		<div class="action">
+			<a href="javascript:;" class="btn delete-selected-btn" onclick="deleteHistory();">
+			<svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 48 48"><path d="M38.5 18v20a4.5 4.5 0 0 1-4.5 4.5H14A4.5 4.5 0 0 1 9.5 38V18h-3v20a7.51 7.51 0 0 0 7.5 7.5h20a7.51 7.51 0 0 0 7.5-7.5V18zM18.5 6.42a.87.87 0 0 1 .72-.92h9.46a.9.9 0 0 1 .81 1v4H40v-3h-7.5v-.92a3.9 3.9 0 0 0-3.72-4.08h-9.65a3.86 3.86 0 0 0-3.63 4v1H8v3h10.5z" fill="#ff730a"></path><path fill="#ff730a" d="M30.5 24h3v13h-3zM23.5 27h3v10h-3zM15.5 24h3v13h-3z"></path></svg>确定删除(<span id="delete_count">0</span>)
+			</a>
+		</div>
+	</div>
+</div>
+<div class="mask-box delete-selected-confirm" style="display: none;"></div>
+<div class="modal confirm-modal delete-selected-confirm" style="display: none;">
+	<div class="inner">
+		<div class="confirm-box">
+			<div class="body">
+				<div class="title">
+					共选中<span id="confirm-delete-count">0</span>个作品
+				</div>
+				<div class="text">
+					是否删除已选中作品?
+				</div>
+			</div>
+			<div class="action">
+				<a href="javascript:void(0);" class="btn cancel" onclick="$('.mask-box').hide();$('.modal').hide();">取消</a>
+				<a href="javascript:void(0);" class="btn confirm" onclick="confirmDelete();">确定</a>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="page" style="display:none; text-align:center; padding:20px;">{$page|default='暂时没有内容'}</div>
+<script src="__PUBLIC__/home/js/infinite-scroll.pkgd.min.js"></script>
+<script type="text/javascript">
+	var page = 1;
+	var wait = true;
+	
+    $(function () {
+		getData();
+		$('.bs-box').bind("scroll", function (event) {
+			if(!wait) return;
+			var top = document.documentElement.scrollTop + document.body.scrollTop;
+			var textheight = $(document).height();
+			if (textheight - top - $(window).height() <= 100) {
+				page++;
+				getData();
+			}
+		});
+	});
+	
+	//获取数据
+	function getData(){
+		$.post("{:U('Ajax/getReadHistory')}",{page:page},function(d){
+			if(d){
+				if(d.status){
+					$('#shelf-container').append(d.info);
+				}else{
+					if(page == 1 && $('#nolist').length == 0){
+						$('.common-ne').show();
+					}	
+					wait = false;
+				}
+			}else{
+				bh_msg_tips('加载失败！');
+			}
+		})
+	}	
+
+	$('#edit_shelf_btn').click(function(){
+		if($("#shelf-container").hasClass('editable')){
+			$("#shelf-container").removeClass('editable');
+			$('#niubi').show();
+			$('#bibibi').hide();
+			$('#d_layer').hide();
+			$('#myfooter').show();
+			
+			//去掉勾选中的样式
+			$("#select_all").prop("checked",false);
+			//去掉item中swtich的check
+			$(".selected-switch").prop('checked',false);
+			
+			$("#shelf-container").find('.cp-box').css('display','flex');
+			$("#shelf-container").find('.cp-box').toggle();
+			$("#shelf-container").find('.action').show();
+			//清除删除数量
+			$('#delete_count').html(0);	
+		}else{
+			$("#shelf-container").addClass('editable');
+			$('#niubi').hide();
+			$('#bibibi').show();
+			$('#d_layer').show();
+			$("#shelf-container").find('.cp-box').toggle();
+			$("#shelf-container").find('.action').hide();
+			$('#myfooter').hide();
+		}
+    });
+	
+	
+	function choose(ob){
+		var len = $(".selected-switch:checked").length;
+		//如果数量小于item的数量
+		if($('#shelf-container .item').length > len){
+			$("#select_all").prop("checked",false);
+		}
+		//如果数量等于item的数量
+		if($('#shelf-container .item').length == len){
+			$("#select_all").prop("checked",true);
+		}
+
+		$('#delete_count').html(len);
+	}
+	
+	
+	$('#select_all').click(function(){
+		if($("#select_all").prop("checked")){
+			$(".selected-switch").prop('checked',true);
+			$('#delete_count').html($('#shelf-container .item').length)
+		}else{
+			$(".selected-switch").prop('checked',false);
+			$('#delete_count').html(0);
+		}
+	})
+	
+	//确定删除
+	var ids = [];
+	function deleteHistory(){
+		ids = [];
+		$(".selected-switch").each(function(){
+			if($(this).prop("checked")){
+				ids.push($(this).val());
+			}
+		});
+				
+		$('.mask-box').show();
+		$('#confirm-delete-count').html(ids.length);
+		$('.modal').show();
+	}
+	
+	
+	//提交删除
+	function confirmDelete(){
+		if(ids.length == 0){
+			bh_msg_tips('您没有选中任何记录！');
+			return false;
+		}
+		$(".selected-switch").each(function(){
+			if($.inArray($(this).val() ,ids)>=0 && $(this).prop('checked')){
+				$(this).parents('.item').remove();
+			}
+		});
+		
+		$("#shelf-container").find('.cp-box').css('display','flex');
+		$("#shelf-container").find('.cp-box').toggle();
+		$("#shelf-container").find('.action').show();
+		
+		
+		$('.mask-box').hide();
+		$('#confirm-delete-count').html(0);
+		$('.modal').hide();
+		
+		$("#shelf-container").removeClass('editable');
+		$('#niubi').show();
+		$('#bibibi').hide();
+		$('#d_layer').hide();
+		$('#myfooter').show();
+		
+		//去掉勾选中的样式
+		$(".selected-switch").prop('checked',false);
+		//清除删除数量
+		$('#delete_count').html(0);	
+		
+		if($('#shelf-container .item').length == 0){
+			$('.common-ne').show();
+		}
+		
+		
+		$.post("{:U('Ajax/deleteReadHistory')}",{ids:ids.join(",")});
+	}
+	
+	
+</script>
+<include file="include/footer2" />

@@ -1,0 +1,285 @@
+@charset "utf-8";
+/* CSS Document */
+html,body {background:#EEEEEE;}
+.head_tit_box {
+	background-color: #feedbe;
+}
+.re_head_box{
+	position: relative;
+	left: 0;
+	top: 0;
+	overflow: hidden;
+	height: .45rem;
+	background-color: #feedbe;
+}
+
+.re_img{
+	overflow: hidden;
+	position: absolute;
+	left: .15rem;
+	top: .15rem;
+	padding:.05rem;
+	width: .6rem;
+	height: .6rem;
+	border-radius: .6rem;
+	box-shadow: 0 0.04rem 0.06rem 0 rgba(0,0,0,0.1);
+	background-color: #fff;
+}
+.re_img_vip{
+	position: absolute;
+	left: .15rem;
+	top: .15rem;
+	width: .48rem;
+	height: .48rem;
+	padding: 1px;
+	border-radius: .48rem;
+	box-sizing: border-box;
+	-moz-box-shadow:0 0 0 1px #ffd99e;
+	-webkit-box-shadow:0 0 0 1px #ffd99e;
+	box-shadow:0 0 0 1px #ffd99e;
+	box-sizing: border-box;
+}
+
+.re_img_vip span{
+	position: absolute;
+	left: 50%;
+	bottom: -.02rem;
+	margin: 0 0 0 -.145rem;
+	width: .29rem;
+	height: .12rem;
+	background: url(../img/icon/user_vip_2.png) no-repeat center center/100% 100%;
+}
+
+.re_img img,
+.re_img_vip img{
+	height: 100%;
+	width: 100%;
+	border-radius: .48rem;
+}
+
+.re_user_info_box{
+	overflow: hidden;
+	margin: .1rem 0 0 .2rem;
+	height: .48rem;
+}
+
+.re_user_info_box h3{
+	display:none;
+	height: .3rem;
+	font-size: .15rem;
+	color: #0a347e;
+	line-height: .3rem;
+}
+
+.re_user_info{
+}
+
+.re_user_info em{
+	display: inline;
+	width: 100%;
+	font-size: .15rem;
+	color: #513D3D;
+	line-height: 1.5;
+	margin-right: 0.1rem;
+}
+.line-css{
+	color: #848282;
+}
+
+.re_user_info em span{
+	display: inline;
+	color: #513D3D;
+}
+
+.re_user_info strong{
+	display: inline;
+	width: 100%;
+	font-size: .15rem;
+	color: #513D3D;
+	line-height: 1.5;
+	box-sizing: border-box;
+}
+.re_user_info strong span{
+	display: inline;
+	color: #513D3D;
+}
+
+.re_main_box{
+	overflow: hidden;
+	background-color: #fff;
+}
+
+.re_vip_txt{
+	overflow: hidden;
+	padding: .05rem .15rem ;
+	text-align: center;
+	background-color: #FFFCDD;
+}
+
+.re_vip_txt em,
+.re_vip_txt strong{
+	overflow: hidden;
+	display: block;
+	font-size: .13rem;
+	line-height: .2rem;
+}
+
+.re_vip_txt em{
+	color: #9A9191;
+}
+.re_vip_txt strong{
+	color: #FFB473;
+}
+
+.re_list_box{
+	overflow: hidden;
+	background-color: #fff;
+}
+
+.re_list_tit{
+	overflow: hidden;
+	margin: 0 .15rem;
+	padding: .16rem 0 .14rem;
+}
+
+.re_list_tit h2{
+	font-size: .16rem;
+	color: #513D3D;
+	line-height: .24rem;
+}
+
+.re_list_tit h2 span{
+	margin-left:.1rem;
+	font-size: .13rem;
+	color: #FFB473;
+}
+
+.re_list_ul{
+	overflow: hidden;
+	padding: 0 .07rem;
+}
+
+.re_list_ul li{
+	float: left;
+	overflow: hidden;
+	width: 50%;
+}
+
+.re_list_ul a{
+	display: block;
+	overflow: hidden;
+	position: relative;
+	left: 0;
+	top: 0;
+	margin: 0 .08rem .16rem;
+	padding: .09rem 0 .05rem .12rem;
+	-moz-box-shadow:0 0 0 1px #ced2df inset;
+	-webkit-box-shadow:0 0 0 1px #ced2df inset;
+	box-shadow:0 0 0 1px #ced2df inset;
+	box-sizing: border-box;
+	-webkit-border-radius: .06rem;
+	-moz-border-radius: .06rem;
+	-ms-border-radius: .06rem;
+	-o-border-radius: .06rem;
+	border-radius: .06rem;
+}
+
+.re_list_ul strong{
+	display: block;
+	height: .24rem;
+	font-size: .16rem;
+	color: #494a4c;
+	font-weight: 600;
+	line-height: .24rem
+}
+
+.re_list_ul em{
+	overflow: hidden;
+	display: block;
+	height: .24rem;
+	font-size: .13rem;
+	color: #999;
+	line-height: .24rem;
+}
+
+.re_list_ul span{
+	display: inline;
+	font-size: .13rem;
+	color: #F5A623;
+}
+
+.re_list_ul i{
+	overflow: hidden;
+	padding: 0 .04rem 0 .08rem;
+	position: absolute;
+	right: 0;
+	top: .11rem;
+	height: .18rem;
+	background-color: #FA2A2D;
+	font-size: .12rem;
+	color: #fff;
+	line-height: .18rem;
+	border-radius: .18rem 0 0 .18rem;
+}
+
+.re_list_ul b{
+	overflow: hidden;
+	display: block;
+	font-size: .13rem;
+	color: #F5A623;
+	font-weight: normal;
+	line-height: .2rem;
+}
+
+.re_list_ul .hover a{
+	-moz-box-shadow:0 0 0 2px #FFB473 inset;
+	-webkit-box-shadow:0 0 0 2px #FFB473 inset;
+	box-shadow:0 0 0 2px #FFB473 inset;
+	background:url(../img/icon/icon-select.png) no-repeat right bottom;
+	background-size: .18rem auto;
+}
+
+.re_but_box{
+	overflow: hidden;
+	padding: .04rem .15rem;
+}
+
+.re_but_box a{
+	display: block;
+	margin: 0 auto;
+	height: .36rem;
+	width: auto;
+	background-color: #FFB473;
+	font-size: .16rem;
+	color: #fff;
+	text-align: center;
+	line-height: .36rem;
+	border-radius: .36rem;
+}
+
+.re_rule_box{
+	overflow: hidden;
+	padding:.2rem .15rem;
+	background-color: #fff;
+}
+.re_rule_box p:first-child {
+	font-size: .15rem;
+}
+.re_rule_box p{
+	overflow: hidden;
+	padding: .02rem 0 .08rem;
+	font-size: .13rem;
+	color: #9A9191;
+	line-height: .2rem;
+}
+
+
+
+
+
+
+
+
+
+
+

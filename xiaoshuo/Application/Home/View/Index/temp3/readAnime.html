@@ -1,0 +1,617 @@
+<include file="include/header" title="{$anime.title}" />
+
+
+<style>
+	body{background:#ded0b3}
+    img {
+        max-width: 100%;
+        font-size: inherit;
+        line-height: 32px;
+        text-indent: 2em;
+        font-family: 微软雅黑;
+        display: block;
+        /*小说和漫画是不同的*/
+        -webkit-margin-before: 0;
+        -webkit-margin-after: 0;
+        -webkit-margin-start: 0;
+        -webkit-margin-end: 0;
+    }
+    .novel p {
+        text-indent:2em;padding-top:4px;padding-bottom:4px;font-size:17px;line-height:32px;  
+    }
+	.m-box p{line-height:30px;}
+	.cols{width:100%;height:1.333rem;background:#eee;}
+	.cols ul{width: 90%;margin: 0 auto;height: 100%;display: -webkit-box;}
+	.cols ul li{height:100%;-webkit-box-flex:1;}
+	.cols ul li span{width: .6rem;height: .6rem;border-radius: 50%;display: block;margin: .3665rem auto;background: red;border:1px solid #dcd4d4;text-align:center;line-height:.6rem}
+	.cols ul li div{width:.6rem;height:.6rem;text-align:center;line-height:.6rem;margin:.3665rem auto;font-size:.5rem;font-weight:600}
+	.cols ul li .color1{background-color:#fff;}
+	.cols ul li .color2{background-color:#b6b2ca;}
+	.cols ul li .color3{background-color:#ded0b3;}
+	.cols ul li .color4{background-color:#c1cac1;}
+	.cols ul li .color5{background-color:#bf7cbf;}
+	.cols ul li .color6{background-color:#4CAF50;}
+	.cols ul li .color7{background-color:#2E2F2D;}
+	.read-footer > .control .item a{color:#666;}
+</style>
+<div class="v-content">
+	<div class="rt-bar" style="position: fixed;">
+		<div class="row">
+			<div class="col icon">
+				<a href="javascript:history.go(-1);">
+					<svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 40 40"><path d="M29.56 39.47a2 2 0 0 1-1.38-.56L8.45 20 28.17 1.09A2 2 0 1 1 30.94 4L14.23 20l16.71 16a2 2 0 0 1-1.38 3.44z" fill="#ff730a"></path></svg>
+				</a>
+			</div>
+			<div class="col title">
+				{$info.title}
+			</div>
+			<div class="col link">
+				<a href="{:U('Index/info',array('id'=>$info['anid'],'isCks'=>1))}">全集</a>
+			</div>
+		</div>
+		<if condition="$anime['btype'] eq 2">
+			<div class="cols">
+				<ul>
+					<li><span class="colors color1"></span></li>
+					<li><span class="colors color2"></span></li>
+					<li><span class="colors color3"></span></li>
+					<li><span class="colors color4"></span></li>
+					<li><span class="colors color5"></span></li>
+					<li><span class="colors color6"></span></li>
+					<li><span class="colors color7"></span></li>
+					<li><div class="colont">A+</div></li>
+					<li><div class="colont">A-</div></li>
+				</ul>
+			</div>
+		</if>
+	</div>
+	<script>
+		var font = 1;
+			size = 0.45;
+			line = 30; 
+		$('.colors').click(function(){
+			var index = $(this).parent().index();
+			var color = $(this).css('background-color');
+			$('body').css('background-color',color);
+			$('body div').css('background-color',color);
+			if(index == 6){
+				$('body').css('color','#fff');
+				$.cookie('pcolor','#fff');
+			}else{
+				$('body').css('color','#333');
+				$.cookie('pcolor','#333');
+			}
+			$.cookie('bodycolor',color);
+
+		});
+		
+		$(function(){
+			var bcolor = $.cookie('bodycolor');
+			var	pcolor = $.cookie('pcolor'); 
+			var	size = $.cookie('size');
+			var	line = $.cookie('line');
+			var btype = "{$anime['btype']}";
+			if(btype == "2"){
+				if(bcolor){
+					$('.v-content').css('background-color',bcolor);
+					$('.v-content div').css('background-color',bcolor);
+					$('body').css('color',pcolor);
+				}else{
+					//初始化背景颜色
+					$('.v-content').css('background-color',"#ded0b3");
+					$('.v-content div').css('background-color',"#ded0b3");
+					$('.v-content').css('color',"#333");
+					
+				}
+				if(size){
+					$('.m-box p').css('font-size',size+'rem');
+					$('.m-box p').css('line-height',line+'px');
+				}
+			}
+		})
+		
+		$('.colont').click(function(){
+			var index = $(this).parent().index();
+			if(index == 7){
+				font++;
+				if(font>4){
+					font = 4;
+				}else{
+					size += 0.05;
+					line += 5;
+				}
+			}else{
+				font--;
+				if(font < 1){
+					font = 1;
+				}else{
+					size = size - 0.05;
+					line = line - 5;
+				}
+			}
+			$('.m-box p').css('font-size',size+'rem');
+			$('.m-box p').css('line-height',line+'px');
+			$.cookie('line',line);
+			$.cookie('size',size);
+		})
+	</script>
+	<if condition="$anime['btype'] eq 1">
+	<?php 
+		$imgs = explode(",",$info['info']);
+	?>
+	<div class="m-box" style="font-size: 0.45rem;padding:1.333rem 0 0 0;">
+		<foreach name="imgs" item="v">
+		<p>
+			<img src="{$v}">
+		</p>
+		</foreach>
+	</div>
+	<else />
+	<div class="m-box" style="font-size: .45rem;padding:2.8583rem 20px 0 20px;">
+		{:htmlspecialchars_decode($info['info'])}
+	</div>
+	</if>
+
+	<style>
+	.go-home{
+		height: .7rem;
+		width: .7rem;
+		display: block;
+		margin: -.3rem auto;
+	}
+	</style>
+
+	<div class="read-footer">
+		<div class="row">
+			<div class="col">
+				<a href="javascript:addMarker({$info['anid']},{$info['chaps']});" style="-webkit-tap-highlight-color: rgba(0,0,0,0);" class="shelf <if condition="$collect">active</if>">
+				<i class="icon-fav"></i>收藏
+				</a>
+			</div>
+			<div class="col">
+				<!-- <a href="javascript:;" style="-webkit-tap-highlight-color: rgba(0,0,0,0);" data-clipboard-action="copy" data-clipboard-text="{$anime.huas}&#10;{$shareUrl}" class="copy shelf <if condition="$collect">active</if>">
+					<i class="icon-share"></i>红包
+				</a> -->
+				<a href="{:U('share',array('id'=>$info['anid']))}" style="-webkit-tap-highlight-color: rgba(0,0,0,0);">
+					<i class="icon-share"></i>分享赚红包
+				</a>
+			</div>
+			<div class="col">
+				<a href="{:U('Index/info',array('id'=>$info['anid'],'isCks'=>1))}" style="-webkit-tap-highlight-color: rgba(0,0,0,0);">
+				<i class="icon-dir"></i>目录
+				</a>
+			</div>
+		</div>
+		<div class="control clearfix">
+			<div class="item prev">
+				<if condition="$info['chaps'] eq 1">
+					<a href="javascript:nextChaps({$info['anid']},1);"><i></i>上一章</a>
+				<else />
+					<a href="javascript:nextChaps({$info['anid']},{$info['chaps']-1});"><i></i>上一章</a>
+				</if>
+			</div>
+			<div class="item next">
+				<a href="javascript:;" onclick="showMlist();">
+					<span style="display: block;">目录</span>
+				</a>
+			</div>
+			<div class="item next">
+				<a href="javascript:;" onclick="nextChaps({$info['anid']},{$info['chaps']+1});">下一章<i></i></a>
+			</div>
+		</div>
+	</div>
+	
+	
+	<div class="rb-bar chapter-menu" style="display: none;">
+		<div class="row">
+			<div class="col">
+				<if condition="$info['chaps'] eq 1">
+					<a href="javascript:nextChaps({$info['anid']},1);"><i></i>上一章</a>
+				<else />
+					<a href="javascript:nextChaps({$info['anid']},{$info['chaps']-1});"><i></i>上一章</a>
+				</if>
+			</div>
+			<div class="col">
+				<a href="javascript:addMarker({$info['anid']},{$info['chaps']});" class="shelf <if condition="$collect">active</if>"><i class="icon-fav"></i> 收藏</a>
+			</div>
+			<div class="col">
+				<a href="javascript:;" onclick="nextChaps({$info['anid']},{$info['chaps']+1})">下一章<i></i></a>
+			</div>
+		</div>
+	</div>
+	<div class="circle-box" style="display:none;bottom:4.5rem">
+		<a onclick="howContinue()" class="portal">
+			<i class="icon-home"></i>
+			<span class="title">
+			追书
+			</span>
+		</a>
+		<a href="{:U('Index/lodge',array('anid'=>$_GET['anid']))}" class="portal" style="margin-top: 5px; background-color: rgba(0,0,0,.0); background-image: url(./Public/home/images/svg/reading_icon_jubao@2x.png); background-position: center; background-repeat: no-repeat; background-size: 40px;"></a>
+		<a href="{:U('Index/share',array('id'=>$_GET['anid']))}" class="portal" style="margin-top:5px;">
+			<i class="icon-share"></i>
+			<span class="title">
+			红包
+			</span>
+		</a>
+	</div>
+	
+</div>
+
+<style>
+	.m-list{position:fixed;width:100%;height:100%;bottom:0;left:0;z-index:99999;display:none;}
+	.m-list .msk{position:absolute;width:100%;height:100%;top:0;left:0;background:#000;opacity:0.7;}
+	.m-list ul{width:96%;position:absolute;left:2%;bottom:1.7rem;background:#fff;border-radius: 3px;}
+	.m-list ul li{height:1.2rem;line-height:1.2rem;text-align:center;border-bottom:1px solid #ddd;font-size: .45rem;color: #007AFF;}
+	.m-list ul li:last-child{border:none;}
+	.m-list button{height: 1.2rem;line-height: 1.2rem;text-align: center;font-size: .45rem;color: #007AFF;bottom: .3rem;width: 96%;left: 2%;background: #fff;border: none;-webkit-appearance: none;border-radius: 3px;position: absolute;}
+	
+	.m-font{display:none;}
+	.m-font-txt ul{width: 90%;height: 1.5rem;background: #fff;display: -webkit-box;border: 1px solid #ddd;margin: 0 5%;}
+	.m-font-txt ul li{font-size:.45rem;-webkit-box-flex: 1;text-align:center;line-height:1.5rem;border-right:1px solid #ddd;font-size:.35rem;color: #333;}
+	.m-font-txt ul li:last-child{border:none}
+	
+	.m-color{display:none;}
+	.m-color-txt ul{width: 90%;height: 1.5rem;background: #fff;display: -webkit-box;border: 1px solid #ddd;margin: 0 5%;}
+	.m-color-txt ul li{font-size:.45rem;-webkit-box-flex: 1;text-align:center;line-height:1.5rem;border-right:1px solid #ddd;font-size:.35rem;color: #333;}
+	.m-color-txt ul li:last-child{border:none}
+</style>
+
+<div class="m-list">
+	<div class="msk" onclick="$('.m-list').slideUp()"></div>
+	<div id="mlist">
+		<ul>
+			<if condition="$anime['btype'] eq 2">
+			<li onclick="showLay('.m-font')">字体大小</li>
+			<li onclick="showLay('.m-color')">背景颜色</li>
+			</if>
+			<li onclick="addMarker({$_GET['anid']}, {$_GET['chaps']})">添加书签</li>
+			<li onclick="location.href=&#39;{:U('Index/info',array('id'=>$info['anid'],'isCks'=>1))}&#39;">返回目录</li>
+			<li onclick="location.href=&#39;{:U('Index/novel')}&#39;">返回首页</li>
+		</ul>
+		<button onclick="$('.m-list').slideUp()">取消</button>
+	</div>
+</div>
+
+<div class="m-font">
+	<div class="m-font-txt">
+		<ul>
+			<li onclick="setFont(this)">小</li>
+			<li onclick="setFont(this)">中</li>
+			<li onclick="setFont(this)">大</li>
+		</div>
+	</div>
+</div>
+
+
+<div class="m-color">
+	<div class="m-color-txt">
+		<ul>
+			<li onclick="setColor(this)">白天</li>
+			<li onclick="setColor(this)">舒适</li>
+			<li onclick="setColor(this)">黑夜</li>
+		</div>
+	</div>
+</div>
+
+
+
+
+<script>
+	function showMlist(){	
+		$('.m-list').css({"background-color":"rgba(0,0,0,0)"});
+		$('.m-list .msk').css("background-color","rgba(0,0,0,0.7)");
+		$('.m-list').slideDown();
+	}
+	
+	
+	function showLay(ob){
+		$('.m-list').hide();
+		$(ob).find('div').css({"background-color":"rgba(0,0,0,0)"});
+		layer.open({
+			content: $(ob).html(),
+			btn: '好的',
+			one: function (index) {
+				layer.close(index);
+			}
+		});
+	}
+	
+	function setFont(ob){
+		var _index = $(ob).index();
+		var size;
+		var line;
+		if(_index == 0){
+			size = 0.45;
+			line = 30;
+			$('.m-box p').css('font-size',size+'rem');
+			$('.m-box p').css('line-height',line+'px');
+			$.cookie('line',line);
+			$.cookie('size',size);
+		}
+		if(_index == 1){
+			size = 0.55;
+			line = 40;
+			$('.m-box p').css('font-size',size+'rem');
+			$('.m-box p').css('line-height',line+'px');
+			$.cookie('line',line);
+			$.cookie('size',size);
+		}
+		if(_index == 2){
+			size = 0.6;
+			line = 45;
+			$('.m-box p').css('font-size',size+'rem');
+			$('.m-box p').css('line-height',line+'px');
+			$.cookie('line',line);
+			$.cookie('size',size);
+		}
+	}
+	
+	
+	function setColor(ob){
+		var _index = $(ob).index();
+		var index = $(this).parent().index();
+		if(_index == 0){
+			var color = "#fff";
+			$('.v-content').css('background-color',color);
+			$('.v-content div').css('background-color',color);
+			$('.v-content').css('color','#333');
+			$.cookie('pcolor','#333');
+			$.cookie('bodycolor',color);
+		}
+		if(_index == 1){
+			var color = "#ded0b3";
+			$('.v-content').css('background-color',color);
+			$('.v-content div').css('background-color',color);
+			$('.v-content').css('color','#333');
+			$.cookie('pcolor','#333');
+			$.cookie('bodycolor',color);
+		}
+		if(_index == 2){
+			var color = "#2E2F2D";
+			$('.v-content').css('background-color',color);
+			$('.v-content div').css('background-color',color);
+			$('.v-content').css('color','#fff');
+			$.cookie('pcolor','#fff');
+			$.cookie('bodycolor',color);
+		}	
+	}
+	
+	
+	
+</script>
+
+<div class="mask-box delete-selected-confirm" style="display: none;"></div>
+<div class="modal confirm-modal delete-selected-confirm" style="display: none;">
+	<div class="inner">
+		<div class="confirm-box">
+			<div class="body">
+				<div class="title">
+					您的帐户余额不足，是否进行充值？
+				</div>
+			</div>
+			<div class="action">
+				<a href="javascript:void(0);" class="btn" onclick="$('.mask-box').hide();$('.modal').hide();">取消</a>
+				<a href="javascript:void(0);" class="btn cancel" onclick="location.href=&#39;{:U('Index/charge',array('anid'=>$_GET['anid']))}&#39;">确定</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+
+	$(function(){
+		//初始化判断是否超过强制关注
+		var sub = "{$chapter['subchaps']}"?parseInt("{$chapter['subchaps']}"):0;
+			tchapter = parseInt("{$anime['tchapter']}")?parseInt("{$anime['tchapter']}"):0;
+			subscribe = "{$user['subscribe']}"?parseInt("{$user['subscribe']}"):0;
+			chaps = "{$_GET['chaps']}"?parseInt("{$_GET['chaps']}"):0;
+			userid = "{$user['id']}" ? parseInt("{$user['id']}"):0;
+		if(sub == 0 && tchapter>0){
+			sub = tchapter;
+		}
+		if(sub >0 && subscribe == 0 && chaps>=sub){
+			if(userid == "" || userid == 0){
+				location.href="{:U('Public/login')}&fr="+"{$url}";
+				return;			
+			}
+			layer.open({
+				content: '<div style="text-align:center;">' +
+					'<div style="color:darkorange;font-size:14px;">长按识别下方二维码关注公众号继续观看！</div>' +
+					'<img width="100%" src="{$qrcode}"/>' +
+					'<div style="font-size:14px;">长按识别上方二维码关注</div></div>',
+				one: function (index) {
+					layer.close(index);
+				}
+			});
+		}
+		
+		//判断是否有代理信息
+		var submodel = "{$mch['submodel']}";
+		if(submodel != "" && submodel == 2 && subscribe == 0){ //代理设置了强制关注，并且用户未关注
+			var mchsub = "{$mchsub}"?parseInt("{$mchsub}"):0;
+			if(mchsub != 0 && chaps>=mchsub){
+				layer.open({
+					content: '<div style="text-align:center;">' +
+						'<div style="color:darkorange;font-size:14px;">长按识别下方二维码关注公众号继续观看！</div>' +
+						'<img width="100%" src="{$qrcode}"/>' +
+						'<div style="font-size:14px;">长按识别上方二维码关注</div></div>',
+					one: function (index) {
+						layer.close(index);
+					}
+				});
+			}
+		}
+	})
+	
+	//下一章
+	function nextChaps(anid,chaps){
+		//判断是否有强制关注
+		var sub = "{$chapter['subchaps']}" ? parseInt("{$chapter['subchaps']}"):0;
+			tchapter = parseInt("{$anime['tchapter']}")?parseInt("{$anime['tchapter']}"):0;
+			subscribe = "{$user['subscribe']}" ? parseInt("{$user['subscribe']}"):0;
+			userid = "{$user['id']}" ? parseInt("{$user['id']}"):0;
+			
+		if(sub == 0 && tchapter>0){
+			sub = tchapter;
+		}
+		if(sub >0 && subscribe == 0 && chaps>=sub){
+			if(userid == "" || userid == 0){
+				location.href="{:U('Public/login')}&fr="+"{$url}";
+				return;			
+			}
+			layer.open({
+				content: '<div style="text-align:center;">' +
+					'<div style="color:darkorange;font-size:14px;">长按识别下方二维码关注公众号继续观看！</div>' +
+					'<img width="100%" src="{$qrcode}"/>' +
+					'<div style="font-size:14px;">长按识别上方二维码关注</div></div>',
+				one: function (index) {
+					layer.close(index);
+				}
+			});
+			return false;
+		}
+		
+		$.post("{:U('Ajax/nextChaps')}",{anid:anid,chaps:chaps},function(d){
+			if(d){
+				console.log(d);
+				if(d.status == 1){
+					$('.mask-box').show();
+					$('.modal').show();
+				}else if(d.status == 2){
+					location.href = d.url;
+				}else{
+					alert("异常错误！");
+				}
+			}else{
+				alert("请求失败！");
+			}
+		});
+	}
+
+
+	function howContinue() {
+        layer.open({
+            content: '<div style="text-align:center;"><p style="font-size:16px;">如何追书？</p>' +
+                '<div style="color:darkorange;font-size:14px;">关注作者授权公众号，方便下次阅读</div>' +
+                '<img width="100%" src="{$qrcode}"/>' +
+                '<div style="font-size:14px;">长按识别上方二维码关注</div></div>',
+            btn: '明天再说啦',
+            one: function (index) {
+                layer.close(index);
+            }
+        });
+    }
+
+    
+    function addMarker(anid, chaps) {
+        var is_gray_ = $(".shelf").hasClass("active");
+		if (is_gray_) {
+            $(".shelf").removeClass("active");
+        }
+        else {
+            $(".shelf").addClass("active");
+        }
+        $.post("{:U('Ajax/collect')}",{id:"{$info['anid']}"},function(d){
+			if(d){
+				layer.open({
+					content: '<h5 style="text-align:center;color:#333333; margin-bottom:10px;">温馨提示</h5><span style="font-size:14px;color:#888888;">操作成功！</span>',
+					btn: '好的',
+					one: function (index) {
+						layer.close(index);
+					}
+				});
+			}else{
+				alert('请求失败！');
+			}
+		});
+        
+    }
+    $(function () {
+        var winSTbefore = 0;//声明一个变量，用于装触发scroll事件的上一个scrollTop
+        function monitor() {
+            var winH = window.innerHeight;    //获取浏览器窗口高度，若要支持IE需要在此处做兼容
+            var winST = $(window).scrollTop();  //获取scrollTop
+            var docH = $(document).height();  //获取文档高度
+            var arr = [winH, winST, docH];
+            return arr;
+        }
+        monitor();
+        $(window).scroll(function () {
+            var arr = monitor();
+            var winH = arr[0];
+            var winST = arr[1];
+            var docH = arr[2];
+            if (winST <= winH / 10) {
+                $('.chapter-menu').hide(); //在首屏时隐藏
+                $('.rt-bar').removeClass('flt');
+                $('.rt-bar').css('position', 'absolute');
+            } else if (winST + winH >= docH) {
+                $('.chapter-menu').hide(); //到达底部时隐藏
+                $('.rt-bar').removeClass('flt');
+                $('.rt-bar').css('position', 'absolute');
+            } else if (winST > winSTbefore) {
+                $('.chapter-menu').hide();    //向下滑动时隐藏
+                $('.rt-bar').removeClass('flt');
+                $('.rt-bar').css('position', 'absolute');
+				$('.circle-box').hide();
+            } else if (winST < winSTbefore) {
+                $('.chapter-menu').show(); //向上滑动时显示
+                $('.rt-bar').addClass('flt');
+                $('.rt-bar').css('position', 'fixed');
+				$('.circle-box').show();
+            }
+            winSTbefore = winST;  //更新winSTbefore的值
+        });
+        $(document).click(function(){
+            var arr = monitor();
+            var winh = arr[0];
+            var winst = arr[1];
+            var doch = arr[2];
+            if (winst + winh >= doch) {
+                $('.chapter-menu').hide(); //到达底部时隐藏
+                $('.rt-bar').removeClass('flt');
+                $('.rt-bar').css('position', 'absolute');
+				$('.circle-box').show();
+            }
+            else{
+                $('.chapter-menu').show(); //向上滑动时显示
+                $('.rt-bar').addClass('flt');
+                $('.rt-bar').css('position', 'fixed');
+            }
+        })
+        $(document).on("tap",function(){
+            var arr = monitor();
+            var winh = arr[0];
+            var winst = arr[1];
+            var doch = arr[2];
+            if (winst + winh >= doch) {
+                $('.chapter-menu').hide(); //到达底部时隐藏
+                $('.rt-bar').removeClass('flt');
+                $('.rt-bar').css('position', 'absolute');
+				$('.circle-box').show();
+            }
+            else{
+                $('.chapter-menu').show(); //向上滑动时显示
+                $('.rt-bar').addClass('flt');
+                $('.rt-bar').css('position', 'fixed');
+				$('.circle-box').show();
+            }
+        });
+
+    });
+
+</script>
+<div class="backtop" id="icon-top" style="display:none">
+	<a href="javascript:void(0);" class="top">顶部</a>
+</div>
+<script>
+	window.shareData = {
+		img: "{$anime['coverpic']|complete_url}", 
+		link: "<?php echo complete_url(U('readAnime',array('anid' => $anime['id'],'chaps'=>$info['chaps'])));?>",
+		title: "{$anime['sharetitle']}",
+		desc: "{$anime['sharedesc']}",
+	};	
+</script>
+<include file="include/share" />
+</body>
+</html>

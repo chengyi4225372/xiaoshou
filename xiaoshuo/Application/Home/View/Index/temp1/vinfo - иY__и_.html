@@ -1,0 +1,92 @@
+<include file="include/header" title="{$title}" />
+<script src="//qzonestyle.gtimg.cn/open/qcloud/video/h5/h5connect.js" charset="utf-8"></script> 
+
+<link rel="stylesheet" href="__PUBLIC__/layer/skin/default/layer.css">
+<script src="__PUBLIC__/layer/layer.js"></script>
+
+<div id="id_video_container" style="width:100%; height:auto;"></div>
+<div class="vinfo-title">
+	<h1>{$info.title}</h1>
+	<p>{$info.remark}</p>
+	<p>{$info.reads}人观看</p>
+	<if condition="$videoVip eq 0">
+		<p style="color:#ff5420;font-size:.38rem;">免费试看时间{$info['trys']/60}分钟</p>
+	</if>
+</div>
+<div class="vinfo-content">
+	<div class="title">详情</div>
+	<div class="txt">
+		{$info.info}
+	</div>
+</div>
+<script>
+var file_id = "{$info['fileid']}";
+	app_id = "1257662618";
+	tryhours = {$info['trys']};
+	vid = "{$info['id']}";
+	vip = "{$videoVip}";
+var option;
+if(vip == "0" || vip == ""){
+	option ={
+		"file_id":file_id,
+		"app_id":app_id,
+		"width":640,
+		"height":360,
+		"stop_time":tryhours,
+		"hide_h5_setting":true,
+		"remember":1,
+	};
+}else{
+	option ={
+		"file_id":file_id,
+		"app_id":app_id,
+		"width":640,
+		"height":360,
+		"hide_h5_setting":true,
+		"remember":1,
+	};
+}
+
+
+function buyVideo(){
+	layer.confirm("试看结束，是否立即购买？",function(){
+		//立即购买
+		$.post("{:U('Ajax/buyVideo')}",{vid:vid},function(d){
+			if(d){
+				if(d.status){
+					layer.alert(d.info,function(){
+						location.reload();
+					})
+				}else{
+					layer.confirm(d.info,function(){
+						location.href = d.url;
+					})
+				}
+			}else{
+				layer.msg("请求失败！");
+			}
+		});
+	});
+}
+
+var listener = {
+    playStatus: function (status){
+        if(status == 'stop'){
+			buyVideo();
+			$('.trump-play-controller').click(function(){
+				buyVideo();
+			});
+			$('.trump-button').click(function(){
+				buyVideo();
+			});
+		}
+    }
+};
+var player = new qcVideo.Player("id_video_container", option, listener);
+
+</script>
+<div class="vinfo-footer">
+	<input type="button" value="观看需要支付{$info.money}阅读币" />
+</div>
+</body>
+</html>

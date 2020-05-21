@@ -1,0 +1,236 @@
+<link rel="stylesheet" href="__PUBLIC__/admin/css/switch.css">
+<section class="content-header">
+<div>
+	<ol class="breadcrumb" style="background: none; margin-bottom: 0px;">
+		<li><a href="{:U('Index/index')}" style="color: #333;"><i class=" fa fa-home"></i>&nbsp;Home</a></li>
+		<li class="active">分集信息</li>
+	</ol>
+</div>
+</section>
+<section class="content">
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box">
+			<div class="box-header">
+				<h3 class="box-title"></h3>
+			</div>
+			<!-- /.box-header -->
+			<div class="box-body">
+				<table class="table table-bordered table-hover table-striped text-center">
+					<tbody>
+						<tr>
+							<th>章节名称</th>
+							<th>第几章节</th>
+							<th>操作</th>
+						</tr>
+						<foreach name="list" item="v">
+							<tr>
+								<td>{$v.title}</td>
+								<td>{$v.chaps}</td>
+								<td>
+									<if condition="$info['btype'] eq 3">
+										<a href="javascript:;" data-info="{$v['info']}" class="btn btn-info listing">
+											<i class="fa fa-bell"></i>试听
+										</a>
+									<else />
+										<a href="javascript:;" data-title="{$v.title}" data-info="{$v.info}" data-btype="{$info.btype}" class="btn btn-info looks">
+											<i class="fa fa-search"></i>查看
+										</a>	
+									</if>
+									<if condition="$info['btype'] eq 1">
+										<a href="javascript:;" onclick="showModal({$v.id},'{$v.title}','{$v.coverpic}','{$info['btype']}')" class="btn btn-info">
+											<i class="fa fa-edit"></i>编辑
+										</a>
+									<elseif condition="$info['btype'] eq 2" />
+										<a href="javascript:;" onclick="showModal({$v.id},'{$v.title}','{$v.info}','{$info['btype']}')" class="btn btn-info">
+											<i class="fa fa-edit"></i>编辑
+										</a>
+									<else />
+										<a href="javascript:;" onclick="showModal({$v.id},'{$v.title}','{$v.info}','{$info['btype']}')" class="btn btn-info">
+											<i class="fa fa-edit"></i>编辑
+										</a>
+									</if>
+								</td>
+							</tr>
+						</foreach>
+					</tbody>
+				</table>
+			</div>
+			<!-- /.box-body -->
+			<div class="page">{$page|default="<p style='text-align:center'>暂时没有数据</p>"}</div>
+		</div>
+	</div>
+</div>
+</section>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+				<h4 class="modal-title" id="modal-title"></h4>
+			</div>
+			<div class="modal-body" id="modal-content">
+				
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="display: none;">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+				<h5 class="modal-title">编辑分集信息</h5>
+			</div>
+			<div class="modal-body">
+				<form class="form-horizontal" action="{:U('setChapter')}">
+					<div class="form-group">
+						<label class="control-label col-sm-2">分集标题:</label>
+						<div class="col-sm-10">
+							<input class="form-control" id="title" name="title" value="" />
+						</div>
+					</div>
+					<if condition="$info['btype'] eq 1">
+					<div class="form-group">
+						<label class="control-label col-sm-2">分级封面:</label>
+						<div class="col-sm-10">
+							<iframe id="frame" src="{:U('Index/upload', 'event=setPic&url')}" scrolling="no" style="width:200px;height:200px;border: none;display:block;"></iframe>
+							<input type="hidden" name="coverpic" id="coverpic" value="" class="smallinput" />
+							<script>
+							function setPic(url){
+								document.getElementById('coverpic').value = url;
+							}
+							</script>
+						</div>
+					</div>
+					<elseif condition="$info['btype'] eq 2" />
+						<div class="form-group">
+							<label class="control-label col-sm-2">分级内容:</label>
+							<div class="col-sm-10">
+								<textarea name="info" id="chapter-info" style="width: 100%;height: 500px;"></textarea>
+							</div>
+						</div>
+					<else />
+						<div class="form-group">
+							<label class="control-label col-sm-2">分级内容:</label>
+							<div class="col-sm-10">
+								<textarea name="info" id="mp3" style="width: 100%;height: 100px;"></textarea>
+							</div>
+						</div>
+					</if>
+					<input class="form-control" type="hidden" id="id" name="id" value="" />
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="ajaxBtn" class="btn btn-primary">保存</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<audio id="player" autoplay="false">  
+	<source src="" type="audio/mpeg">  
+</audio>
+
+<script src="__PUBLIC__/plugins/ueditor1.4.3/ueditor.config.js"></script>
+<script src="__PUBLIC__/plugins/ueditor1.4.3/ueditor.all.min.js"></script>
+<script>
+	var btype = "{$info['btype']}";
+	if(btype == "1" || btype == "2"){
+		var ue = UE.getEditor('chapter-info');
+	}
+	
+	$('.looks').click(function(){
+		var title = $(this).data('title');
+			info = $(this).data('info');
+			btype = $(this).data('btype');
+		$('#modal-title').html(title);	
+		if(btype == 2){
+			$('#modal-content').html(info);
+		}else{
+			var arr = info.split(",");
+			var html = "";
+			$(arr).each(function(i,v){
+				html+='<img src="'+v+'" style="width:100%;">';
+			})
+			$('#modal-content').html(html);
+		}
+		$('#myModal').modal('show');
+	});
+	
+	
+	$('.listing').click(function(){
+		var player = document.getElementById("player");
+		var src = $(this).data('info');
+		if( ($('#player').attr('src') == "" || $('#player').attr('src') == undefined)){
+			$('#player').attr('src',src);
+			player.play();
+			$(this).html('<i class="fa fa-bell"></i>暂停');
+		}else if($('#player').attr('src') != "" && $('#player').attr('src') != "" && src != $('#player').attr('src')){
+			$('#player').attr('src',src);
+			player.play();
+			$(this).html('<i class="fa fa-bell"></i>暂停');
+			$(this).parent().parent().siblings().find('.listing').html('<i class="fa fa-bell"></i>试听');
+		}else{
+			if(player.paused){ 
+				player.play();
+				$(this).html('<i class="fa fa-bell"></i>暂停');
+			}else{  
+				player.pause();
+				$(this).html('<i class="fa fa-bell"></i>试听');			
+			};  
+		
+		}
+	})
+	
+	
+
+	//显示
+	function showModal(id,title,info,btype){
+		$('#id').val(id);
+		$('#title').val(title);
+		
+		if(btype == '1'){
+			$('#coverpic').val(info);
+			var url = $('#frame').attr('src');
+			url = changeURLArg(url,'url',info);
+			$('#frame').attr('src',url);
+		}else if(btype == "2"){
+			ue.setContent(info);
+			//$('#chapter-info').val(info);
+		}else{
+			$('#mp3').val(info);
+		}
+		
+		$('#Modal').modal('show');
+	}
+	
+	
+	
+	
+	//修改url参数
+	function changeURLArg(url,arg,arg_val){ 
+       var pattern=arg+'=([^&]*)'; 
+       var replaceText=arg+'='+arg_val; 
+       if(url.match(pattern)){ 
+           var tmp='/('+ arg+'=)([^&]*)/gi'; 
+           tmp=url.replace(eval(tmp),replaceText); 
+           return tmp; 
+       }else{ 
+           if(url.match('[\?]')){ 
+               return url+'&'+replaceText; 
+           }else{ 
+               return url+'?'+replaceText; 
+           } 
+      } 
+       return url+'\n'+arg+'\n'+arg_val; 
+   }
+</script>

@@ -1,0 +1,52 @@
+<include file="include/header3" title="{$title}" />
+<style>
+    .nav-footer{display: none}
+</style>
+
+<body>
+<div class="mui-content cor-content">
+    <div class="mui-content w-content">
+
+        <ul class="y-vip-mian">
+            <h1 class="y-vip-top"> </h1>
+            <li>
+                <i class="y-vip-img"></i>
+                <div class="y-vip-title">
+                    <span>漫画免费看</span>
+                    <p>站内漫画统统免费看！如丝般顺滑，再也不用担心余额不足了。</p>
+                </div>
+            </li>
+            <li>
+                <i class="y-vip-img" id="y-vip-img1"></i>
+                <div class="y-vip-title">
+                    <span>超级金币礼包</span>
+                    <p>购买即送10000金币！任性打赏漫画小主，收下围观群众的膝盖。</p>
+                </div>
+            </li>
+
+            <li class="">
+                <i class="y-vip-img" id="y-vip-img3"></i>
+                <div class="y-vip-title">
+                    <span>专属客服</span>
+                    <p>即将开通VIP专属客服！制服小姐姐等你来撩哟！么么哒~</p>
+                </div>
+            </li>
+            <li>
+                <i class="y-vip-img" id="y-vip-img4"></i>
+                <div class="y-vip-title">
+                    <span>敬请期待</span>
+                    <p>后续还有更多惊喜特权加入！没时间解释了，快点上车吧！</p>
+                </div>
+            </li>
+        </ul>
+                <div class="y-vip-paymenu"><a href="{:U('Index/charge')}">购买/续费年费VIP</a></div>
+    </div>
+</div>
+
+<include file="include/footer3" />
+<script>
+    mui('.tophref').on('tap','a',function(){document.location.href=this.href;});
+</script>
+
+</body>
+</html>

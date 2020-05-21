@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+<script src="__PUBLIC__/home/js/jquery-1.7.min.js"></script>
+<title>{$info['title']} -- 地图定位</title>
+<style type="text/css">
+	body, html,#allmap {width: 100%;height: 100%;overflow: hidden;margin:0;}
+	#golist {display: none;}
+	@media (max-device-width: 800px){#golist{display: block!important;}}
+	.header {height: 50px;width: 100%;background: #C14B4B;color: #fff;}
+	.header {width: 100%;margin: 0 auto;padding: 0;text-align:center;line-height:50px;font-weight: bold;}
+	.header a {height: 40px;position: absolute;width: 45px;left: 0px;}
+	a:visited {text-decoration: none;color: #666;}
+	a:link {text-decoration: none;}
+	a {color: #666;}
+	.header a span {display: block;height: 25px;text-indent: 17px;width: 20px;color: #FFF;font-size: 14px;padding-top: 8px;}
+</style>
+</head>
+<body>
+	<div class="header">
+		<a href="javascript:history.go(-1);"><span><img style="height:25px;" src="/Public/images/fh.png"></span></a>
+		{$info['title']} -- 地图
+	</div>
+    <lbs-map width="100px" style="height:92%" center="116.307852,40.057031">
+    	<lbs-poi name="{$info['district']}" class="location" location="116.307852,40.057031" addr="{$info['district']}" ></lbs-poi>
+    </lbs-map>
+</body>
+
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=rj1dpvwNqHo2rb3AY7wH0wGcvWgWA4IK"></script>
+<script type="text/javascript">
+	
+	var address = "{$info['district']}";
+	
+	// 创建地址解析器实例
+	var myGeo = new BMap.Geocoder();
+	// 将地址解析结果显示在地图上,并调整地图视野
+	myGeo.getPoint(address, function(point){
+		if (point) {
+			console.log(point);
+			var location = point.lng +"," + point.lat;
+			$('.location').attr('location',location);
+		}else{
+			alert("您选择地址没有解析到结果!");
+		}
+	}, "北京");
+	
+</script>
+</html>

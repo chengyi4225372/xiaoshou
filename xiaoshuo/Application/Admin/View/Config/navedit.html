@@ -1,0 +1,70 @@
+<section class="content-header">
+	<div>
+		<ol class="breadcrumb" style="background: none; margin-bottom: 0px;">
+			<li>
+				<a href="{:U('Index/index')}" style="color: #333;">
+				<i class=" fa fa-home">
+				&nbsp;</i>Home</a>
+			</li>
+			<li class="active">底部导航</li>
+			<li class="active"><if condition="$_GET['id']">修改导航<else />添加导航</if></li>
+		</ol>
+	</div>
+</section>
+
+<section class="content">
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="box box-primary">
+				<form class="form-horizontal" style="margin-top:30px" method="POST" id="form" action="" enctype="multipart/form-data">
+					<div class="box-body">
+						<div class="form-group">
+							<label for="name" class="control-label col-sm-3">标题</label>
+							<div class="col-sm-6">
+								<input type="text" name="name" class="form-control col-sm-9" value="{$info['name']}">
+								<p class="help-block help-block-error col-sm-7 col-xs-10"></p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="name" class="control-label col-sm-3">链接</label>
+							<div class="col-sm-6">
+								<input type="text" name="url" class="form-control col-sm-9" value="{$info['url']}">
+								<p class="help-block help-block-error col-sm-7 col-xs-10"></p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="name" class="control-label col-sm-3">图标</label>
+							<div class="col-sm-6">
+								<iframe src="{:U('Index/upload', 'event=setPics&url='.$info['img'])}" scrolling="no" style="width:100px;height:100px;border: none;display:block;"></iframe>
+								<input type="hidden" name="img" id="img" value="{$info['img']}" class="smallinput" />
+								<script>
+                                    function setPics(url){
+                                        document.getElementById('img').value = url;
+                                    }
+								</script>
+								<p class="help-block help-block-error col-sm-7 col-xs-10">点击图片可进行更换</p>
+							</div>
+						</div>
+
+					</div>
+					<!-- /.box-body -->
+
+					<div class="box-footer">
+						<div class="form-group">
+							<div class="col-sm-offset-3 col-sm-9">
+								<button type="button" id="ajaxBtn"  class="btn btn-primary">保存</button>
+								<button type="button" class="btn btn-inverse" style="margin-left:20px;" onclick="history.go(-1)">返回</button>
+							</div>	
+						</div>
+					</div>
+				</form>
+			</div>
+			<!-- PAGE CONTENT ENDS -->
+		</div><!-- /.col -->
+	</div>
+</section>
+<script src="__PUBLIC__/plugins/ueditor1.4.3/ueditor.config.js"></script>
+<script src="__PUBLIC__/plugins/ueditor1.4.3/ueditor.all.min.js"></script>
+<script>
+	ue = UE.getEditor('body');
+</script>

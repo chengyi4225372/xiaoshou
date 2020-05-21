@@ -1,0 +1,325 @@
+/*-----------签到页面-----------*/
+/*
+author: lvs --- from  a  hun ning tu shun jian yi dong gong cheng shi
+
+time: August 3, 2018
+
+other: Please notify me promptly after modifying this document, otherwise you will be sack,
+
+and this file will be deleted automatically after many years.
+*/
+body {
+    background-color: #ffffff;
+}
+.mui-content {
+    background-color: inherit !important;
+    padding-bottom: 26px;
+}
+.l-sign-top {
+    position: relative;
+    text-align: center;
+    background: url(http://img.fox800.xyz/themes/wechat/yellow-theme/default-skin/src/img/sign/signTopBg.png) no-repeat center;
+    height: 202px;
+    margin-bottom: -63px;
+}
+.l-sign-top .l-content-head {
+    position: relative;
+    margin-bottom: 16px;
+}
+.l-sign-top .l-content-head span {
+    display: inline-block;
+    padding-top: 32px;
+    font-size: 32px;
+    color: #ffffff;
+}
+.l-sign-top .l-content-head i {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    background: url(http://img.fox800.xyz/themes/wechat/yellow-theme/default-skin/src/img/sign/signMoney.png) no-repeat bottom;
+    background-size: 100%;
+    margin-left: -3px;
+}
+.l-sign-top .l-content-head div{
+    font-size: 13px;
+    color: #fff;
+    font-weight: 100;
+    padding-top: 2px;
+ }
+ .l-sign-top a {
+    color: #ffc3c4;
+    position: absolute;
+    top: 13px;
+    right: 13px;
+    font-size: 14px;
+    display: block;
+    border: 1px solid #ffc3c4;
+    padding: 2px 8px;
+    border-radius: 15px;
+ }
+ .l-sign-top .l-sign-btn {
+     margin-top: 7px;
+     font-weight: lighter;
+     padding: 6px 25px;
+     border-radius: 16px;
+    }
+.l-sign-top .default {
+    background-color: #ffd802;
+    color: #fb0a54;
+}
+.l-sign-top .success {
+    background-color: #fff;
+    color: #fb0a54;
+}
+.l-sign-day {
+    position: relative;
+    padding: 15px 12px 7px;
+    background-color: #fff;
+    margin: 0 8px;
+    border-radius: 16px;
+}
+.l-sign-day-bg {
+    background: url(http://img.fox800.xyz/themes/wechat/yellow-theme/default-skin/src/img/sign/signInfoBg.png) no-repeat center;
+    background-size: 277px;
+    height: 25px;
+    text-align: center;
+    background-position: center;
+    line-height: 25px;
+    color: #5e5e5e;
+    margin-bottom: 12px;
+    font-size: 16px;
+}
+.l-sign-day .l-sign-day-list ul {
+    display: flex;
+    padding: 0;
+    margin: 3px 0;
+}
+.l-sign-day .l-sign-day-list ul li {
+    flex: 1;
+    text-align: center;
+    font-size: 14px;
+}
+.l-sign-day .l-sign-day-list ul li div {
+    background-image: url(http://img.fox800.xyz/themes/wechat/yellow-theme/default-skin/src/img/sign/giftDefault.png);
+    height: 38px;
+    background-size: 33px;
+    background-position: center;
+    background-repeat: no-repeat;
+    line-height: 47px;
+    font-size: 12px;
+    color: #e8e6e6;
+    margin-bottom: 3px;
+}
+.l-sign-day .l-sign-day-list ul li .active {
+    background-image: url(http://img.fox800.xyz/themes/wechat/yellow-theme/default-skin/src/img/sign/gift.png) !important;
+    color: #fff;
+}
+.l-sign-day .l-sign-day-list ul li span {
+    color: #999898
+ }
+ .l-sign-work {
+    background-color: #fff;
+    margin: 8px;
+    padding: 10px 0;
+    border-radius: 16px;
+    font-weight: initial;
+ }
+ .l-sign-work .l-work-top {
+    font-size: 16px;
+    padding: 10px
+ }
+ .l-sign-work .l-work-item {
+     border-bottom: 1px solid #e8e6e6;
+     overflow: hidden;
+     padding: 11px 0 10px;
+ }
+ .l-sign-work .l-work-item .l-item-left {
+     float: left;
+     padding-left: 55px;
+     background: url(http://img.fox800.xyz/themes/wechat/yellow-theme/default-skin/src/img/sign/sing-icon.png) no-repeat center left;
+ }
+ .l-sign-work .l-work-item .l-sign-icon {
+    background-position: 9px 2px;
+    background-size: 169px;
+ }
+ .l-sign-work .l-work-item .l-sign-share {
+    background-position: -32px 2px;
+    background-size: 169px;
+ }
+ .l-sign-work .l-work-item .l-sign-invite {
+    background-position: -74px 2px;
+    background-size: 169px;
+ }
+ .l-sign-work .l-work-item .l-sign-agree {
+    background-position: -118px 2px;
+    background-size: 169px;
+ }
+ .l-sign-work .l-work-item .l-sign-collect {
+    background-position: 12px -33px;
+    background-size: 169px;
+ }
+ .l-sign-work .l-work-item .l-sign-comment {
+    background-position: -31px -33px;
+    background-size: 169px;
+ }
+ .l-sign-work .l-work-item .l-sign-first {
+    background-position: -75px -33px;
+    background-size: 169px;
+ }
+ .l-sign-work .l-work-item .l-sign-total {
+    background-position: -119px -33px;
+    background-size: 169px;
+ }
+ .l-sign-work .l-work-item .l-item-left section {
+     background-color: #fff;
+ }
+ .l-sign-work .l-work-item .l-item-left p {
+     font-size: 14px;
+     margin-bottom: 0 !important;
+     color: #383838;
+ }
+ .l-sign-work .l-work-item .l-item-left span {
+     font-size: 12px;
+     color: #aaaaaa;
+ }
+ .l-sign-work .l-work-item .l-item-btn {
+    display: block;
+    float: right;
+    padding-right: 10px;
+    padding: 5px 10px;
+    border-radius: 16px;
+    margin-right: 12px;
+    font-size: 14px;
+    margin-top: 7px;
+}
+.l-sign-work .l-work-item:last-child {
+    border-bottom: 0 !important;
+}
+.l-sign-work .l-work-item .default {
+    background-color: #ffc102;
+    color: #fff;
+}
+.l-sign-work .l-work-item .success {
+    background-color: inherit;
+    color: #ffc102;
+    border: 1px solid #ffc102;
+}
+.l-sign-work .l-work-item .receive {
+    background-color: #fd4e4d;
+    color: #fff;
+    padding: 5px 19px !important;
+}
+.l-common-bg {
+    position: fixed;
+    display: flex;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+    text-align: center;
+    visibility: hidden;
+    /* transition: all 0.3s; */
+}
+.l-bg-active  {
+    z-index: 99;
+    visibility: visible
+}
+/* .l-bg-active .l-model-content {
+   visibility: visible !important;
+} */
+.l-common-bg .l-model-content {
+    position: relative;
+    width: 280px;
+    height: 300px;
+    margin: auto;
+    background-size: 100% !important;
+    color: #fff;
+    margin-top: 26%;
+    /* visibility: hidden; */
+}
+.l-common-bg .l-model-content .l-model-tittle {
+    margin: 32px 0 10px;
+    font-size: 19px;
+    font-weight: 600;
+    letter-spacing: 3px;
+}
+.l-common-bg.l-model-content .l-model-info {
+    font-size: 16px;
+}
+.l-common-bg .l-model-content .l-model-info span {
+    color: #ffd94d;
+    font-size: 19px;
+}
+.l-common-bg .l-model-content .l-model-share {
+    position: absolute;
+    height: 56px;
+    bottom: 10px;
+    background-size: 75% !important;
+    width: 100%;
+    left: 0;
+    line-height: 54px;
+    color: #a54206;
+    text-indent: 17px;
+}
+.l-common-bg .l-model-content .l-model-close {
+    width: 35px;
+    height: 35px;
+    position: absolute;
+    bottom: -64px;
+    left: 123px;
+    background: url(http://img.fox800.xyz/themes/wechat/yellow-theme/default-skin/src/img/sign/closeBtn.png) no-repeat center;
+    background-size: 100%;
+}
+
+/* 签到成功弹窗 */
+.l-common-bg .l-model-sign {
+    background: url(http://img.fox800.xyz/themes/wechat/yellow-theme/default-skin/src/img/sign/signSuccessBg.png) no-repeat center top;
+}
+.l-common-bg .l-model-sign .l-model-share {
+    background: url(http://img.fox800.xyz/themes/wechat/yellow-theme/default-skin/src/img/sign/shareBtnBg.png) no-repeat center;
+}
+
+/* 分享成功过弹窗 */
+
+.l-common-bg .l-model-invite {
+    background: url(http://img.fox800.xyz/themes/wechat/yellow-theme/default-skin/src/img/sign/shareSuccessBg.png) no-repeat center top;
+}
+.l-common-bg .l-model-invite .l-model-share {
+    background: url(http://img.fox800.xyz/themes/wechat/yellow-theme/default-skin/src/img/sign/signInviteBtnBg.png) no-repeat center;
+}
+
+/* 测试动画 */
+@keyframes bounceIn {
+	from,
+	50%,
+	to {
+	  -webkit-animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+	  animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+	}
+
+	0% {
+	  opacity: 0;
+	  -webkit-transform: scale3d(0.3, 0.3, 0.3);
+	  transform: scale3d(0.3, 0.3, 0.3);
+	}
+
+	70% {
+	  opacity: 1;
+	  -webkit-transform: scale3d(1.09, 1.09, 1.09);
+	  transform: scale3d(1.09, 1.09, 1.09);
+	}
+
+	to {
+	  opacity: 1;
+	  -webkit-transform: scale3d(1, 1, 1);
+	  transform: scale3d(1, 1, 1);
+	}
+  }
+  .bounceIn {
+	-webkit-animation-duration: 0.2s;
+	animation-duration: 0.2s;
+	-webkit-animation-name: bounceIn;
+	animation-name: bounceIn;
+  }

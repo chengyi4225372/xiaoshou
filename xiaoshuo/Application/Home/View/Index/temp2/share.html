@@ -1,0 +1,73 @@
+<include file="include/header" title="{$title}" />
+<style>
+	textarea{
+		width: 90%;
+		padding: .3rem 5% 2rem 5%;
+		border: none;
+		border-bottom: 1px solid #eee;
+		font-size: .4rem;
+	}
+	.share{
+		height: 1rem;
+		line-height: 1rem;
+		padding-left: .5rem;
+		font-size: .4rem;
+	}
+	.copy{
+		width: 40%;
+		display: block;
+		margin: 1rem auto;
+		text-align: center;
+		padding: .2rem 0;
+		background: #2196F3;
+		color: #fff;
+		font-size: .4rem;
+		border-radius: .2rem;
+	}
+	.share-img{
+		width: 92%;
+		margin: -.3rem auto 1.5rem;
+		display: block;
+	}
+</style>
+<div>
+	<textarea id="huas">{$info.huas}</textarea>
+</div>
+<div class="share">
+	分享链接：<span id="share-url">{$shareUrl}</span>
+</div>
+<a href="javascript:;" class="copy" data-clipboard-action="copy" data-clipboard-text="{$info.huas}&#10;{$shareUrl}">复制</a>
+<if condition="$info['huaspic']">
+<img src="{$info.huaspic}" class="share-img"/>
+</if>
+<script src="__PUBLIC__/admin/js/clipboard.min.js"></script>
+<script>
+	$('textarea').bind('input propertychange', function(){
+		var huas = $('textarea').val();
+			url = $('#share-url').html();
+		if($("textarea").val() != ""){
+			var html = huas+"\n"+url;
+			$('.copy').attr("data-clipboard-text",html);
+		}
+    });
+
+	
+	//分享复制
+	var clipboard = new Clipboard('.copy');
+	clipboard.on('success', function (e) {
+		layer.open({
+            content: '<div style="color:darkorange;font-size:14px;">您已成功复制分享话术和分享地址，发布朋友圈粘贴即可！</div>' ,
+            btn: '确定',
+            one: function (index) {
+                layer.close(index);
+            }
+        });
+		e.clearSelection();
+	});
+
+	clipboard.on('error', function (e) {
+		console.error('Action:', e.action);
+		console.error('Trigger:', e.trigger);
+	});
+</script>
+<include file="include/footer2" />

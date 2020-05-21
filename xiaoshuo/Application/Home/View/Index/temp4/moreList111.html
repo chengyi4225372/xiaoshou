@@ -1,0 +1,64 @@
+<include file="include/header" title="{$title}" />
+<a class="toback tobackbg-free" href="javascript:history.go(-1);"></a>
+<style>
+	.tl span{
+		position: absolute;
+		left: .7rem;
+		font-size: 1rem;
+		top: 1.85rem;
+		font-family: monospace;
+		font-weight: 600;
+	}
+</style>
+<div class="br-box free-box rank-view clearfix">
+    <div class="tl"><i class="wbg"></i><span>{$mtitle}</span></div>
+    <div class="list clearfix" id="html_box" style="min-height: 740px;">       
+        <volist name="list" id="vo">
+			
+        </volist>
+    </div>
+</div>
+<script>
+	var page = 1;
+	var wait = true;
+	
+	$(function () {
+		//随机颜色
+		var arr = ['#1A772B','#A15E08','#97277F','#256088'];
+		var arrLength = arr.length;
+		$('.tl span').css('color',arr[rand(arrLength)]);  //取值0~6
+	
+		getData();
+		$(window).bind("scroll", function (event) {
+			if(!wait) return;
+			var top = document.documentElement.scrollTop + document.body.scrollTop;
+			var textheight = $(document).height();
+			if (textheight - top - $(window).height() <= 100) {
+				page++;
+				getData();
+			}
+		});
+	});
+	
+	//获取数据
+	function getData(){
+		$.post("{:U('Ajax/getMoreList')}",{page:page,field:"{$_GET['field']}",value:"{$_GET['value']}",btype:"{$_GET['btype']}"},function(d){
+			if(d){
+				if(d.status){
+					$('#html_box').append(d.info);
+				}else{
+					if(page == 1 && $('#nolist').length == 0){
+						$('#html_box').append('<li id="nolist" style="text-align:center;line-height: 3rem;list-style: none;font-size: .35rem;" class="mui-table-view-cell mui-media">抱歉，平台管理员很偷懒，还没上传哦！</li>');
+					}
+					wait = false;
+				}
+			}else{
+				bh_msg_tips('加载失败！');
+			}
+		})
+	}	
+	
+	function rand(number) {
+		return Math.floor(Math.random()*number);
+	}
+</script>

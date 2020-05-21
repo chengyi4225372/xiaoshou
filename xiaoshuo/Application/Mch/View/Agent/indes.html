@@ -1,0 +1,116 @@
+<section class="content-header">
+<div>
+	<ol class="breadcrumb" style="background: none; margin-bottom: 0px;">
+		<li><a href="{:U('Index/index')}" style="color: #333;"><i class=" fa fa-home"></i> Home</a></li>
+		<li class="active">代理信息</li>
+	</ol>
+</div>
+</section><!-- Main content --><section class="content">
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box">
+			<div class="box-header">
+				<a href="{:U('edit2')}" class="btn btn-success" style="float:left; margin-right:15px;">添加代理</a>
+				<form method="post">
+					<div class="form-group input-group" style="float:left; margin-right:15px;">
+						<div class="col-sm-6" style="padding:0px;">
+							<select class="select-get-attention" name="status" style="height: 35px;" default="{$_GET['status']}">
+								<option value="">状态筛选（全部）</option>
+								<option value="-2">待审核</option>
+								<option value="1">正常</option>
+								<option value="-1">停用</option>
+							</select>
+						</div>
+					</div>
+					<div class="input-group" style="width: 220px;margin-right: 5px;">
+						<input type="text" name="keyword" class="form-control pull-right" placeholder="公众号名称/手机号" value="{$_GET['keyword']}">
+						<div class="input-group-btn">
+							<button type="submit" class="btn btn-default">搜索</button>
+						</div>
+					</div>
+				</form>
+			</div>
+			<!-- /.box-header -->
+			<div class="box-body">
+				<table class="table table-bordered table-hover table-striped text-center">
+				<tbody>
+				<tr>
+					<th>公众号名称</th>
+					<th>用户名</th>
+					<th>代理名称</th>
+					<th>手机号</th>
+					<th>绑定域名</th>
+					<th>佣金比例</th>
+					<th>状态</th>
+					<th>注册时间</th>
+					<th>操作</th>
+				</tr>
+				<foreach name="list" item="v">
+					<tr>
+						<td>{$v.title}</td>
+						<td><span style="color:#168fff">{$v.username}</span></td>
+						<td><span style="color:#168fff">{$v.name}</span></td>
+						<td>{$v.mobile}</td>
+						<td>{$v.url}</td>
+						<td>{$v.lv}%</td>
+						<td class="channel_status">
+							<if condition="$v['status'] eq -1">
+								禁用
+							<elseif condition="$v['status'] eq 1" />
+								正常
+							<else />
+								待审核
+							</if>
+						
+						</td>
+						<td>{$v.create_time|date="Y-m-d H:i:s",###}</td>
+						<td>
+							<a href="{:U('orders',array('id'=>$v['id']))}" class="btn btn-xs btn-info" style="background: #00a65a;border-color: #00a65a;">数据统计</a>
+							<a href="{:U('edit2',array('id'=>$v['id']))}" class="margin btn btn-xs btn-info">修改资料</a>
+							<if condition="$v['status'] eq 1">
+								<a href="javascript:;" class="btn-xs btn bg-maroon edit" data-id="{$v.id}">&nbsp;&nbsp;禁&nbsp;用&nbsp;&nbsp;</a>
+							<elseif condition="$v['status'] eq -1" />
+								<a href="javascript:;" class="btn-xs btn bg-olive edit" data-id="{$v.id}">&nbsp;&nbsp;启&nbsp;用&nbsp;&nbsp;</a>
+							</if>
+						</td>
+					</tr>
+				</foreach>
+				</tbody>
+				</table>
+			</div>
+			<!-- /.box-body -->
+			<div class="box-footer clearfix">
+			</div>
+		</div>
+	</div>
+</div>
+</section>
+<script>
+	$('.edit').click(function () {
+		var id = $(this).data('id');
+		var type = $(this).data('type');
+		var _this = $(this);
+        var status = $(this).parent().siblings('.channel_status');
+		
+		$.post("{:U('setStatus')}",{id:id},function(d){
+			if(d){
+				if(d.update == -1){
+					 status.text('禁用');
+					_this.html('&nbsp;&nbsp;启&nbsp;用&nbsp;&nbsp;');
+					_this.attr('data-type',2);
+					_this.removeClass('bg-maroon');
+					_this.addClass('bg-olive');
+				}else{
+					status.text('正常');
+					_this.html('&nbsp;&nbsp;禁&nbsp;用&nbsp;&nbsp;');
+					_this.attr('data-type',1);
+					_this.removeClass('bg-olive');
+					_this.addClass('bg-maroon');
+				}
+				
+			}else{
+				layer.msg('非法请求！');
+			}
+		})
+	});
+</script>    

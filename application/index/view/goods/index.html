@@ -1,0 +1,358 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="Generator" content="ECSHOP v4.0.6" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="Keywords" content="" />
+    <meta name="Description" content="" />
+
+    <title>购物流程_我是一家测试商城 - Powered by ECShop</title>
+
+    <link rel="shortcut icon" href="favicon.ico" />
+    <link rel="icon" href="animated_favicon.gif" type="image/gif" />
+    <link href="themes/fd15/style.css" rel="stylesheet" type="text/css" />
+
+    <script type="text/javascript" src="js/common.js"></script><script type="text/javascript" src="js/shopping_flow.js"></script><script type="text/javascript" src="js/common2.js"></script><script type="text/javascript" src="js/compare2.js"></script></head>
+<body>
+
+<script type="text/javascript" src="js/transport2.js"></script><script type="text/javascript" src="js/utils.js"></script><link href="themes/fd15/images/ec12.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    var process_request = "正在处理您的请求...";
+</script>
+<script language='javascript' src='themes/fd15/js/fdjs.js' type='text/javascript' charset='utf-8'></script>
+<script language='javascript' src='themes/fd15/js/fdjs.json.js' type='text/javascript' charset='utf-8'></script>
+<div class="reg_top" style="padding-top:10px"> <a href="index.php" name="top"><img src="themes/fd15/images/logo.gif" /></a> </div>
+<div class="clear0"></div>
+<div class="blank"></div>
+<div class="block">
+    <div class="step_all step_1"></div>
+
+
+    <script type="text/javascript" src="js/showdiv.js"></script>  <script type="text/javascript">
+    var user_name_empty = "请输入您的用户名！";
+    var email_address_empty = "请输入您的电子邮件地址！";
+    var email_address_error = "您输入的电子邮件地址格式不正确！";
+    var new_password_empty = "请输入您的新密码！";
+    var confirm_password_empty = "请输入您的确认密码！";
+    var both_password_error = "您两次输入的密码不一致！";
+    var show_div_text = "请点击更新购物车按钮";
+    var show_div_exit = "关闭";
+</script>
+    <div class="flowBox flowBox1">
+
+        <form id="formCart" name="formCart" method="post" action="flow.php">
+            <table width="100%" align="center" border="0" cellpadding="5" cellspacing="0" class="formCart_table" >
+                <tr>
+                    <th >商品名称</th>
+                    <!--              <th >属性</th>-->
+                    <th >本店价</th>
+                    <th >购买数量</th>
+                    <th >小计</th>
+                    <th >操作</th>
+                </tr>
+                <tr>
+                    <td  align="center">
+                        <div class="fl"> <a href="goods.php?id=897" target="_blank"><img src="./images/4ced182d04ce4fb88c2964dc8fbbf3be.jpg" border="0" title="虚拟商品测试H5" /></a></div>
+                        <div class="fl">
+                            <a href="goods.php?id=897" target="_blank" class="f6">虚拟商品测试H5</a>
+                            <p>                            </p></div>
+                    </td>
+                    <!--              <td ></td>-->
+                    <td  >￥100.00</td>
+                    <td  >
+
+                        <input name="submit" type="submit" class="fd30_jian_8669" value="-" />
+
+                        <input type="text" name="goods_number[8669]" id="goods_number_8669" value="1" size="2" class="inputBg fd30_num" style="text-align:center " onkeydown="showdiv(this)"/>
+
+
+                        <input name="submit" type="submit" class="fd30_jia_8669" value="+" />
+
+
+                        <script>
+                            $(function (){
+                                var t = $("#goods_number_8669");
+                                $(".fd30_jia_8669").click(function(){
+                                    t.val(parseInt(t.val())+1)
+                                    if (parseInt(t.val())!=1){
+
+                                        $('.fd30_jia_8669').attr('disabled',false);
+                                    }
+
+                                });
+                                $(".fd30_jian_8669").click(function(){
+
+
+                                    if (parseInt(t.val())==1){
+
+                                        $('.fd30_jian_8669').attr('disabled',true);
+
+                                    }	else{t.val(parseInt(t.val())-1);}
+
+                                });
+
+                            });</script>
+                    </td>
+                    <td align="right" >￥100.00</td>
+                    <td align="center" >
+                        <a href="javascript:if (confirm('您确实要把该商品移出购物车吗？')) location.href='flow.php?step=drop_goods&amp;id=8669'; " class="f6">删除</a>
+                    </td>
+                </tr>
+
+            </table>
+
+
+            <input type="hidden" name="step" value="update_cart" />
+        </form>
+        <table width="100%" align="center" border="0" cellpadding="5" cellspacing="0" class="fd30_tt" >
+            <tr>
+                <td ><a href="./"><img src="themes/fd15/images/continue.gif" alt="continue" /></a><input type="button" value="清空购物车" class="fd30_clear" onclick="location.href='flow.php?step=clear'" /></td>
+                <td  > <div class="fr"> <a href="flow.php?step=checkout" class="fd30_checkout">去结算</a></div>
+                    <div class="fr">
+                        <span>购物金额小计 ￥100.00</span></div>
+                </td>
+            </tr>
+        </table>
+
+    </div>
+    <div class="blank5"></div>
+
+
+    <div class="block">
+        <div class="flowBox">
+            <h6><span>优惠活动</span></h6>
+            <form action="flow.php" method="post">
+                <table width="100%" align="center" border="0" cellpadding="5" cellspacing="1" bgcolor="#dddddd" >
+                    <table width="100%" align="center" border="0" cellpadding="5" cellspacing="0" >
+                        <tr>
+                            <td align="right" >活动名称：</td>
+                            <td ><strong>春节促销2</strong></td>
+                        </tr>
+                        <tr>
+                            <td align="right" >优惠期限：</td>
+                            <td >2020-01-06 00:00:00 --- 2020-05-31 00:00:00</td>
+                        </tr>
+                        <tr>
+                            <td align="right" >优惠范围：</td>
+                            <td >全部商品<br />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="right" >金额区间：</td>
+                            <td >￥100.00 --- ￥0.00</td>
+                        </tr>
+                        <tr>
+                            <td align="right" >优惠方式：</td>
+                            <td >
+                                <span class="STYLE1">从下面的赠品（特惠品）中选择 1 个（0表示不限制数量）</span>
+                                <br />
+                                <input type="checkbox" value="838" name="gift[]" />
+                                <a href="goods.php?id=838" target="_blank" class="f6">爱普生LQ-615KII针式打印机三联单</a> [￥1.00]
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="right" >&nbsp;</td>
+                            <td align="center" ><input type="image" src="themes/fd15/images/bnt_cat.gif" alt="Add to cart"  border="0" /></td>
+                        </tr>
+                    </table>
+                    <input type="hidden" name="act_id" value="17" />
+                    <input type="hidden" name="step" value="add_favourable" />
+            </form>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+</div>
+<div class="blank5"></div>
+
+<div class="ipl flow_goods">
+</div><script type="Text/Javascript" language="JavaScript">
+    <!--
+
+    function selectPage(sel)
+    {
+        sel.form.submit();
+    }
+
+    //-->
+</script>
+<script type="text/javascript">
+    window.onload = function()
+    {
+        Compare.init();
+        fixpng();
+    }
+    var button_compare = '';
+    var exist = "您已经选择了%s";
+    var count_limit = "最多只能选择4个商品进行对比";
+    var goods_type_different = "\"%s\"和已选择商品类型不同无法进行对比";
+    var compare_no_goods = "您没有选定任何需要比较的商品或者比较的商品数少于 2 个。";
+    var btn_buy = "购买";
+    var is_cancel = "取消";
+    var select_spe = "请选择商品属性";
+</script>
+
+
+<div class="blank"></div>
+<div class="clear10"></div>
+
+<div class="footer_wrap">
+
+
+    <div class="footer footerbg">
+        <div class="footads"><A href=""></A><A href=""></A><A href=""></A><A href=""></A></div>
+        <div class="footHelp">
+            <table  border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td>                <a href="category.php?id=95"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    >剑网3</a>
+                        |
+                        <a href="message.php"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        >留言板</a>
+                        |
+                        <a href="user.php"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                           target="_blank"
+                        >用户中心</a>
+                        |
+                        <a href="message.php"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        >留言板</a>
+                        |
+                        <a href="article_cat.php?id=4"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        >3G资讯</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+
+
+
+
+        <div class="footer_info"> &copy; 2005-2020 测试商城 版权所有，并保留所有权利。  888     Tel: 4006781125234          <a href="http://wpa.qq.com/msgrd?V=1&amp;Uin=123013025&amp;Site=测试商城&amp;Menu=yes" target="_blank"><img src="http://wpa.qq.com/pa?p=1:123013025:4" height="16" border="0" alt="QQ" /> 123013025</a>
+            <a href="http://amos1.taobao.com/msg.ww?v=2&uid=%E9%A6%96%E4%BB%93%E8%B4%B8%E6%98%93%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8&s=2" target="_blank"><img src="http://amos1.taobao.com/online.ww?v=2&uid=%E9%A6%96%E4%BB%93%E8%B4%B8%E6%98%93%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8&s=2" width="16" height="16" border="0" alt="淘宝旺旺" />首仓贸易有限公司</a>
+            <br />
+            ICP备案证书号:<a href="http://www.miibeian.gov.cn/" target="_blank">沪ICP备123456</a><br />
+            共执行 138 个查询，用时 0.032519 秒，在线 105 人，Gzip 已禁用，占用内存 3.486 MB<br />
+            <a href="https://xyunqi.com/products/ecshop?from=nav" target="_blank" style=" font-family:Verdana; font-size:11px;">Powered&nbsp;by&nbsp;<strong><span style="color: #3366FF">ECShop</span>&nbsp;<span style="color: #FF9966">v4.0.6</span></strong></a>&nbsp;<a href="http://www.ecshop.com/license.php?product=ecshop_b2c&url=http%3A%2F%2Fecshop.test1.shopex123.com%2F" target="_blank"
+            >&nbsp;&nbsp;Licensed</a><br />
+            <div >
+                <div class="clear10"></div>
+            </div>
+        </div>
+        <script type="text/javascript">
+
+            window.__Object_toJSONString = Object.prototype.toJSONString;
+            delete Object.prototype.toJSONString;
+
+
+        </script></body>
+<script type="text/javascript">
+    var process_request = "正在处理您的请求...";
+    var username_empty = "- 用户名不能为空。";
+    var username_shorter = "- 用户名长度不能少于 3 个字符。";
+    var username_invalid = "- 用户名只能是由字母数字以及下划线组成。";
+    var password_empty = "- 登录密码不能为空。";
+    var password_shorter = "- 登录密码不能少于 6 个字符。";
+    var confirm_password_invalid = "- 两次输入密码不一致";
+    var email_empty = "- Email 为空";
+    var email_invalid = "- Email 不是合法的地址";
+    var agreement = "- 您没有接受协议";
+    var msn_invalid = "- msn地址不是一个有效的邮件地址";
+    var qq_invalid = "- QQ号码不是一个有效的号码";
+    var home_phone_invalid = "- 家庭电话不是一个有效号码";
+    var office_phone_invalid = "- 办公电话不是一个有效号码";
+    var mobile_phone_invalid = "- 手机号码不是一个有效号码";
+    var msg_un_blank = "* 用户名不能为空";
+    var msg_un_length = "* 用户名最长不得超过7个汉字";
+    var msg_un_format = "* 用户名含有非法字符";
+    var msg_un_registered = "* 用户名已经存在,请重新输入";
+    var msg_can_rg = "* 可以注册";
+    var msg_email_blank = "* 邮件地址不能为空";
+    var msg_email_registered = "* 邮箱已存在,请重新输入";
+    var msg_email_format = "* 邮件地址不合法";
+    var msg_blank = "不能为空";
+    var no_select_question = "- 您没有完成密码提示问题的操作";
+    var passwd_balnk = "- 密码中不能包含空格";
+    var username_exist = "用户名 %s 已经存在";
+    var compare_no_goods = "您没有选定任何需要比较的商品或者比较的商品数少于 2 个。";
+    var btn_buy = "购买";
+    var is_cancel = "取消";
+    var select_spe = "请选择商品属性";
+</script>
+</html>

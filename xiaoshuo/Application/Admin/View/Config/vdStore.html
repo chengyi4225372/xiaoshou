@@ -1,0 +1,94 @@
+<section class="content-header">
+<div>
+	<ol class="breadcrumb" style="background: none; margin-bottom: 0px;">
+		<li><a href="{:U('Index/index')}" style="color: #333;"><i class=" fa fa-home"></i>&nbsp;Home</a></li>
+		<li class="active">视频信息</li>
+		<li class="active">视频分类</li>
+	</ol>
+</div>
+</section>
+<section class="content">
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box">
+			<div class="box-header">
+				<h3 class="box-title"></h3>
+				<a href="javascript:;" onclick="addTr();" class="btn btn-success">添加分类</a>
+			</div>
+			<!-- /.box-header -->
+			<div class="box-body">
+				<form class="form-horizontal" style="margin-top:30px" method="POST" enctype="multipart/form-data">
+					<table class="table table-bordered table-hover table-striped text-center">
+						<tbody id="tables">
+							<tr>
+								<th>分类图片</th>
+								<th>分类名称</th>
+								<th>操作</th>
+							</tr>
+							<volist name="_vdStore" id="v" >
+								<tr>
+									<td>
+										<iframe src="{:U('Index/upload?event=setPath&cur_index='.$i.'&url='.$v['pic'])}" scrolling="no" style="width:100px; height:100px;"></iframe>
+										<input type="hidden" name="pic[]" value="{$v.pic}" />
+									</td>
+									<td><input type="text" name="name[]" class="form-control col-sm-9" value="{$v.name}"></td>
+									<td>
+										<a href="javascript:;" onclick="delTr(this);" class="btn btn-xs btn-info">
+											<i class="fa fa-times"></i>删除
+										</a>
+									</td>
+								</tr>
+							</volist>
+						</tbody>
+					</table>
+					
+					<div class="box-footer">
+						<div class="form-group">
+							<div class="col-sm-offset-3 col-sm-9">
+								<button type="button" id="ajaxBtn" class="btn btn-primary">保存</button>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+</section>
+<script>
+	var cur_index = null;
+		index = null;
+	function addTr(){
+		var html = '';
+			html+='<tr>';
+			
+			html+='<td>';
+			html+='<iframe src="{:U('Index/upload?cur_index=_n_&event=setPath')}" scrolling="no" style="width:100px; height:100px;"></iframe>';
+			html+='<input type="hidden" name="pic[]" value="" />';
+			html+='</td>';
+			
+			html+='<td>';
+			html+='<input type="text" name="name[]" class="form-control col-sm-9" value="">';
+			html+='</td>';
+
+			html+='<td>';
+			html+='<a href="javascript:;" onclick="delTr(this);" class="btn btn-xs btn-info"><i class="fa fa-close"></i>删除</a>';
+			html+='</td>';
+			html+='</tr>';
+			
+		size = $("#tables").find("tr").size();
+		$('#tables').append(html.replace('_n_',size_r));
+	}
+	
+	function setPath(url){
+		if(cur_index==null)return;
+		index = cur_index;
+		cur_index= null;
+		jQuery("#tables").find("tr").eq(index).find("td:eq(0)").find("input[type=hidden]").val(url);
+	}
+	
+	
+	function delTr(ob){
+		$(ob).parents('tr').remove();
+	}
+</script>

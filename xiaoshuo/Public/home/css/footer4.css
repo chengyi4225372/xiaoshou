@@ -1,0 +1,67 @@
+.footer {
+    width: 100%;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #fff;
+    border-top: 1px solid #ddd;
+    display: table;
+    z-index: 9;
+}
+
+.footer ul {
+    display: table-row;
+}
+
+.footer li {
+    display: table-cell;
+    text-align: center;
+}
+
+.footer li a {
+    height: 49px;
+    line-height: 49px;
+    display: block;
+    /*font-size: 1.4rem;*/
+    color: #a0a0a0;
+}
+
+.footer li a.active {
+    color: #ff730b;
+}
+
+.footer li a i {
+    width: 17px;
+    height: 17px;
+    display: inline-block;
+    background: url(../images/column.png) no-repeat;
+    background-size: 115px 17px;
+    position: relative;
+    top: 4px;
+    margin-right: 6px;
+}
+
+.footer li a i.icon-book {
+    background-position: 0 0;
+}
+
+.footer li a.active i.icon-book {
+    background-position: -20px 0;
+}
+
+.footer li a i.icon-choice {
+    background-position: -42px 0;
+}
+
+.footer li a.active i.icon-choice {
+    background-position: -61px 0;
+}
+
+.footer li a i.icon-my {
+    background-position: -80px 0;
+}
+
+.footer li a.active i.icon-my {
+    background-position: -98px 0;
+}

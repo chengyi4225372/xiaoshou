@@ -1,0 +1,243 @@
+<include file="include/header4" title="{$title}" />
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/home/css/template3/home.css" />
+<style>
+.home-hottag-menu {
+
+    height: 50px;
+    bottom: 0;
+    display: table;
+    width: 100%;
+    padding: 0;
+    table-layout: fixed;
+    border-top: 0;
+    border-bottom: 0;
+    -webkit-touch-callout: none;
+    z-index: 199;
+ 
+
+}
+.box {
+	width: 100%;
+	background-color: #fff;
+}
+.home-hottag-menu .home-hottag-item {
+	display: table-cell;
+	width: 1%;
+	text-align: center;
+	vertical-align: middle;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	color: #929292;
+}
+p {
+	font-size: 14px;
+	margin-top: 0;
+	margin-bottom: 10px;
+	color: #8f8f94;
+}
+.box img{ width: 60px;height: 60px;}
+</style>
+<div class="mui-content g-content cor-content">
+	<!--<foreach name="list" item="v">-->
+		<!--<volist name="v['list2']" id="vv">-->
+			<!--{$vv.title}-->
+		<!--</volist>-->
+	<!--</foreach>-->
+	<!--漫画轮播图-开始-->
+	<div class="banner_bg">
+		<div id="home-slider" class="mui-slider">
+			<div class="mui-slider-group mui-slider-loop" >
+				<foreach name="_mhBanner" item="v">
+				<div class="mui-slider-item">
+					<a href="{$v.url}">
+						<img class="banner-image" src="{$v.pic}">
+					</a>
+				</div>
+				</foreach>
+
+			</div>
+			<!--轮播图分页点-->
+			<div class="mui-slider-indicator">
+				<div class="mui-indicator mui-active"></div>
+				<div class="mui-indicator "></div>
+				<div class="mui-indicator "></div>
+				<div class="mui-indicator "></div>
+			</div>
+		</div>
+	</div>
+	<!--轮播图-结束-->
+
+	<!-- banner底部弧形 -->
+	<div class="banner-bottom">
+		<img src="__PUBLIC__/home/images/template3/home-banner-bottom.png">
+	</div>
+	<!-- banner底部弧形结束 -->
+
+	<div class="home-header">
+		<div class="home-title">
+			<div class="home-tab">
+				<a class="boy"></a>
+			</div>
+		</div>
+	</div>
+
+	<div class="y-sex-popup">
+		<div class="y-sex-popup-box">
+			<img src="__PUBLIC__/home/images/template3/y-sex-popup-man.png">
+		</div>
+	</div>
+
+	<div class="home-search-icon">
+		<a class="search-icon" href="{:U('Index/iSearch')}"></a>
+	</div>
+
+	<div class="home-hottag-menu">
+		<div class="box">
+			<foreach name="middle" item="v">
+			<a class="home-hottag-item" onclick="location.href='http://{$serviceUrl}/{$v.url}'">
+				<img class="home-menu-img2" src="{$v.img}" />
+				<p>{$v.name}</p>
+			</a>
+			</foreach>
+		</div>
+	</div>
+
+	<!-- 3个菜单结束 -->
+	<foreach name="list" item="v">
+	<!--精选漫画-->
+	<div class="home-recommend">
+		<div class="mui-card-title"><a  href="{:U('Index/moreList',array('field'=>'areas','value'=>$v['sid'],'btype'=>1))}"><strong style="color: #fc4d08;"><i></i>{$v.name}<i></i></strong></a></div>
+		<!--推荐列表第二种样式-开始-->
+		<foreach name="v['list2']" item="vv">
+			<div class="home-card-1 mui-card">
+				<a class="mui-card-content" href="{:U('Index/info',array('id'=>$vv['id']))}">
+					<img src="{$vv.coverpic}">
+					<div class="home-tag-bottom">
+						<i class="sprite-app-fire icon"></i></div>
+				</a>
+				<div class="mui-card-footer">
+					<div class="home-recommend-footer">
+						<span class="home-footer-title">{$vv.title}</span>
+					</div>
+					<div class="home-footer-describe">{$vv.remark}</div>
+				</div>
+			</div>
+		</foreach>
+	<if condition="$v['sid'] neq 3">
+	   <volist name="v['list']" id="vv" offset="0" length="4">
+		<div class="home-card-2" id="">
+			<a class="mui-card-content" href="{:U('Index/info',array('id'=>$vv['id']))}">
+				<img src="{$vv.coverpic}">
+			</a>
+			<div class="mui-card-footer">
+				<div class="home-recommend-footer">
+					<span class="home-footer-title" >{$vv.title}</span>
+				</div>
+				<div class="home-footer-describe">{$vv.remark}</div>
+			</div>
+		</div>
+
+
+	   </volist>
+	<else/>
+
+		<volist name="v['list']" id="vv" offset="0" length="4">
+		<div class="y-newbook">
+			<div class="y-newbook-img">
+				<a class="mui-card-content" href="{:U('Index/info',array('id'=>$vv['id']))}">
+					<img src="{$vv.coverpic}">
+				</a>
+			</div>
+			<div class="y-newbook-data">
+				<a class="mui-card-content" href="{:U('Index/info',array('id'=>$vv['id']))}">
+
+					<div class="y-newbook-title">{$vv.title}</div>
+					<!--<div class="y-newbook-like">39.6万人喜欢</div>-->
+					<p>{$vv.remark}</p>
+				</a>
+			</div>
+		</div>
+		</volist>
+
+	</if>
+	</div>
+	</foreach>
+
+	<if condition="$noPay">
+	<!--人气推荐-->
+	<div class="home-recommend">
+		<div class="mui-card-title"><strong><i></i>人气推荐<i></i></strong></a></div>
+		<!--以下样式共调用3条-->
+
+		<div class="y-classic-end">
+			<ul>
+		    	<foreach name="noPay" item="v">
+				<li>
+					<a href="{:U('Index/info',array('id'=>$v['id']))}"><img src="{$v.coverpic}"></a>
+					<div class="y-newbook-title">{$v.title}</div>
+					<p>{$v.title}</p>
+				</li>
+		    	</foreach>
+			</ul>
+		</div>
+	</div>
+	</if>
+
+
+
+
+
+
+
+	<!--页脚二维码-->
+<div class="y-qrcodey">
+	<div class="y-qrcodey-box">
+		<i></i>
+		<i></i>
+		<a href="{:U('Index/bookType',array('btype'=>1))}">
+			<span>~(＾◇＾)~ 我是底线~</span>点我探索吧~
+		</a>
+	</div>
+	<div class="y-qrcodey-img">
+		<if condition="$mch">
+		 <img src="{$mch['qrcode']}">
+		<else/>
+		<img src="{$_site['qrcode']}">
+		</if>
+	</div>
+	<div class="y-qrcodey-bottom"><img src="__PUBLIC__/home/images/template3/y-qrcodey-bottom.png"></div>
+</div>
+
+</div>
+
+<if condition="$plat neq 1">
+	<nav class="mui-bar mui-bar-tab nav-footer tophref">
+		<input type="hidden" name="yemain" value="$_SERVER['HTTP_REFERER']" />
+		<a class="mui-tab-item" href="{:U('Index/index')}">
+			<span class="footer-nav-icon icon-recommended"></span>
+			<span class="mui-tab-label">推荐</span>
+		</a>
+		<a class="mui-tab-item" href="{:U('Index/bookType',array('btype'=>1))}">
+			<span class="footer-nav-icon icon-class"></span>
+			<span class="mui-tab-label">找书</span>
+		</a>
+		<a class="mui-tab-item"  href="{:U('Index/readHistory')}">
+			<span class="footer-nav-icon icon-bookcase"></span>
+			<span class="mui-tab-label">书架</span>
+		</a>
+
+		<a class="mui-tab-item" href="{:U('Index/my')}">
+			<span class="footer-nav-icon icon-mine"></span>
+			<span class="mui-tab-label">我的</span>
+		</a>
+	</nav>
+</if>
+<script>
+    mui('.tophref').on('tap','a',function(){document.location.href=this.href;});
+	$(document).ready(function(){
+        $('.nav-footer a').each(function(){
+            if($($(this))[0].href==String(window.location))
+                $(this).addClass('mui-active');
+        });
+    })
+</script>

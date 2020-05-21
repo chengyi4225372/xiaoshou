@@ -1,0 +1,122 @@
+<include file="include/header" title="{$title}" />
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=rj1dpvwNqHo2rb3AY7wH0wGcvWgWA4IK"></script>
+<div class="sellinfo-top">
+	<img class="coverpic" src="{$info['coverpic']}" />
+	<div class="msk"></div>
+	<div class="txts">
+		<a href="{:U('sellerShare',array('id'=>$info['id']))}"><span class="spfl"><img src="__PUBLIC__/home/images/share.png" />一键分享</span></a>
+		<span class="logo"><img src="{$info.logo}" /></span>
+		<a href="http://api.map.baidu.com/geocoder?address={$info['district']}&output=html&src=webapp.baidu.openAPIdemo" id="map"><span class="spfr"><img src="__PUBLIC__/home/images/location.png" />一键导航</span></a>
+	</div>
+</div>
+
+<div class="sellinfo-notice">
+	<ul>
+		<li><span>公告</span></li>
+		<li>
+			<marquee behavior="scroll" direction="left" scrollamount="8">{$info['notice']}</marquee>
+		</li>
+	</ul>
+</div>
+<style>
+
+</style>
+<if condition="$imgs">
+<div class="seller-banner">
+	<div class="swiper-container swiper-container-horizontal swiper-container-ios swiper-container-wp8-horizontal">
+		<div class="swiper-wrapper">
+			<foreach name="imgs" item="v">
+				<div class="item swiper-slide">
+					<a href="javascript:;">
+						<img class="slide_loading" src="{$v}">
+					</a>
+				</div>
+			</foreach>
+		</div>
+		<div class="swiper-pagination swiper-pagination-bullets swiper-pagination-bullets-dynamic" ></div>
+	</div>
+</div>
+<script>
+	$(function () {
+        var swiper = new Swiper('.swiper-container', {
+            autoplay: {
+                delay: 3000,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                dynamicBullets: true,
+            },
+        });
+    });
+</script>
+</if>
+
+<div class="sellinfo-content">
+	{$info.info}
+</div>
+
+<div class="sellinfo-footer">
+	<div class="title">{$info.title}<span onclick="$('.sellinfo-footer').slideUp();">X</span></div>
+	<div class="addNum">
+		<div><span onclick="decNums();">-</span></div>
+		<div class="nums">1</div>
+		<div><span onclick="addNums();">+</span></div>
+	</div>
+	<button onclick="buySeller();">支付¥<span id="total">{$info['money']}</span>元</button>
+</div>
+
+<div class="sellinfo-buy" onclick="$('.sellinfo-footer').slideDown();">
+	一键购买
+</div>
+
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/layer/skin/default/layer.css">
+<script src="__PUBLIC__/layer/layer.js"></script>
+<script>
+	var money = "{$info['money']}";
+	
+	function addNums(){
+		var nums = $('.nums').html();
+		nums++;
+		$('.nums').html(nums);
+		var total = (Number(money*nums)).toFixed(2);
+		$('#total').html(total);
+	}
+	
+	function decNums(){
+		var nums = $('.nums').html();
+		nums--;
+		if(nums<=1){
+			nums = 1;
+		}
+		$('.nums').html(nums);
+		var total = (Number(money*nums)).toFixed(2);
+		$('#total').html(total);
+	}
+	
+	
+	function buySeller(){
+		var nums = $('.nums').html();
+		layer.load(2);
+		$.post("{:U('Ajax/buySeller')}",{id:"{$info['id']}",nums:nums},function(d){
+			layer.closeAll();
+			if(d){
+				if(d.status){
+					layer.alert(d.info,function(){
+						location.reload();
+					});
+				}else{
+					layer.alert(d.info,function(){
+						location.href = d.url;
+					});
+				}
+			}else{
+				layer.msg('非法请求！');
+			}
+		});
+	}
+
+</script>
+
+</body>
+</html>

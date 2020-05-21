@@ -1,0 +1,30 @@
+<include file="include/header" title="{$title}" />
+<style>
+.vd-content .vd-items:last-child{
+	border:none;
+}
+</style>
+<div class="vd-content">
+	<div class="vd-items">
+		<div class="title">{$title}</div>
+		<ul>
+			<foreach name="list" item="vv">
+			<a href="{:U('vinfo',array('id'=>$vv['id']))}">
+				<li>
+					<img src="{$vv.coverpic}" />
+					<div class="txt">
+						<h1>{$vv.title}</h1>
+						<span>{$vv.remark}</span>
+						<p>
+							{$vv.reads}人阅读
+							<if condition="$vv['isfw'] eq 1">
+							<i>￥{$vv.money}&nbsp;书币</i>
+							</if>
+						</p>
+					</div>
+				</li>
+			</a>
+			</foreach>
+		</ul>
+	</div>
+</div>

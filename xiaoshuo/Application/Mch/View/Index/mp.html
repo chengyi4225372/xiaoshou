@@ -1,0 +1,122 @@
+<section class="content-header">
+	<div>
+		<ol class="breadcrumb" style="background: none; margin-bottom: 0px;">
+			<li><a href="{:U('Index/index')}" style="color: #333;"><i class=" fa fa-home"></i> Home</a></li>
+			<li class="active">公众号信息</li>
+			<li class="active">公众号设置</li>
+		</ol>
+	</div>
+
+</section>
+
+<!-- Main content -->
+<section class="content">
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box">
+			<div class="nav-tabs-custom">
+				<ul class="nav nav-tabs">
+				  <li class="active"><a href="{:U('mp')}">公众号设置</a></li>
+				  <li class=""><a href="{:U('integrate')}">公众号接入</a></li>
+				</ul>
+				<div class="tab-content">
+				  <div class="tab-pane active" id="tab_1">
+					<div class="row">
+						<div style="margin-bottom:30px">
+						</div>
+						<form id="main-form" class="form-horizontal" method="post">
+							<div class="form-group">
+								<label class="control-label col-sm-3">类型</label>
+								<div class="col-sm-9">
+									<label class="radio-inline">
+										<input type="radio" checked="checked">
+										<span>认证服务号</span>
+									</label>
+								</div>
+							</div>
+							
+							<div class="form-group">
+								<label class="control-label col-sm-3">站点名称</label>
+								<div class="col-sm-6">
+									<input type="text" name="title" class="form-control col-sm-9" value="{$info['title']}" required="">
+									<p class="help-block help-block-error col-sm-7 col-xs-10"></p>
+								</div>
+							</div>
+								<div class="form-group">
+									<label for="exampleInputEmail1" class="control-label col-sm-3">网站首次关注提示关键词</label>
+									<div class="col-sm-6">
+										<input type="text" name="subscribe" class="form-control col-sm-9" value="{$info['subscribe']}">
+									</div>
+								</div>					
+							<div class="form-group">
+								<label class="control-label col-sm-3">App ID</label>
+								<div class="col-sm-6">
+									<input type="text" name="appid" class="form-control col-sm-9" value="{$info['appid']}" required="">
+									<p class="help-block help-block-error col-sm-7 col-xs-10"></p>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-sm-3">App Secret</label>
+								<div class="col-sm-6">
+									<input type="text" name="appsecret" class="form-control col-sm-9" value="{$info['appsecret']}" required="">
+									<p class="help-block help-block-error col-sm-7 col-xs-10"></p>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-sm-3">关注模式</label>
+								<div class="col-sm-9">
+									<label class="radio-inline">
+										<input type="radio" name="submodel" value="1" <if condition="$mch['submodel'] eq 1">checked="checked"</if> />
+										<span>主动关注</span>
+									</label>
+									<label class="radio-inline">
+										<input type="radio" name="submodel" value="2" <if condition="$mch['submodel'] eq 2">checked="checked"</if> />
+										<span>强制关注</span>
+									</label>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-sm-3">IP白名单</label>
+								<div class="col-sm-6">
+									
+									<?php
+										$ips = explode("|",$mch['ips']);
+										$html = implode("&#10;",$ips);
+									?>
+									<if condition="$ips">
+										<foreach name="ips" item="v">
+											<p>{$v}</p>
+										</foreach>
+									</if>					
+									<button type="button" class="btn btn-xs fa fa-copy copy" data-clipboard-action="copy" data-clipboard-text="{$html}">复制</button>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-offset-3 col-sm-9">
+									<button type="button" id="ajaxBtn" class="btn btn-primary">保存</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				  </div> 
+			</div>
+		</div>
+	</div><!-- /.col -->
+</div>
+</section>
+
+<link rel="stylesheet" href="__PUBLIC__/layer/skin/default/layer.css">
+<script src="__PUBLIC__/admin/js/clipboard.min.js"></script>
+<script src="__PUBLIC__/layer/layer.js"></script>
+<script>
+var clipboard = new Clipboard('.copy');
+clipboard.on('success', function (e) {
+	layer.msg("复制成功!");
+	e.clearSelection();
+});
+
+clipboard.on('error', function (e) {
+	console.error('Action:', e.action);
+	console.error('Trigger:', e.trigger);
+});
+</script>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html data-dpr="1" style="font-size: 37.5px;">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="viewport" content="designWidth=750,width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>{$titles}</title>
+<link href="__PUBLIC__/home/css/swiper.min.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/home/css/style.min.css">
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/layer/skin/default/layer.css">
+<script src="__PUBLIC__/home/js/jquery-1.7.min.js"></script>
+<script src="__PUBLIC__/home/js/swiper.min.js"></script>
+<script src="__PUBLIC__/home/js/mui.min.js"></script>
+<script src="__PUBLIC__/layer/layer.js"></script>
+</head>
+<style>
+	a{
+		text-decoration:none;
+	}
+	.btns{
+		display:block;
+		width:30%;
+		margin:30px 35% 0px 35%;
+		text-align:center;
+		font-size:.45rem;
+		border:none;
+		background:#ff9800;
+		color:#fff;
+		line-height:1rem;
+		border-radius:8px;
+	}
+	.btns-back{
+		margin:15px 35% 0px 35%;
+		background:#2196f3;
+	}
+</style>
+<body>
+	<div style=" text-align:right;">
+		<img src="__PUBLIC__/Home/images/right_top.png" style="width:100px;height:100px;margin-right:20px;" />
+	</div>
+	<div style=" padding:10px 50px 10px 10px;font-size:.5rem;text-align:right;">
+		<p>1.请点击右上角</p>
+		<p>2.然后选择<span style=" color:green;">默认浏览器中打开</span></p>
+	</div>
+	
+	<a class="btns" href="javascript:history.go(-1);">返回</a>
+	<a class="btns btns-back" href="{$return_url}">已支付完成</a>
+</body> 
+</html>

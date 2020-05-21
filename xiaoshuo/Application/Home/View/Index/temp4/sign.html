@@ -1,0 +1,47 @@
+<include file="include/header5" title="{$title}" />
+
+<link href="__PUBLIC__/home/css/template5_sign.css" rel="stylesheet" type="text/css">
+
+
+<div class="body_sytle">
+	<div class="s_main <eq name="singok" value="2">is_sign</eq>">
+		<div class="s_img"></div>
+		<h1 class="j_h1">签到送礼</h1>
+		<strong class="j_site">每日签到可获得<span>{$signmoney}书币</span>奖励</strong>
+		<div class="content_null_but_box j_sign_btn">
+		<eq name="singok" value="2">
+			<a class="sign_1" id="toIndex" href="javascript:;">今日已签到，继续阅读</a>
+		<else/>	
+			<a class="sign_0" id="sign" href="javascript:;">签到领书币</a>
+		</eq>
+		</div>
+	</div>
+</div>
+<script type="text/javascript" src="__PUBLIC__/home/js/zepto.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/home/js/zepto.cookie.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/home/js/zepto.picLazyLoad.min.js"></script>			
+<script type="text/javascript" src="__PUBLIC__/home/js/template5_common.js"></script>
+<script>
+	var isClick = false;
+	$('#sign').click(function(){
+		if(isClick){
+			return false;
+		}
+		isClick = true;
+		$.post("{:U('Ajax/sign')}",{},function(data){
+		    console.log(data);
+			if (data.status){
+				$('.j_h1').text('签到成功');
+				$('.j_site').html('恭喜您获得<span>'+data.smoney+'书币</span>奖励');
+				$('.j_sign_btn').html('<a class="sign_0" href="{:U("my/readHistory")}">去看书</a>');
+			}else{
+				isClick = false;
+			}
+		})
+	});
+	$('#toIndex').click(function(){
+		window.location.href = "{:U('my/readHistory')}";
+	});
+</script>
+</body>
+</html>

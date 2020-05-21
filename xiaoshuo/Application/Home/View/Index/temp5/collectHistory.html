@@ -1,0 +1,239 @@
+<include file="include/header4" title="{$title}" />
+
+<style>
+	.mui-popup-in {
+		position: fixed !important;
+	}
+
+	.mui-popup-out {
+		position: fixed !important;
+	}
+	img{object-fit: cover;}
+</style>
+
+<body>
+
+
+<div class="w-shelfTab ">
+	<div id="segmentedControl" class="mui-segmented-control">
+		<a class="mui-control-item w-active" href="{:U('Index/readHistory',array('btype'=>$btype))}">历史</a>
+		<a class="mui-control-item w-active mui-active">收藏</a>
+	</div>
+	<div class="w-shelfCleanUp">
+		<span class="w-cleanUp"><i class="icon-source-list icon-settle"></i></span>
+		<span class="w-achieve">完成</span>
+	</div>
+</div>
+<div class="mui-content taphref">
+	<div class="w-shelfContent">
+
+		<!--收藏-->
+		<div id="item1" class="mui-control-content mui-active">
+<!-- 
+			<div class="w-shelfUpdate" style="display: none;">
+				<div class="w-userPhoto">
+					<img src="__PUBLIC__/home/js/template3/scpic.jpg"/>
+				</div>
+				<div class="w-shelfNum">您收藏的漫画有<span class="updateCount">0</span>部更新啦！</div>
+			</div> -->
+
+			<div class="w-shelfBooklist">
+				<ul id="shelf-container">
+
+				</ul>
+			</div>
+			<div class="w-operation1">
+				<div class="w-Select">
+					<div class="w-SelectAll">全选</div>
+					<div class="w-SelectNone">取消</div>
+				</div>
+				<div class="w-delete">删除</div>
+			</div>
+		</div>
+
+	</div>
+</div>
+<include file="include/footer4" />
+<script type="text/javascript">
+    var page = 1;
+    var wait = true;
+
+    $(function () {
+        getData();
+        $('.bs-box').bind("scroll", function (event) {
+            if(!wait) return;
+            var top = document.documentElement.scrollTop + document.body.scrollTop;
+            var textheight = $(document).height();
+            if (textheight - top - $(window).height() <= 100) {
+                page++;
+                getData();
+            }
+        });
+    });
+
+    //获取数据
+    function getData(){
+       
+        $.post("{:U('Ajax/getCollectHistory3')}",{page:page,btype:"{$btype}"},function(d){
+            if(d){
+                if(d.status){
+                    $('#shelf-container').append(d.info);
+                }else{
+                    if(page == 1 && $('#nolist').length == 0){
+                        $('.common-ne').show();
+                    }
+                    wait = false;
+                }
+            }else{
+                bh_msg_tips('加载失败！');
+            }
+        })
+    }
+
+    $('#edit_shelf_btn').click(function(){
+        if($("#shelf-container").hasClass('editable')){
+            $("#shelf-container").removeClass('editable');
+            $('#niubi').show();
+            $('#bibibi').hide();
+            $('#d_layer').hide();
+            $('#myfooter').show();
+
+            //去掉勾选中的样式
+            $("#select_all").prop("checked",false);
+            //去掉item中swtich的check
+            $('.item').find('.swtich').removeClass('check');
+            //清除删除数量
+            $('#delete_count').html(0);
+        }else{
+            $("#shelf-container").addClass('editable');
+            $('#niubi').hide();
+            $('#bibibi').show();
+            $('#d_layer').show();
+            $('#myfooter').hide();
+        }
+    });
+    function choose(ob){
+        if($(ob).parents('.editable').length>0){
+            if($(ob).find('.swtich').hasClass('check')){
+                $(ob).find('.swtich').removeClass('check');
+                var len = $('.check').length;
+                //如果数量小于item的数量
+                if($('#shelf-container .item').length > len){
+                    $("#select_all").prop("checked",false);
+                }
+
+            }else{
+                $(ob).find('.swtich').addClass('check');
+                var len = $('.check').length;
+                //如果数量等于item的数量
+                if($('#shelf-container .item').length == len){
+                    $("#select_all").prop("checked",true);
+                }
+            }
+            $('#delete_count').html(len);
+        }
+    }
+
+    $('#select_all').click(function(){
+        if($("#select_all").prop("checked")){
+            $('.row-list').find('.swtich').addClass('check');
+            $('#delete_count').html($('#shelf-container .item').length)
+        }else{
+            $("#select_all").prop("checked",false);
+            $('.row-list').find('.swtich').removeClass('check');
+            $('#delete_count').html(0);
+        }
+    })
+	/*
+
+    //确定删除
+    var ids = [];
+    function deleteCollect(){
+        ids = [];
+        $('.row-list .swtich').each(function(){
+            if($(this).hasClass('check')){
+                ids.push($(this).attr("_id"));
+            }
+        });
+
+        $('.mask-box').show();
+        $('#confirm-delete-count').html(ids.length);
+        $('.modal').show();
+    }
+
+    //提交删除
+    function confirmDelete(){
+        if(ids.length == 0){
+            bh_msg_tips('您没有选中任何记录！');
+            return false;
+        }
+        $('.row-list .swtich').each(function(){
+            if($.inArray($(this).attr("_id") ,ids)>=0 && $(this).hasClass('check')){
+                $(this).parents('.item').remove();
+            }
+        });
+        $('.mask-box').hide();
+        $('#confirm-delete-count').html(0);
+        $('.modal').hide();
+
+        $("#shelf-container").removeClass('editable');
+        $('#niubi').show();
+        $('#bibibi').hide();
+        $('#d_layer').hide();
+        $('#myfooter').show();
+
+        //去掉勾选中的样式
+        $("#select_all").prop("checked",false);
+        //去掉item中swtich的check
+        $('.item').find('.swtich').removeClass('check');
+        //清除删除数量
+        $('#delete_count').html(0);
+
+        if($('#shelf-container .item').length == 0){
+            $('.common-ne').show();
+        }
+
+        $.post("{:U('Ajax/deleteCollect')}",{ids:ids.join(",")});
+    }*/
+	$(".w-operation1 .w-delete").click(function () {
+        var checked = $(".w-checkbox1 input[name='checked']:checked");
+        var ids = '';
+        var len = 0;
+        $.each(checked, function (i, e) {
+            ids += e.value + ',';
+            len += 1;
+        });
+        mui.confirm('确认删除选中' + len + '本书？', '删除后将无法恢复', ['是', '否'], function (e) {
+            // 发送请求
+            if (e.index == 0) {
+                if (ids != "") {
+                    var param = { ids: ids};
+                    $.ajax({
+                        type: 'POST',
+                        url: "{:U('Ajax/deleteCollect')}",
+                        data: param,
+                        dataType: 'json',
+                        success: function (r) {
+						     console.log(r);
+                            if (r.status == 1) {
+                                mui.toast('删除成功！');
+                                // $.each(checked, function (i, e) {
+                                //     $('#shelf' + e.value).remove();
+                                // });
+                                window.location.reload();
+                            }
+                        }
+                    });
+                } else {
+                    mui.toast('请选择书籍！');
+                }
+            } else {
+                mui.toast('已取消！');
+            }
+        })
+    });
+    mui('.mui-segmented-control').on('tap','a',function(){document.location.href=this.href;});
+</script>
+<script type="text/javascript" src="__PUBLIC__/home/js/template3/common.js"></script> 
+</body>
+</html>

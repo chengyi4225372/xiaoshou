@@ -1,0 +1,692 @@
+<style>
+	.template-msg-editor {
+		border: #ddd 1px solid;
+		border-radius: 4px;
+		padding: 8px;
+		background: white;
+		width: 400px;
+	}
+
+	.item-title:hover {
+		text-decoration: underline;
+		color: #86D0FF;
+	}
+
+	.item-img {
+		cursor: pointer;
+	}
+
+	ul {
+		list-style: none;
+	}
+
+	.rich-msg-editor {
+		border: #ddd 1px solid;
+		border-radius: 4px;
+		padding: 8px;
+		background: white;
+		width: 400px;
+	}
+
+	.rich-msg-editor .msg-edit-pic-overlay {
+		display: none;
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		text-align: center;
+		line-height: 170px;
+		background: rgba(0, 0, 0, .2);
+	}
+
+	.msg-sub-item {
+		padding: 5px 0;
+		border-bottom: 1px #ddd solid;
+	}
+
+	.msg-sub-item-img {
+		width: 40px;
+		height: 40px;
+		position: relative;
+	}
+
+	.msg-sub-item-img img {
+		width: 100%;
+		height: 100%;
+	}
+
+	.msg-sub-item-img-overlay {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		line-height: 40px;
+		top: 0;
+		left: 0;
+		text-align: center
+	}
+
+	.msg-sub-item-img-overlay:hover .msg-sub-item-img-overlay span {
+		display: block;
+	}
+
+	.msg-sub-item-img-overlay span {
+		color: #fff;
+		cursor: pointer;
+		text-decoration: underline;
+		display: none;
+	}
+
+	.msg-sub-item-img-overlay:hover span {
+		color: #fff;
+		cursor: pointer;
+		text-decoration: underline;
+		display: block;
+	}
+
+	.check_time {
+		cursor: pointer;
+	}
+
+</style>
+<link rel="stylesheet" href="__PUBLIC__/admin/css/message_filter.css">
+<section class="content-header">
+	<div>
+		<ol class="breadcrumb" style="background: none; margin-bottom: 0px;">
+			<li><a href="{:U('Index/index')}" style="color: #333;"><i class=" fa fa-home"></i> Home</a></li>
+			<li class="active">客服消息</li>
+		</ol>
+	</div>
+
+</section>
+
+        <!-- Main content -->
+        <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+
+                <div class="box box-primary">
+                    <div style="margin-bottom:30px">
+                    </div>
+                    <form id="main-form" class="form-horizontal" method="post">
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">任务名称</label>
+                            <div class="col-sm-6">
+								<if condition="$_GET['id']">
+                                <input type="text" name="name" id="name" class="form-control col-sm-9" value="">
+								<else />
+								<input type="text" name="name" id="name" class="form-control col-sm-9" value="">
+								</if>
+                                <p class="help-block help-block-error col-sm-7 col-xs-10"></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">图文选择</label>
+                            <div class="col-sm-6">
+                                <div style="background: #eee;padding: 10px">
+                                    <div id="rich-msg-editor" class="rich-msg-editor">
+                                        <div class="msg-title" style="margin-bottom:5px;">
+                                            <span>{$info['title']}</span>
+                                            <i class="fa fa-edit" id="edit_msg_title" style="cursor: pointer"></i>
+                                        </div>
+                                        <div class="msg-cover" style="position: relative;padding-bottom:10px;border-bottom: 1px solid #ddd">
+                                            <img src="{$info['spic']}" id="tpic" alt="" style="width: 100%;height: 250px">
+                                            <div class="msg-edit-pic-overlay" style="display: none;">
+                                                <span class="btn-edit-pic btn btn-success btn-xs" id="edit_picurl"><i class="fa fa-edit"></i> 更换图片</span>
+                                            </div>
+                                        </div>
+                                        <div class="msg-sub-items">
+                                        </div>
+                                    </div>
+                                    <div class="add-sub-item" style="width: 400px;margin-top: 10px;text-align: center">
+                                        <a href="javascript:void (0);"><i class="fa fa-plus"></i>添加次条</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">头条链接</label>
+                            <div class="col-sm-6">
+                                <input type="text" name="url" id="url" class="form-control col-sm-9" placeholder="请输入点击跳转链接" required="" value="http://{$mch['url']}/index.php?a=activity&id={$info.actid}">
+                                <p class="help-block no-padding-left">
+                                    用户点击客服消息后跳转到的网页链接
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">消息描述</label>
+                            <div class="col-sm-6">
+                                <textarea type="text" name="remark" required="" id="remark" class="form-control col-sm-9">{$info.remark}</textarea>
+                                <p class="help-block help-block-error col-sm-7 col-xs-10"></p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">接收用户</label>
+                            <div class="col-sm-6">
+                                <div class="radio col-sm-3">
+                                    <label>
+                                        <input type="radio" name="is_all" value="1"> 全部用户
+                                    </label>
+                                </div>
+                                <div class="radio col-sm-3">
+                                    <label>
+                                        <input type="radio" name="is_all" value="0" checked=""> 按分类选择
+                                    </label>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="form-group" id="filter">
+                            <div class="col-sm-6 col-sm-offset-3">
+                                <div class="filter">
+                                    <div class="tags-group-list">
+                                        <div class="tags-items-wrap clearfix">
+                                            <label class="tags-items-label fl" style="width: 15%">性别：</label>
+                                            <div class="tags-items-list fl clearfix" style="width: 85%">
+                                                <div class="ant-tag">
+                                                    <input type="radio" name="sex" value="0" id="sex_0" class="filter-radio" checked=""> <label for="sex_0">不限</label>
+                                                </div>
+                                                <div class="ant-tag">
+                                                    <input type="radio" name="sex" value="1" id="sex_1" class="filter-radio"> <label for="sex_1">男</label>
+                                                </div>
+                                                <div class="ant-tag">
+                                                    <input type="radio" name="sex" value="2" id="sex_2" class="filter-radio"> <label for="sex_2">女</label>
+                                                </div>
+                                                <div class="ant-tag">
+                                                    <input type="radio" name="sex" value="3" id="sex_3" class="filter-radio"> <label for="sex_3">保密</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tags-items-wrap clearfix">
+                                            <label class="tags-items-label fl" style="width: 15%">充值情况：</label>
+                                            <div class="tags-items-list fl clearfix" style="width: 85%">
+                                                                                                    <div class="ant-tag">
+                                                        <input type="radio" name="charge" value="0" id="charge_0" checked="" class="filter-radio">
+                                                        <label for="recharge_0">不限</label>
+                                                    </div>
+                                                    <div class="ant-tag">
+                                                        <input type="radio" name="charge" value="2" id="charge_1" class="filter-radio">
+                                                        <label for="recharge_1">未充值用户</label>
+                                                    </div>
+                                                                                                <div class="ant-tag">
+                                                    <input type="radio" name="charge" value="1" id="charge_2" class="filter-radio">
+                                                    <label for="recharge_2">已充值用户</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tags-items-wrap clearfix">
+                                            <label class="tags-items-label fl" style="width: 15%">阅读币剩余：</label>
+                                            <div class="tags-items-list fl clearfix" style="width: 85%">
+                                                <div class="ant-tag">
+                                                    <input type="radio" name="money" value="0" id="money_0" checked="" class="filter-radio">
+                                                    <label for="balance_0">不限</label>
+                                                </div>
+                                                <div class="ant-tag">
+                                                    <input type="radio" name="money" value="1" id="money_1" class="filter-radio">
+                                                    <label for="balance_1">低于500</label>
+                                                </div>
+                                                <div class="ant-tag">
+                                                    <input type="radio" name="money" value="2" id="money_2" class="filter-radio">
+                                                    <label for="balance_2">低于2000</label>
+                                                </div>
+                                                <div class="ant-tag">
+                                                    <input type="radio" name="money" value="3" id="money_3" class="filter-radio">
+                                                    <label for="balance_3">低于5000</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tags-items-wrap clearfix">
+                                            <label class="tags-items-label fl" style="width: 15%">关注时间：</label>
+                                            <div class="tags-items-list fl clearfix" style="width: 85%">
+                                                <div class="ant-tag">
+                                                    <input type="radio" name="join_time" value="0" id="join_time_0" class="filter-radio" checked="">
+                                                    <label for="attention_time_0">不限</label>
+                                                </div>
+                                                <div class="ant-tag">
+                                                    <input type="radio" name="join_time" value="1" id="join_time_6" class="filter-radio">
+                                                    <label for="attention_time_6">一天内</label>
+                                                </div>
+                                                <div class="ant-tag">
+                                                    <input type="radio" name="join_time" value="2" id="join_time_1" class="filter-radio">
+                                                    <label for="attention_time_1">一周内</label>
+                                                </div>
+                                                <div class="ant-tag">
+                                                    <input type="radio" name="join_time" value="3" id="join_time_2" class="filter-radio">
+                                                    <label for="attention_time_2">半个月内</label>
+                                                </div>
+                                                <div class="ant-tag">
+                                                    <input type="radio" name="join_time" value="4" id="join_time_3" class="filter-radio">
+                                                    <label for="attention_time_3">一个月内</label>
+                                                </div>
+                                                <div class="ant-tag">
+                                                    <input type="radio" name="join_time" value="5" id="join_time_4" class="filter-radio">
+                                                    <label for="attention_time_4">三个月内</label>
+                                                </div>
+                                                <div class="ant-tag">
+                                                    <input type="radio" name="join_time" value="6" id="join_time_5" class="filter-radio">
+                                                    <label for="attention_time_5">更早</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tags-group-footer clearfix">
+                                        <div class="fl">
+                                            <span>符合条件的用户：</span>
+                                            <span>约 <img src="__PUBLIC__/admin/images/loading.gif" style="width: 18px; height: 18px; display: none;" id="loading-img"><span id="count" style="display: inline;">{$persons}</span> 人</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">发送时间</label>
+                            <div class="col-sm-6">
+                                <input type="text" name="send_time" class="form-control col-sm-9" id="reservationtime" required="" placeholder="选择发送时间">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3"></label>
+                            <div class="col-sm-6">
+                                <div class="col-sm-2 check_time btn btn-default btn-sm" style="margin-right: 10px;" data-value="10">10分钟后</div>
+                                <div class="col-sm-2 check_time btn btn-default btn-sm" style="margin-right: 10px;" data-value="30">30分钟后</div>
+                                <div class="col-sm-2 check_time btn btn-default btn-sm" style="margin-right: 10px;" data-value="60">1小时后</div>
+                                <div class="col-sm-2 check_time btn btn-default btn-sm" style="margin-right: 10px;" data-value="120">2小时后</div>
+                                <div class="col-sm-2 check_time btn btn-default btn-sm" style="margin-right: 10px;" data-value="180">3小时后</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">测试粉丝ID</label>
+                            <div class="col-sm-6 form-inline">
+                                <input type="text" name="user_id" id="user_id" class="form-control col-sm-9">
+                                <button type="button" style="margin-left:5px" class="btn btn-primary form-control col-sm-3" id="test_send"  onclick="saveForm(1);">测试发送
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="box-footer">
+                            <div class="form-group">
+                                <div class="col-sm-offset-3 col-sm-9">
+                                    <button type="button" class="btn btn-primary" id="save_form"  onclick="saveForm(2);">保存</button>                              
+								</div>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+
+            </div><!-- /.col -->
+        </div>
+    </section>
+    <div class="modal fade" id="chose_title" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="myModalLabel">选择标题</h4>
+                </div>
+                <div class="modal-body" style="max-height:400px;overflow:auto;">
+                    <ul class="list-group">
+						<foreach name="titles" item="v">
+							<li class="list-group-item item-title" style="color: #337ab7;cursor: pointer" data-title="{$v.title}">{$v.title}</li>
+						</foreach>
+					</ul>
+                </div>
+                <div class="modal-footer">
+                    <div class="form-group clearfix" style="margin-bottom: 10px">
+                        <div class="col-sm-12">
+                            <input type="text" name="url" id="self-title" class="form-control" placeholder="自填标题">
+                        </div>
+                    </div>
+                    <div>
+                        <button type="button" class="btn btn-info" id="self-title-button">选用自填标题</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    </div>
+
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+    <div class="modal fade" id="chose_img" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="myModalLabel">选择图片</h4>
+                </div>
+                <div class="modal-body" style="max-height:400px;overflow:auto;">
+                    <ul>
+						<foreach name="pics" item="v">
+						<li class="item-img" data-img="{$v.pic}" style="margin: 5px;width: 23%;float: left;height: 80px">
+							<img src="{$v.pic}" alt="" style="width: 100%;height: 100%">
+                        </li>
+						</foreach>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="chose_link" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="myModalLabel">输入链接</h4>
+                </div>
+                <div class="modal-body" style="height: 100px">
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <input type="text" id="form-control-ipt" class="form-control" placeholder="请输入点击跳转链接">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="save-link">保存</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+	var title_arr = {$titles_arr};
+	var img_arr = {$pics_arr};
+	
+	
+	//初始化人数
+	
+	$('.msg-cover').hover(function () {
+		$('.msg-edit-pic-overlay').show();
+	}, function () {
+		$('.msg-edit-pic-overlay').hide();
+	});
+	
+	//选择标题
+	$('#edit_msg_title').click(function () {
+		$('#chose_title').modal('show');
+	});
+	$('.item-title').unbind('click').click(function () {
+		var title = $(this).data('title');
+		$('.msg-title').find('span').text(title);
+		$('#chose_title').modal('hide');
+	});
+	$('#self-title-button').unbind('click').click(function () {
+		var title = $.trim($('#self-title').val());
+		if (title === '') {
+			layer.msg('自填标题不能为空！');
+		} else {
+			$('.msg-title').find('span').text(title);
+			$('#chose_title').modal('hide');
+		}
+	});
+	
+
+	$('#edit_picurl').click(function () {
+		$('#chose_img').modal('show');
+		$('.item-img').unbind('click').click(function () {
+			var img = $(this).data('img');
+			$('.msg-cover').find('img').attr('src', img);
+			$('#chose_img').modal('hide');
+		});
+	});
+	
+	var click_num = 0;
+	$(".add-sub-item").bind('click', function () {
+		var sub_items_size = $(".msg-sub-item").length;
+		click_num++;
+		var title = title_arr[Math.floor(Math.random() * title_arr.length + 1) - 1]['title'];
+		var img = img_arr[Math.floor(Math.random() * img_arr.length + 1) - 1]['pic'];
+		if (sub_items_size < 7) {
+			$(".msg-sub-items").append('<div class="msg-sub-item clearfix" data-id="' + click_num + '">' +
+				'<div class="pull-left">' +
+				'<span class="sub-title">' + title + '</span>' +
+				'<a href="javascript:void (0);" onclick="editTitle(this)"><i class="fa fa-edit edit-sub-title"></i></a>' +
+				'<a href="javascript:void (0);" onclick="deleteThis(this);" class="text-danger"><i class="fa fa-trash-o remove-sub-item"></i></a>' +
+				'<div class="msg-sub-item-meta">' +
+				'<span class="msg-sub-item-link" style="color:red;cursor: pointer">链接未配置</span>' +
+				'</div>' +
+				'</div>' +
+				'<div class="pull-right">' +
+				'<div class="msg-sub-item-img">' +
+				'<img src="' + img + '">' +
+				'<div class="msg-sub-item-img-overlay">' +
+				'<span>更换</span>' +
+				'</div>' +
+				'</div>' +
+				'</div>' +
+				'</div>'
+			);
+		} else {
+			$(this).hide();
+		}
+	});
+	
+	
+	//删除添加
+	function deleteThis(ob){
+		$(ob).parents('.msg-sub-item').remove();
+		$(".add-sub-item").show();
+	}
+	
+	//编辑标题
+	function editTitle(ob){
+		$('#chose_title').modal('show');
+		sub_title = $(ob).parents('.msg-sub-item').find('.sub-title');
+		var msg_title = sub_title.text();
+		$('.item-title').unbind('click').click(function () {
+			var title = $(this).data('title');
+			sub_title.text(title);
+			$('#chose_title').modal('hide');
+		});
+		$('#self-title-button').unbind('click').click(function () {
+			var title = $.trim($('#self-title').val());
+			if (title === '') {
+				layer.msg('自填标题不能为空！');
+			} else {
+				sub_title.text(title);
+				$('#chose_title').modal('hide');
+			}
+		});
+	};
+	
+	
+	//配置多次图片
+	 $(".msg-sub-items").delegate('.msg-sub-item-img-overlay', 'click', function () {
+			$('#chose_img').modal('show');
+			sub_img = $(this).parent().children('img');
+			$('.item-img').unbind('click').click(function () {
+				var img = $(this).data('img');
+				sub_img.attr('src', img);
+				$('#chose_img').modal('hide');
+			});
+		});
+	
+	//配置链接
+	$(".msg-sub-items").delegate('.msg-sub-item-link', 'click', function () {
+		if ($(this).text() === '链接未配置') {
+			$("#form-control-ipt").val('');
+		} else {
+			$("#form-control-ipt").val($(this).text())
+		}
+		link_id = $(this).parent().parent().parent().data('id');
+		$('#chose_link').modal('show');
+	});
+	
+	//保存配置链接
+	$('#save-link').click(function () {
+		var value = $("#form-control-ipt").val();
+		if (value !== '') {
+			$('.msg-sub-item').each(function () {
+				var item_id = $(this).data('id');
+				if (item_id === link_id) {
+					$(this).find('.pull-left').find('.msg-sub-item-meta').find('span').text(value);
+					$(this).find('.pull-left').find('.msg-sub-item-meta').find('span').css('color', '#000');
+				}
+			});
+			$('#chose_link').modal('hide');
+		} else {
+			layer.msg('链接不能为空!');
+		}
+	});
+	
+		
+	var filter = $('#filter');
+	$('input[name="is_all"]').change(function () {
+		var value = $(this).val();
+		if (value === '1') {
+			filter.hide();
+		} else {
+			filter.show();
+		}
+	});	
+	
+    $('.filter-radio').change(function () {
+        get_number_count();
+    });
+
+    
+    function get_number_count() {
+        $(".filter-radio").attr("disabled",true);
+        var count = $('#count');
+        var loading = $('#loading-img');
+        loading.show();
+        count.hide();
+		var data = {
+			sex: $('input[name="sex"]:checked').val(),
+			charge: $('input[name="charge"]:checked').val(),
+			money: $('input[name="money"]:checked').val(),
+			join_time:$('input[name="join_time"]:checked').val()
+		}
+		$.post("{:U('getUserCount')}",data,function(d){
+			if(d){
+			console.log(d);
+				loading.hide();
+				count.text(d.info);
+				count.show();
+				$(".filter-radio").removeAttr("disabled");
+			}else{
+				layer.msg('请求失败！');
+			}
+		});
+    }	
+	
+	$('.check_time').click(function () {
+		var time = $(this).data('value');
+		$.post("{:U('getNowAfter')}",{time:time},function(d){
+			if(d){
+				$('#reservationtime').val(d.info);
+			}else{
+				layer.msg('请求失败！');
+			}
+		});
+	});
+	
+	function eachJson(){
+		var arr= [];
+		if($('.msg-sub-item').length>0){
+			$('.msg-sub-item').each(function () {
+				var title_item = $(this).find('.pull-left').find('.sub-title').text();
+				var url_item = $(this).find('.pull-left').find('.msg-sub-item-meta').find('span').text();
+				if (url_item === '链接未配置') {
+					url_item = '';
+				}
+				var picurl_item = $(this).find('.pull-right').find('.msg-sub-item-img').find('img').attr('src');
+				var obj = {
+					title: title_item,
+					url: url_item,
+					picurl: picurl_item
+				};
+				arr.push(obj);
+			});
+			if (arr.length > 0) {
+				var json = JSON.stringify(arr);
+				return json;
+			} else {
+				return '';
+			}
+		}
+	}
+	
+	function saveForm(type){
+		var data= {
+				"info" : eachJson(),
+				"name" : $("#name").val(),
+				"title" : $('.msg-title').find('span').html(),
+				"pic" : $('#tpic').attr("src"),
+				"url" : $('#url').val(),
+				"remark" : $('#remark').val(),
+				"sex": $('input[name="sex"]:checked').val(),
+				"charge": $('input[name="charge"]:checked').val(),
+				"money": $('input[name="money"]:checked').val(),
+				"join_time":$('input[name="join_time"]:checked').val(),
+				"stime":$("#reservationtime").val(),
+				"user_id":$('#user_id').val(),
+				"type":type,
+			}
+		if(data.name == ""){
+			layer.msg('请填写任务名称！');
+			return false;
+		}
+		if(data.url == ""){
+			layer.msg('请头条链接不能为空！');
+			return false;
+		}
+		if(data.stime == "" && type != 1){
+			layer.msg('请选择发送时间！');
+			return false;
+		}
+		if(type == 1){ // 测试发送
+			if(data.user_id == ""){
+				layer.msg('请输入测试用户ID！');
+				return false;
+			}
+		}
+		layer.load(2);
+		$.post("{:U('sendCustom')}",data,function(d){
+			if(d){
+				layer.closeAll();
+				if(d.status){
+					if(type == 1){
+						layer.alert(d.info);
+					}else{
+						layer.alert(d.info,function(){
+							location.href = d.url;
+						})
+					}
+				}else{
+					layer.alert(d.info);
+				}
+			}else{
+				layer.closeAll();
+				layer.msg('请求失败！');
+			}
+		});
+	}
+	
+	$.fn.datetimepicker.dates['zh-CN'] = {
+		days: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"],
+		daysShort: ["日", "一", "二", "三", "四", "五", "六", "日"],
+		daysMin: ["日", "一", "二", "三", "四", "五", "六", "日"],
+		months: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+		monthsShort: ["一", "二", "三", "四", "五", "六", "七", "八", "九", "十", "十一", "十二"],
+		meridiem: ["上午", "下午"],
+		today: "今天"
+	};
+
+	$('#reservationtime').datetimepicker({
+		language: 'zh-CN',
+		weekStart: 1,
+		todayBtn: 1,
+		autoclose: 1,
+		todayHighlight: 1,
+		startView: 2,
+		forceParse: 0,
+		showMeridian: 1
+	});
+</script>

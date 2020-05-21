@@ -1,0 +1,179 @@
+<section class="content-header">
+	<div>
+		<ol class="breadcrumb" style="background: none; margin-bottom: 0px;">
+			<li><a href="{:U('Index/index')}" style="color: #333;"><i class=" fa fa-home"></i> Home</a></li>
+			<li class="active">推广信息</li>
+			<li class="active">推广链接</li></ol>
+	</div>
+</section>
+
+
+
+<!-- Main content -->
+<section class="content">
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="box">
+				<div class="box-header">
+					<h3 class="box-title"></h3>
+					<div class="box-tools" style="position: static;display: flex;">
+						
+						<form class="form-inline" method="post" style="float:left;margin-left:10px;">
+							<div class="input-group" style="width: 350px;">
+								<input type="text" name="name" class="form-control pull-right" placeholder="推广名称" value="{$_GET['name']}">
+								<div class="input-group-btn">
+									<button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+								</div>
+							</div>
+						</form>
+						<div class="input-group input-group-sm">
+							<input type="button" value="群普通链接复制" class="btn btn-sm btn-success" onclick="cloneUrl(1);">
+						</div>
+						<div class="input-group input-group-sm" style="margin-left:10px;">
+							<input type="button" value="群新浪短链接复制" class="btn btn-sm btn-success" onclick="cloneUrl(2);">
+						</div>
+					</div>
+				<!-- /.box-header -->
+					<div class="tab-content">
+						<div class="box-body table-responsive" id="outerChannel">
+							<table class="table table-bordered table-hover table-striped popularizeTable" style="word-wrap:break-word;">
+								<tbody>
+								<tr>
+									<th style="width:70px;">
+										<label class="css-input css-checkbox css-checkbox-primary remove-margin-t remove-margin-b">
+                                            <input type="checkbox" id="check-all"><span></span>
+                                        </label>
+									</th>
+									<th>ID</th>
+									<th>封面</th>
+									<th>名称</th>
+									<th>普通链接</th>
+									<th>新浪短链接</th>
+								</tr>	
+								<foreach name="list" item="v">
+								<tr>
+									<td>
+										<label class="css-input css-checkbox css-checkbox-primary remove-margin-t remove-margin-b">
+                                            <input type="checkbox" class="checks-child" value="{$v['id']}"><span></span>
+                                        </label>
+									</td>
+									<td>{$v.id}</td>
+									<td><img src="{$v.coverpic}" style="width:50px;height:70px;" /></td>
+									<td class="title">{$v.title}</td>
+									<td class="url"> 
+										<if condition="$v['url']">
+										{$v.url}
+										<else />
+										<a href="javascript:;" onclick="createChapter({$v['id']});" class="btn btn-xs btn-default editchapter">
+											<i class="fa fa-edit" style="margin-right: 5px;"></i>创建链接
+										</a>
+										</if>
+									</td>
+									<td class="shorturl">{$v.shorturl}</td>
+								</tr>
+								</foreach>
+							</tbody>
+						</table>
+					</div>
+					<div class="page">{$page|default="<p style='text-align:center'>暂时没有数据</p>"}</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</section>
+
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+				<h4 class="modal-title" id="modal-title"></h4>
+			</div>
+			<div class="modal-body" id="modal-content">
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-success copy" data-clipboard-action="copy" data-clipboard-target="#modal-content">复制</button>
+				<button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<link rel="stylesheet" href="__PUBLIC__/layer/skin/default/layer.css">
+<script src="__PUBLIC__/admin/js/clipboard.min.js"></script>
+<script src="__PUBLIC__/layer/layer.js"></script>
+
+<script>
+	var $choose = $(".checks-child");
+	 //全选
+	$("#check-all").click(function(){
+		if($(this).prop('checked')){
+			$choose.each(function(){
+				$(this).prop("checked",true);
+			});
+		}else{
+			$choose.each(function(){
+				$(this).prop("checked",false);
+			});
+		}
+	});
+	
+	
+	function createChapter(id){
+		layer.load(2);
+		$.post("{:U('createChapter')}",{id:id},function(d){
+			if(d){
+				layer.closeAll();
+				layer.msg(d.info);
+				setTimeout(function(){
+					location.reload();
+				},1000);
+			}else{
+				layer.closeAll();
+				layer.msg('请求失败！');
+			}
+		})
+	}
+	
+	function cloneUrl(type){
+		var html="";
+		$choose.each(function(){
+			if($(this).prop('checked') && $(this).parents("tr").find('.shorturl').html()!=""){
+				var title = $(this).parents("tr").find('.title').html();
+				if(type == 1){
+					url = $(this).parents("tr").find('.url').html();
+				}else{
+					url = $(this).parents("tr").find('.shorturl').html();
+				}
+				html+= title+":"+url+"<br>";
+			}
+		});
+		if(html ==""){
+			layer.msg('请选择要操作的数据');
+			return false;
+		}
+		$('#modal-content').html(html);
+		if(type == 1){
+			$('#modal-title').html('群普通链接复制');
+		}else{
+			$('#modal-title').html('群新浪短链接复制');
+		}
+		$('#myModal').modal("show");
+	}
+	
+	
+</script>
+<script>
+    var clipboard = new Clipboard('.copy');
+    clipboard.on('success', function (e) {
+        layer.msg("复制成功!");
+        e.clearSelection();
+    });
+    clipboard.on('error', function (e) {
+        console.error('Action:', e.action);
+        console.error('Trigger:', e.trigger);
+    });
+</script>

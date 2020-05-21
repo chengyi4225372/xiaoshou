@@ -1,0 +1,280 @@
+<section class="content-header">
+<div>
+	<ol class="breadcrumb" style="background: none; margin-bottom: 0px;">
+		<li><a href="{:U('Index/index')}" style="color: #333;"><i class=" fa fa-home"></i> Home</a></li>
+		<li class="active">粉丝信息</li>
+	</ol>
+</div>
+</section><!-- Main content --><section class="content">
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box">
+			<div class="box-header" style="min-height: 35px;">
+				<h3 class="box-title"></h3>
+				<div class="box-tools" style="left:10px;">
+					<form method="post">
+						<div class="form-group input-group input-group-sm" style="float:left; margin-right:15px;">
+							<div class="" style="padding:0px;">
+								<select class="form-control" name="subscribe" default="{$_GET['subscribe']}">
+									<option value="">关注状态（全部）</option>
+									<option value="2">未关注</option>
+									<option value="1">已关注</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group input-group input-group-sm" style="float:left; margin-right:15px;">
+							<div class="" style="padding:0;">
+								<select class="form-control" name="charge" default="{$_GET['charge']}">
+									<option value="">充值状态（全部）</option>
+									<option value="2">未充值</option>
+									<option value="1">已充值</option>
+								</select>
+							</div>
+						</div>
+						<div class="input-group" style="width: 212px;margin-right: 5px;display:table;border-radius: 4px;">
+							<input type="text" name="nickname" class="form-control pull-right" placeholder="输入昵称/ID搜索" value="{$_GET['nickname']}">
+							<div class="input-group-btn">
+								<button type="submit" class="btn btn-default">搜索
+								</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+			<!-- /.box-header -->
+			<div class="box-body">
+				<table class="table table-bordered table-hover table-striped text-center" style="font-size: 14px;">
+					<tbody>
+					<tr>
+						<th>会员ID</th>
+						<th>所属代理</th>
+						<th style="width:150px">昵称</th>
+						<th>头像</th>
+						<th>余额（阅读币）</th>
+						<th>总充值额</th>
+						<th>是否关注</th>
+						<th>是否vip</th>
+						<th>注册时间</th>
+						<th>操作</th>
+					</tr>
+					<foreach name="list" item="v">
+						<tr>
+							<td>{$v.id}</td>
+							<td>{$v.mname|default="总平台"}</td>
+							<td>{$v.nickname}</td>
+							<td><img src="{$v.headimg}" alt="" width="50px"></td>
+							<td>{$v.money}<button type="button" style="float:right;" class="btn btn-xs btn-danger del" onclick="charge({$v.id});">充值书币</button></td>
+							<td>¥{$v.charge_total|default="0.00"}元</td>
+							<td>
+								<if condition="$v['subscribe']">
+									已关注
+								<else />
+									未关注
+								</if>
+							</td>
+							<td>
+								<if condition="$v['viptime'] gt 0">
+									会员(到期时间:{$v.viptime|date="Y-m-d H:i:s",###})
+								<elseif condition="$v['viptime'] eq -1" />
+									终生会员
+								<else />
+									普通用户
+									<button type="button" style="float:right;" class="btn btn-xs btn-danger del" onclick="vipSet({$v.id});">VIP设置</button>
+								</if>
+							</td>
+							<td>{$v.join_time|date="Y-m-d H:i:s",###}</td>
+							<td>
+								<a href="{:U('detail',array('id'=>$v['id']))}" class="btn bg-olive margin btn-xs">查看详情</a>
+								<a href="javascript:;" onclick="pswSet({$v.id})" class="btn btn-info margin btn-xs">修改密码</a>
+							</td>
+						</tr>
+					</foreach>
+					</tbody>
+				</table>
+			</div>
+			<!-- /.box-body -->
+			<div class="page">{$page|default="<p style='text-align:center'>暂时没有数据</p>"}</div>
+		</div>
+	</div>
+</div>
+</section><!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        ×
+				</button>
+				<h4 class="modal-title" id="myModalLabel">
+                        余额调整（若需要减少书币，请填写负数）
+				</h4>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-xs-2 text-right" style="line-height: 34px;">
+                            阅读币：
+					</div>
+					<div class="col-xs-9">
+						<input type="text" class="form-control" id="balance-charge" placeholder="输入需要增加或者减少的书币">
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">
+                        关闭
+				</button>
+				<button type="button" class="btn btn-primary" id="submit-charge">
+                        提交更改
+				</button>
+			</div>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal -->
+</div>
+
+
+<div class="modal fade" id="vipModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        ×
+				</button>
+				<h4 class="modal-title" id="myModalLabel">
+                        VIP会员设置（请选择设置的VIP会员类型）
+				</h4>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-xs-2 text-right" style="line-height: 34px;">
+                            VIP类型：
+					</div>
+					<div class="col-xs-9">
+						<select class="form-control col-sm-9" name="vip" id="vip">
+							<option value="">请选择</option>
+							<option value="1">年费VIP</option>
+							<option value="2">终生VIP</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">
+                        关闭
+				</button>
+				<button type="button" class="btn btn-primary" id="submit-vip">
+                        设置VIP
+				</button>
+			</div>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal -->
+</div>
+
+
+<div class="modal fade" id="pswModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        ×
+				</button>
+				<h4 class="modal-title" id="myModalLabel">
+                        修改用户密码
+				</h4>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-xs-2 text-right" style="line-height: 34px;">
+                        新密码：
+					</div>
+					<div class="col-xs-9">
+						<input type="text" class="form-control" id="newPsw" placeholder="请输入密码">
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">
+                        关闭
+				</button>
+				<button type="button" class="btn btn-primary" id="submit-psw">
+                        确定修改
+				</button>
+			</div>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal -->
+</div>
+<script>
+	var user_id = 0;
+	function charge(uid){
+		user_id = uid;
+		$('#myModal').modal('show');
+	}
+	function vipSet(uid){
+		user_id = uid;
+		$('#vipModal').modal('show');
+	}
+	
+	function pswSet(uid){
+		user_id = uid;
+		$('#pswModal').modal('show');
+	}
+	
+	//money充值
+	$('#submit-charge').click(function(){
+		var money = $('#balance-charge').val();
+		if(money == 0){
+			layer.msg('充值金额不能为0');
+			return;
+		}
+		$.post("{:U('setUserMoney')}",{user_id:user_id,money:money},function(d){
+			if(d){
+				layer.alert(d.info,function(){
+					location.reload();
+				})
+			}else{
+				layer.msg('请求失败！');
+			}
+		})
+	})
+	
+	//VIP设置
+	$('#submit-vip').click(function(){
+		var vip = $('#vip option:selected').val();
+		if(vip == 0 || vip == ""){
+			layer.msg('请选择设置的VIP会员类型');
+			return;
+		}
+		$.post("{:U('setUserVip')}",{user_id:user_id,vip:vip},function(d){
+			if(d){
+				layer.alert(d.info,function(){
+					location.reload();
+				})
+			}else{
+				layer.msg('请求失败！');
+			}
+		})
+	})
+	
+	//修改密码
+	$('#submit-psw').click(function(){
+		var psw = $('#newPsw').val();
+		if(psw == ""){
+			layer.msg('请输入新密码');
+			return;
+		}
+		$.post("{:U('setUserPsw')}",{user_id:user_id,psw:psw},function(d){
+			if(d){
+				layer.alert(d.info,function(){
+					location.reload();
+				})
+			}else{
+				layer.msg('请求失败！');
+			}
+		})
+	})
+</script>

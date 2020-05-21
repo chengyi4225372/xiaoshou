@@ -1,0 +1,94 @@
+<style>
+	.footer{position:fixed;bottom:0;width:100%;height:1.333rem;box-shadow: 0px 0px 8px #c1c1c1;background:#fff;z-index:99999}
+	.footer ul{width:100%;height:100%;}
+	.footer ul li{float:left;width:20%;}
+	.footer ul li img{width: 0.6rem;display: block;margin: .15rem auto 0.1rem auto;}
+	.footer ul li span{display:block;text-align:center;}
+</style>
+<div class="footer" id="myfooter">
+	<ul>
+		<li>
+			<a href="{:U('Index/index')}">
+				<img src="__PUBLIC__/home/images/shucheng.png" _src="__PUBLIC__/home/images/shuchengs.png" />
+				<span>书城</span>
+			</a>
+		</li>
+		<li>
+			<a href="{:U('Index/moreList',array('field'=>'isfw','value'=>2,'btype'=>1))}">
+				<img src="__PUBLIC__/home/images/xianmian.png" _src="__PUBLIC__/home/images/xianmians.png" />
+				<span>限免</span>
+			</a>
+		</li>
+		<li>
+			<a href="{:U('Index/charge')}">
+				<img src="__PUBLIC__/home/images/chongzhi.png" _src="__PUBLIC__/home/images/chongzhis.png" />
+				<span>充值</span>
+			</a>
+		</li>
+		<li>
+			<a href="{:U('Index/bookType',array('btype'=>2))}">
+				<img src="__PUBLIC__/home/images/shuku.png" _src="__PUBLIC__/home/images/shukus.png" />
+				<span>书库</span>
+			</a>
+		</li>
+		<li>
+			<a href="{:U('Index/my')}">
+				<img src="__PUBLIC__/home/images/wode.png" _src="__PUBLIC__/home/images/wodes.png" />
+				<span>我的</span>
+			</a>
+		</li>
+	</ul>
+</div>
+<div class="backtop" id="icon-top" style="display:none">
+	<a href="javascript:window.scrollTo('0','0');" class="top">顶部</a>
+</div>
+<script>
+	$(window).scroll(function(){
+		if($(window).scrollTop()>500){
+			$("#icon-top").show();
+			
+		}else{
+			$("#icon-top").hide();
+		}
+	});
+
+	$('#myfooter li').click(function(){
+		var index = $(this).index();
+		$.cookie('index',index);
+	});
+	
+	$(function(){
+		if($.cookie('index')){
+			$('#myfooter li').removeClass("active");
+		}else{
+			var $this = $('#myfooter li').eq(0);
+			$this.find('img').attr('src',$this.find('img').attr("_src"));
+			$this.find('span').css('color',"#1296db");
+		}
+		$('#myfooter li').each(function(){
+			var index = $(this).index();
+			if(index == $.cookie('index')){
+				$(this).find('img').attr('src',$(this).find('img').attr("_src"));
+				$(this).find('span').css('color',"#1296db");
+			}
+		})
+	})
+	
+	function bh_msg_tips(msg) {
+		var oMask = document.createElement("div");
+		oMask.id = "bh_msg_lay";
+		oMask.style.position = "fixed";
+		oMask.style.left = "0";
+		oMask.style.top = "50%";
+		oMask.style.zIndex = "100";
+		oMask.style.textAlign = "center";
+		oMask.style.width = "100%";
+		oMask.innerHTML = "<span style='background: rgba(0, 0, 0, 0.65);color: #fff;padding: 10px 15px;border-radius: 3px; font-size: 14px;'>" + msg
+			+ "</span>"; document.body.appendChild(oMask);
+		setTimeout(function () {
+			$("#bh_msg_lay").remove();
+		}, 2000);
+	}
+</script>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<include file="include/header" title="{$title}" />
+<style>
+	html{overflow-x:hidden;}
+	textarea{
+		width: 90%;
+		padding: .3rem 5% 2rem 5%;
+		border: none;
+		border-bottom: 1px solid #eee;
+		font-size: .4rem;
+	}
+	.share{
+		height: 0.1rem;
+		line-height: 0.5rem;
+		padding-left: .5rem;
+		font-size: .4rem;
+	}
+	.copy{
+		width: 90%;
+		display: block;
+		margin: 1rem auto;
+		text-align: center;
+		padding: .2rem 0;
+		background: #2196F3;
+		color: #fff;
+		font-size: .4rem;
+		border-radius: .2rem;
+	}
+	.huas{
+		position: relative;
+		width: 96%;
+		left: 2%;
+		margin: 0.2rem 0rem 0.2rem;
+		border: solid 1px #2196F3;
+	}
+	.share-img{
+		width: 92%;
+		margin: 0.1rem auto 1rem;
+		border: solid 1px #00CC00;
+		display: block;
+	}
+	.explain-div{
+		margin: 0.3rem 0.1rem 0.3rem;
+	}
+	.share-text{
+		position: relative;
+		left: 10px;
+		font-size: 19px;
+	}
+	.explain-text{
+		position: relative;
+		left: 20px;
+		font-size: 16px;
+	}
+</style>
+<div class="explain-div">
+	<div class="share-text"><font color="#FF0000">分享赚书币说明：</font></div>
+	<div class="explain-text"><font color="#00CC00">1.请按下面的教程分享链接给好友</font></div>
+	<div class="explain-text"><font color="#00CC00">2.当好友点开链接后您可得</font><font color="#f00">20个</font><font color="#00CC00">书币</font></div>
+	<div class="explain-text"><font color="#00CC00">3.若100个好友点开链接您将获</font><font color="#f00">2000个</font><font color="#00CC00">书币</font></div>
+	<div class="explain-text"><font color="#00CC00">4.24小时后再次分享给好友可重复获得书币</font></div>
+	<div class="explain-text"><font color="#00CC00">5.发完朋友圈您还可以将链接分享到微信群</font></div>
+	<div class="explain-text"><font color="#00CC00">6.您也可以找您的好友转发朋友圈或他的群里</font></div>
+	<div class="explain-text"><font color="#00CC00">7.赚书币最有效的方法是一个个的私发给好友</font></div>
+	<div class="explain-text"><font color="#00CC00">8.有了书币，就可以不充值，免费看小说漫画 </font></div>
+</div>
+<div class="huas">
+	<textarea id="huas">{$_site['huas']}</textarea>
+</div>
+<div class="share">
+	分享链接：<span id="share-url">{$shareUrl}</span>
+</div>
+<a href="javascript:;" class="copy" data-clipboard-action="copy" data-clipboard-text="{$info.huas}&#10;{$shareUrl}">点我 -> 【一键复制】</a>
+
+<div>
+	<div class="share-text"><font color="#FF0000">红包获取教程：</font></div>
+	<img src="{$_site['huaspic']}" class="share-img"/>
+</div>
+<script src="__PUBLIC__/admin/js/clipboard.min.js"></script>
+<script>
+	varHtml();
+	function varHtml(){
+		var huas = $('textarea').val();
+			url = $('#share-url').html();
+		if($("textarea").val() != ""){
+			var html = huas+"\n"+url;
+			$('.copy').attr("data-clipboard-text",html);
+		}
+	}
+	//bind
+	$('textarea').bind('input propertychange', function(){
+		var huas = $('textarea').val();
+			url = $('#share-url').html();
+		if($("textarea").val() != ""){
+			var html = huas+"\n"+url;
+			$('.copy').attr("data-clipboard-text",html);
+		}
+    });
+	//分享复制
+	var clipboard = new Clipboard('.copy');
+	clipboard.on('success', function (e) {
+		layer.open({
+            content: '<div style="color:darkorange;font-size:14px;">【一键复制成功】<br>请按下面的教程操作即可！</div>' ,
+            btn: '确定',
+            one: function (index) {
+                layer.close(index);
+            }
+        });
+		e.clearSelection();
+	});
+
+	clipboard.on('error', function (e) {
+		console.error('Action:', e.action);
+		console.error('Trigger:', e.trigger);
+	});
+</script>
+<include file="include/footer" />

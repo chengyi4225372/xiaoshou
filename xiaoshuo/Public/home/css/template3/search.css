@@ -1,0 +1,19 @@
+/*-----------搜索页面-----------*/
+
+/*搜索框*/
+.search-show{border-bottom: 5px solid #f1f1f1}
+.search-show .icon-delete{width: 20px;  height: 20px;   display: inline-block;  vertical-align: top;  background-position: -46px 1px;background-size: 170px; }
+.search-show .icon-refresh{width: 20px;  height: 20px;   display: inline-block;  vertical-align: top;  background-position: -62px 7px;background-size: 170px; }
+
+/*搜索历史列表*/
+.search-line{  position: relative;  }
+.search-recommend-row {   padding-bottom: 23px; padding-left: 15px; padding-right: 10px;  word-wrap: break-word;  word-break: break-all;  display: block;   }
+.search-recommend-row p {  margin: 10px 4px 0 0;  border-radius: 25px;  background: #efeff4;  }
+.search-recommend-btn {  display: inline-block;  }
+.search-history {  color: #777;  padding:3px 14px;  margin: 0;  display: inline-block;  font-size: 13px;  }
+
+
+
+/*搜索结果*/
+.search-result {  padding: 15px 0;  }
+

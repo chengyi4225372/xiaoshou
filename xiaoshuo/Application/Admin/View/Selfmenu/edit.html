@@ -1,0 +1,148 @@
+
+<section class="content-header">
+	<div>
+		<ol class="breadcrumb" style="background: none; margin-bottom: 0px;">
+			<li>
+				<a href="{:U('Index/index')}" style="color: #333;">
+					<i class=" fa fa-home"></i>&nbsp;Home
+				</a>
+			</li>
+			<li class="active">公众号菜单</li>
+			<li class="active"><if condition="$_GET['id']">修改菜单信息<else />添加菜单信息</if></li>
+		</ol>
+	</div>
+
+</section>
+	<!-- Main content -->
+<section class="content">
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="box box-primary">
+				<form id="main-form" class="form-horizontal" style="margin-top:30px" method="post">
+					<div class="form-group">
+						<label class="control-label col-sm-3">名称</label>
+						<div class="col-sm-6">
+							<input type="text" name="name" class="form-control col-sm-9" value="{$info.name}" required="">
+							<p class="help-block help-block-error col-sm-7 col-xs-10">菜单显示的名称</p>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-3">排序权值</label>
+						<div class="col-sm-6">
+							<input type="text" name="sort" class="form-control col-sm-9" value="{$info.sort}" required="">
+							<p class="help-block help-block-error col-sm-7 col-xs-10"></p>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-3">上级菜单</label>
+						<div class="col-sm-6">
+							<select class="form-control col-sm-9" name="pid" default="{$info['pid']}">
+								<option value="0">顶级菜单</option>
+								<volist name="parents" id="vo">
+									<option value="{$vo.id}" <if condition="$_GET['id'] eq $vo['id']">disabled</if>>{$vo.name}</option>
+								</volist>
+							</select>
+							<p class="help-block help-block-error col-sm-7 col-xs-10"></p>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-3">菜单类型</label>
+						<div class="col-sm-6">
+							<select class="form-control col-sm-9" name="type" default="{$info['type']}" id="type_selector" onclick="type_change()">
+								<option value="click">点击推事件</option>
+								<option value="view">跳转URL</option>
+								<option value="scancode_push">扫码推事件</option>
+								<option value="scancode_waitmsg">扫码推事件且弹出“消息接收中”提示框</option>
+								<option value="pic_sysphoto">弹出系统拍照发图</option>
+								<option value="pic_photo_or_album">弹出拍照或者相册发图</option>
+								<option value="pic_weixin">弹出微信相册发图器</option>
+								<option value="location_select">弹出地理位置选择器</option>
+							</select>
+							<p class="help-block help-block-error col-sm-7 col-xs-10"></p>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-3">说明</label>
+						<div class="col-sm-6" id="tips">
+							<b>click：点击推事件</b>
+							用户点击click类型按钮后，微信服务器会通过消息接口推送消息类型为event	的结构给开发者（参考消息接口指南），并且带上按钮中开发者填写的key值，开发者可以通过自定义的key值与用户进行交互；
+							<p class="help-block help-block-error col-sm-7 col-xs-10"></p>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-3">附加内容</label>
+						<div class="col-sm-6">
+							<input type="text" name="extra" class="form-control col-sm-9" value="{$info.extra}" required="">
+							<p class="help-block help-block-error col-sm-7 col-xs-10">请填写关键词、网址后者key，跳转URL填写链接地址</p>
+						</div>
+					</div>
+					
+					<div class="box-footer">
+						<div class="form-group">
+							<div class="col-sm-offset-3 col-sm-9">
+								<button type="button" id="ajaxBtn" class="btn btn-primary">保存</button>
+								<button type="button" class="btn btn-inverse" style="margin-left:20px;" onclick="history.go(-1)">返回</button>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</section>
+
+<div class="contentwrapper lineheight21">
+	<style>
+	.type-remark{ display:none;}
+	</style>
+	<div class="type-remark">
+	<b>click：点击推事件</b>
+	用户点击click类型按钮后，微信服务器会通过消息接口推送消息类型为event	的结构给开发者（参考消息接口指南），并且带上按钮中开发者填写的key值，开发者可以通过自定义的key值与用户进行交互；
+	</div>
+	<div class="type-remark">
+	<b>view：跳转URL</b>
+	用户点击view类型按钮后，微信客户端将会打开开发者在按钮中填写的网页URL，可与网页授权获取用户基本信息接口结合，获得用户基本信息。
+	</div>
+	<div class="type-remark">			
+	<b>scancode_push：扫码推事件</b>
+	用户点击按钮后，微信客户端将调起扫一扫工具，完成扫码操作后显示扫描结果（如果是URL，将进入URL），且会将扫码的结果传给开发者，开发者可以下发消息。
+	</div>
+	<div class="type-remark">
+	<b>scancode_waitmsg：扫码推事件且弹出“消息接收中”提示框</b>
+	用户点击按钮后，微信客户端将调起扫一扫工具，完成扫码操作后，将扫码的结果传给开发者，同时收起扫一扫工具，然后弹出“消息接收中”提示框，随后可能会收到开发者下发的消息。
+	</div>
+	<div class="type-remark">
+	<b>pic_sysphoto：弹出系统拍照发图</b>
+	用户点击按钮后，微信客户端将调起系统相机，完成拍照操作后，会将拍摄的相片发送给开发者，并推送事件给开发者，同时收起系统相机，随后可能会收到开发者下发的消息。
+	</div>
+	<div class="type-remark">
+	<b>pic_photo_or_album：弹出拍照或者相册发图</b>
+	用户点击按钮后，微信客户端将弹出选择器供用户选择“拍照”或者“从手机相册选择”。用户选择后即走其他两种流程。
+	</div>
+	<div class="type-remark">
+	<b>pic_weixin：弹出微信相册发图器</b>
+	用户点击按钮后，微信客户端将调起微信相册，完成选择操作后，将选择的相片发送给开发者的服务器，并推送事件给开发者，同时收起相册，随后可能会收到开发者下发的消息。
+	</div>
+	<div class="type-remark">
+	<b>location_select：弹出地理位置选择器</b>
+	用户点击按钮后，微信客户端将调起地理位置选择工具，完成选择操作后，将选择的地理位置发送给开发者的服务器，同时收起位置选择工具，随后可能会收到开发者下发的消息。
+	</div>
+</div>
+
+<script>
+	function type_change(){
+		obj = document.getElementById('type_selector');
+		i = 0;
+		jQuery(obj).find("option").each(function(index, el){
+			if(jQuery(el).is(":selected")){
+				//jQuery(".type-remark").hide().eq(i).show();
+				jQuery("#tips").html(jQuery(".type-remark").eq(i).html())
+			}
+			i++;
+		});
+	}
+	jQuery(document).ready(function(e){
+		// 调整提示内容
+		type_change()
+	});
+</script>

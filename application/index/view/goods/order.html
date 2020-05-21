@@ -1,0 +1,398 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="Generator" content="ECSHOP v4.0.6" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="Keywords" content="" />
+    <meta name="Description" content="" />
+
+    <title>购物流程_我是一家测试商城 - Powered by ECShop</title>
+
+    <link rel="shortcut icon" href="favicon.ico" />
+    <link rel="icon" href="animated_favicon.gif" type="image/gif" />
+    <link href="themes/fd15/style.css" rel="stylesheet" type="text/css" />
+
+    <script type="text/javascript" src="js/common.js"></script><script type="text/javascript" src="js/shopping_flow.js"></script><script type="text/javascript" src="js/common2.js"></script><script type="text/javascript" src="js/compare2.js"></script></head>
+<body>
+
+<script type="text/javascript" src="js/transport2.js"></script><script type="text/javascript" src="js/utils.js"></script><link href="themes/fd15/images/ec12.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    var process_request = "正在处理您的请求...";
+</script>
+<script language='javascript' src='themes/fd15/js/fdjs.js' type='text/javascript' charset='utf-8'></script>
+<script language='javascript' src='themes/fd15/js/fdjs.json.js' type='text/javascript' charset='utf-8'></script>
+<div class="reg_top" style="padding-top:10px"> <a href="index.php" name="top"><img src="themes/fd15/images/logo.gif" /></a> </div>
+<div class="clear0"></div>
+<div class="blank"></div>
+<div class="block">
+
+
+
+
+
+    <form action="flow.php" method="post" name="theForm" id="theForm" onsubmit="return checkOrderForm(this)">
+        <script type="text/javascript">
+            var flow_no_payment = "您必须选定一个支付方式。";
+            var flow_no_shipping = "您必须选定一个配送方式。";
+        </script><div class="step_all step_2"></div>
+        <div class="flowBox">
+            <h6><span>商品列表</span><a href="flow.php" class="f6">修改</a></h6>
+            <table width="100%" align="center" border="0" cellpadding="5" cellspacing="1" bgcolor="#dddddd" >
+                <tr>
+                    <th >商品名称</th>
+                    <th >属性</th>
+                    <th >本店价</th>
+                    <th >购买数量</th>
+                    <th >小计</th>
+                </tr>
+                <tr>
+                    <td >
+                        <a href="goods.php?id=897" target="_blank" class="f6">虚拟商品测试H5</a>
+                    </td>
+                    <td ></td>
+                    <td  align="right">￥100.00</td>
+                    <td  align="right">1</td>
+                    <td  align="right">￥100.00</td>
+                </tr>
+                <tr>
+                    <td  colspan="7">
+                        购物金额小计 ￥100.00              </td>
+                </tr>
+            </table>
+        </div>
+        <div class="blank"></div>
+        <div class="flowBox">
+            <h6><span>收货人信息</span><a href="flow.php?step=consignee" class="f6">修改</a></h6>
+            <table width="100%" align="center" border="0" cellpadding="5" cellspacing="1" bgcolor="#dddddd">
+                <tr>
+                    <td >收货人姓名:</td>
+                    <td >11111111</td>
+                    <td >电子邮件地址:</td>
+                    <td >2222222222@qq.com</td>
+                </tr>
+                <tr>
+                    <td >电话:</td>
+                    <td >22222222222 </td>
+                    <td >手机:</td>
+                    <td >18672536669</td>
+                </tr>
+            </table>
+        </div>
+        <div class="blank"></div>
+        <input name = "shipping" type="radio" value = "-1" checked="checked"  style="display:none"/>
+        <div class="flowBox">
+            <h6><span>支付方式</span></h6>
+            <table width="100%" align="center" border="0" cellpadding="5" cellspacing="1" bgcolor="#dddddd"  id="paymentTable">
+                <tr>
+                    <th width="5%" >&nbsp;</th>
+                    <th width="20%" >名称</th>
+                    <th >订购描述</th>
+                    <th  width="15%">手续费</th>
+                </tr>
+
+                <tr>
+                    <td valign="top" ><input type="radio" name="payment" value="2"  isCod="0" onclick="selectPayment(this)" /></td>
+                    <td valign="top" ><strong>银行汇款/转帐</strong></td>
+                    <td valign="top" >银行名称
+                        收款人信息：全称 ××× ；帐号或地址 ××× ；开户行 ×××。
+                        注意事项：办理电汇时，请在电汇单“汇款用途”一栏处注明您的订单号。</td>
+                    <td align="right"  valign="top">￥0.00</td>
+                </tr>
+
+                <tr>
+                    <td valign="top" ><input type="radio" name="payment" value="4"  isCod="0" onclick="selectPayment(this)" /></td>
+                    <td valign="top" ><strong>支付宝</strong></td>
+                    <td valign="top" >账号：cxjaqcq@163.com
+                        <br />到账类型：支付宝即时到账
+                        <br />收款人：陈先疆 </td>
+                    <td align="right"  valign="top">￥0.00</td>
+                </tr>
+
+                <tr>
+                    <td valign="top" ><input type="radio" name="payment" value="3"  isCod="1" onclick="selectPayment(this)" disabled="true"/></td>
+                    <td valign="top" ><strong>货到付款</strong></td>
+                    <td valign="top" >开通城市：×××
+                        货到付款区域：×××</td>
+                    <td align="right"  valign="top"><span id="ECS_CODFEE">￥0.00</span></td>
+                </tr>
+
+                <tr>
+                    <td valign="top" ><input type="radio" name="payment" value="7"  isCod="0" onclick="selectPayment(this)" /></td>
+                    <td valign="top" ><strong>微信扫一扫支付</strong></td>
+                    <td valign="top" ></td>
+                    <td align="right"  valign="top">￥0.00</td>
+                </tr>
+
+                <tr>
+                    <td valign="top" ><input type="radio" name="payment" value="9"  isCod="0" onclick="selectPayment(this)" /></td>
+                    <td valign="top" ><strong>微信扫码支付</strong></td>
+                    <td valign="top" >扫码支付是指商户系统按微信支付协议生成支付二维码，用户再用微信“扫一扫”来完成支付。
+
+                        适用于PC网站支付、实体店单品等场景。</td>
+                    <td align="right"  valign="top">￥0.00</td>
+                </tr>
+            </table>
+        </div>
+        <div class="blank"></div>
+
+
+        <div class="flowBox">
+            <h6><span>其它信息</span></h6>
+            <table width="100%" align="center" border="0" cellpadding="5" cellspacing="1" bgcolor="#dddddd" >
+                <tr>
+                    <td ><strong>使用红包:</strong></td>
+                    <td >
+                        选择已有红包                <select name="bonus" onchange="changeBonus(this.value)" id="ECS_BONUS" style="border:1px solid #ccc;">
+                        <option value="0" selected>请选择</option>
+                    </select>
+
+                        或者输入红包序列号                <input name="bonus_sn" type="text" class="inputBg" size="15" value="" />
+                        <input name="validate_bonus" type="button" class="bnt_blue_1" value="验证红包" onclick="validateBonus(document.forms['theForm'].elements['bonus_sn'].value)" style="vertical-align:middle;" />
+                    </td>
+                </tr>
+                <tr>
+                    <td ><strong>开发票:</strong>
+                        <input name="need_inv" type="checkbox"  class="input" id="ECS_NEEDINV" onclick="changeNeedInv()" value="1"  />
+                    </td>
+                    <td >
+                        发票类型                <select name="inv_type" id="ECS_INVTYPE" disabled="true" onchange="changeNeedInv()" style="border:1px solid #ccc;">
+                        <option value="1">1 [6%]</option><option value="2">2 [13%]</option></select>
+                        发票抬头                <input name="inv_payee" type="text"  class="input" id="ECS_INVPAYEE" size="20" disabled="true" value="" onblur="changeNeedInv()" />
+                        发票内容              <select name="inv_content" id="ECS_INVCONTENT" disabled="true"  onchange="changeNeedInv()" style="border:1px solid #ccc;">
+
+                        <option value="个人">个人</option><option value="公司">公司</option>
+                    </select></td>
+                </tr>
+                <tr>
+                    <td valign="top" ><strong>订单附言:</strong></td>
+                    <td ><textarea name="postscript" cols="80" rows="3" id="postscript" style="border:1px solid #ccc;"></textarea></td>
+                </tr>
+                <tr>
+                    <td ><strong>缺货处理:</strong></td>
+                    <td >                <label>
+                        <input name="how_oos" type="radio" value="0" checked onclick="changeOOS(this)" />
+                        等待所有商品备齐后再发</label>
+                        <label>
+                            <input name="how_oos" type="radio" value="1"  onclick="changeOOS(this)" />
+                            取消订单</label>
+                        <label>
+                            <input name="how_oos" type="radio" value="2"  onclick="changeOOS(this)" />
+                            与店主协商</label>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="blank"></div>
+        <div class="flowBox">
+            <h6><span>费用总计</span></h6>
+            <script type="text/javascript" src="js/transport.js"></script><div id="ECS_ORDERTOTAL">
+            <table width="100%" align="center" border="0" cellpadding="5" cellspacing="1" bgcolor="#dddddd">
+                <tr>
+                    <td align="right" bgcolor="#ffffff">
+                        商品总价: <font class="f4_b">￥100.00</font>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" bgcolor="#ffffff"> 应付款金额: <font class="f4_b">￥100.00</font>
+                    </td>
+                </tr>
+            </table>
+        </div>           <div align="center" style="margin:15px auto;">
+            <input type="image" src="themes/fd15/images/bnt_subOrder.gif" />
+            <input type="hidden" name="step" value="done" />
+        </div>
+        </div>
+    </form>
+
+
+
+
+
+</div>
+<div class="blank5"></div>
+
+<div class="ipl flow_goods">
+</div><script type="Text/Javascript" language="JavaScript">
+    <!--
+
+    function selectPage(sel)
+    {
+        sel.form.submit();
+    }
+
+    //-->
+</script>
+<script type="text/javascript">
+    window.onload = function()
+    {
+        Compare.init();
+        fixpng();
+    }
+    var button_compare = '';
+    var exist = "您已经选择了%s";
+    var count_limit = "最多只能选择4个商品进行对比";
+    var goods_type_different = "\"%s\"和已选择商品类型不同无法进行对比";
+    var compare_no_goods = "您没有选定任何需要比较的商品或者比较的商品数少于 2 个。";
+    var btn_buy = "购买";
+    var is_cancel = "取消";
+    var select_spe = "请选择商品属性";
+</script>
+
+
+<div class="blank"></div>
+<div class="clear10"></div>
+
+<div class="footer_wrap">
+
+
+    <div class="footer footerbg">
+        <div class="footads"><A href=""></A><A href=""></A><A href=""></A><A href=""></A></div>
+        <div class="footHelp">
+            <table  border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td>                <a href="category.php?id=95"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    >剑网3</a>
+                        |
+                        <a href="message.php"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        >留言板</a>
+                        |
+                        <a href="user.php"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                           target="_blank"
+                        >用户中心</a>
+                        |
+                        <a href="message.php"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        >留言板</a>
+                        |
+                        <a href="article_cat.php?id=4"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        >3G资讯</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+
+
+
+
+        <div class="footer_info"> &copy; 2005-2020 测试商城 版权所有，并保留所有权利。  888     Tel: 4006781125234          <a href="http://wpa.qq.com/msgrd?V=1&amp;Uin=123013025&amp;Site=测试商城&amp;Menu=yes" target="_blank"><img src="http://wpa.qq.com/pa?p=1:123013025:4" height="16" border="0" alt="QQ" /> 123013025</a>
+            <a href="http://amos1.taobao.com/msg.ww?v=2&uid=%E9%A6%96%E4%BB%93%E8%B4%B8%E6%98%93%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8&s=2" target="_blank"><img src="http://amos1.taobao.com/online.ww?v=2&uid=%E9%A6%96%E4%BB%93%E8%B4%B8%E6%98%93%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8&s=2" width="16" height="16" border="0" alt="淘宝旺旺" />首仓贸易有限公司</a>
+            <br />
+            ICP备案证书号:<a href="http://www.miibeian.gov.cn/" target="_blank">沪ICP备123456</a><br />
+            共执行 148 个查询，用时 0.035202 秒，在线 103 人，Gzip 已禁用，占用内存 3.510 MB<br />
+            <a href="https://xyunqi.com/products/ecshop?from=nav" target="_blank" style=" font-family:Verdana; font-size:11px;">Powered&nbsp;by&nbsp;<strong><span style="color: #3366FF">ECShop</span>&nbsp;<span style="color: #FF9966">v4.0.6</span></strong></a>&nbsp;<a href="http://www.ecshop.com/license.php?product=ecshop_b2c&url=http%3A%2F%2Fecshop.test1.shopex123.com%2F" target="_blank"
+            >&nbsp;&nbsp;Licensed</a><br />
+            <div >
+                <div class="clear10"></div>
+            </div>
+        </div>
+        <script type="text/javascript">
+
+            window.__Object_toJSONString = Object.prototype.toJSONString;
+            delete Object.prototype.toJSONString;
+
+
+        </script></body>
+<script type="text/javascript">
+    var process_request = "正在处理您的请求...";
+    var username_empty = "- 用户名不能为空。";
+    var username_shorter = "- 用户名长度不能少于 3 个字符。";
+    var username_invalid = "- 用户名只能是由字母数字以及下划线组成。";
+    var password_empty = "- 登录密码不能为空。";
+    var password_shorter = "- 登录密码不能少于 6 个字符。";
+    var confirm_password_invalid = "- 两次输入密码不一致";
+    var email_empty = "- Email 为空";
+    var email_invalid = "- Email 不是合法的地址";
+    var agreement = "- 您没有接受协议";
+    var msn_invalid = "- msn地址不是一个有效的邮件地址";
+    var qq_invalid = "- QQ号码不是一个有效的号码";
+    var home_phone_invalid = "- 家庭电话不是一个有效号码";
+    var office_phone_invalid = "- 办公电话不是一个有效号码";
+    var mobile_phone_invalid = "- 手机号码不是一个有效号码";
+    var msg_un_blank = "* 用户名不能为空";
+    var msg_un_length = "* 用户名最长不得超过7个汉字";
+    var msg_un_format = "* 用户名含有非法字符";
+    var msg_un_registered = "* 用户名已经存在,请重新输入";
+    var msg_can_rg = "* 可以注册";
+    var msg_email_blank = "* 邮件地址不能为空";
+    var msg_email_registered = "* 邮箱已存在,请重新输入";
+    var msg_email_format = "* 邮件地址不合法";
+    var msg_blank = "不能为空";
+    var no_select_question = "- 您没有完成密码提示问题的操作";
+    var passwd_balnk = "- 密码中不能包含空格";
+    var username_exist = "用户名 %s 已经存在";
+    var compare_no_goods = "您没有选定任何需要比较的商品或者比较的商品数少于 2 个。";
+    var btn_buy = "购买";
+    var is_cancel = "取消";
+    var select_spe = "请选择商品属性";
+</script>
+</html>

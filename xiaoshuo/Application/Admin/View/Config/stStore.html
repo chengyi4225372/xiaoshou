@@ -1,0 +1,79 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+	<div>
+		<ol class="breadcrumb" style="background: none; margin-bottom: 0px;">
+			<li>
+				<a href="{:U('Index/index')}" style="color: #333;">
+					<i class=" fa fa-home"></i> 
+					&nbsp;Home
+				</a>
+			</li>
+			<li class="active">听书信息</li>
+			<li class="active">听书分类</li>
+		</ol>
+	</div>
+</section>
+
+<style>
+.vstore{
+	width:15%;
+	margin:0px 20px 30px 10px;
+	float:left;
+	display:block;
+}
+.vstore input{width:90%!important;float:left;}
+.vstore i{width:10%;font-size:30px;float:left;cursor:pointer}
+</style>
+
+<!-- Main content -->
+<section class="content">
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box box-primary">
+			<div class="box-header">
+				<a href="javascript:;" onclick="add();" class="btn btn-success" style="float:left; margin-right:15px;">添加分类</a>
+			</div>
+			<!-- /.box-header -->
+			<form class="form-horizontal" style="margin-top:30px" method="POST" action="" enctype="multipart/form-data">
+				<div class="box-body" id="list">
+					<if condition="!$_bookStore">
+						<div id="nolist">暂时没有分类信息，请添加！</div>
+					<else />
+						<foreach name="_stStore" item="v">
+							<span class="vstore">
+								<input name="list[]" class="form-control col-sm-3" value="{$v}" />
+								<i class="fa fa-times" onclick="delThis(this)"></i>
+							</span>
+						</foreach>
+					</if>
+				</div>
+				<!-- /.box-body -->
+				<div class="box-footer" id="btn" <if condition="!$_bookStore">style="display:none"</if>>
+					<div class="form-group">
+						<div class="col-sm-offset-3 col-sm-9">
+							<button type="button" id="ajaxBtn" class="btn btn-primary">保存</button>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+</section>
+<script>
+	function add(){
+		var len = $('#nolist').length;
+		if(len>0){
+			$('#nolist').remove();
+		}
+		var html = '<span class="vstore"><input name="list[]" class="form-control col-sm-3" /><i class="fa fa-times" onclick="delThis(this)"></i></span>';
+		if($("#btn")[0].style.display == 'none'){
+			$('#btn').show();
+		}
+		$('#list').append(html);
+	}
+	
+	function delThis(ob){
+		$(ob).parents("span").remove();
+	}
+</script>

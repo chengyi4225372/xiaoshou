@@ -1,0 +1,106 @@
+<include file="include/header" title="{$title}" />
+<link href="__PUBLIC__/home/css/index.css" rel="stylesheet">
+<style>
+body{background:#f1f1f1;}
+</style>
+<div class="myheader">
+	<img src="{$user.headimg}" />
+	<div class="txt">
+		<h1>{$user.nickname}</h1>
+		<p>ID:{$user.id}</p>
+	</div>
+	<div class="bom">
+		<div>
+			<span id="usermoney">{$user.money}</span>
+			<span>书币</span>
+		</div>
+		<div>
+			<if condition="$sign">
+				<a href="javascript:;" id="sign">已签到</a>
+			<else />
+				<a href="javascript:;" id="sign" onclick="sign();">签到</a>
+			</if>
+			
+			<span>送{$_site['sign']}书币</span>
+		</div>
+	</div>
+	<a href="{:U('charge')}" class="goCharge">充值</a>
+</div>
+<script>
+	//签到
+	function sign(){
+		bh_msg_tips('数据请求中....');
+		$.post("{:U('Ajax/sign')}",function(d){
+			if(d){
+				$('#bh_msg_lay').hide();
+				if(d.status){
+					$('#sign').removeAttr("onclick");
+					var money = $('#usermoney').html();
+					money =  parseInt(money) + parseInt(d.smoney);
+					$('#usermoney').html(money);
+					bh_msg_tips(d.info);
+					$('#sign').html('已签到');
+				}else{
+					bh_msg_tips(d.info);
+				}
+			}else{
+				$('#bh_msg_lay').hide();
+				bh_msg_tips('请求失败！');
+			}
+		})
+	}
+</script>
+<div class="chargePic">
+	<a href="{:U('charge')}"><img src="__PUBLIC__/home/images/charge.png" /></a>
+</div>
+<div class="ntabs">
+	<ul>
+		<a href="{:U('charge')}"><li><i class="icon-money"></i>充值</li></a>
+		<a href="{:U('readHistory')}"><li><i class="icon-time"></i>阅读历史</li></a>
+		<a href="{:U('collectHistory')}"><li><i class="icon-favor"></i>我的收藏</li></a>
+		<a href="{:U('joinUs')}"><li><i class="icon-money"></i>加盟代理</li></a>
+	</ul>
+</div>
+
+<div class="my-item">
+	<div class="title">今日必看<a href="{:U('Index/bookType',array('btype'=>2))}">更多&nbsp;></a></div>
+	<div class="txt">
+		<div class="dfirst">
+			<a href="{:U('Index/info',array('id'=>$first['id']))}">
+				<img src="{$first['selectpic']}" />
+				<div class="txt">
+					<h1>{$first['title']}</h1>
+					<div class="remark">
+						{$first['remark']}
+					</div>
+				</div>
+				<span class="reads"><b>{$first['likes']}</b>正在追书</span>
+			</a>
+		</div>
+		<div class="dsecond">
+			<ul>
+				<foreach name="second" item="v">
+				<li>
+					<a href="{:U('Index/info',array('id'=>$v['id']))}">
+						<img src="{$v.selectpic}" />
+						<span>{$v.title}</span>
+					</a>
+				</li>
+				</foreach>
+			</ul>
+
+		</div>
+	</div>
+</div>
+
+<div class="bm-box erweima">
+	<if condition="$mch">
+		<img src="{$mch['qrcode']}">
+		<p>版权所有，侵权必究！<br>官方QQ：{$mch['qq']}<br>官方微信号：{$mch['weixin']}</p>
+	<else />
+		<img src="{$_site['qrcode']}">
+		<p>版权所有，侵权必究！<br>官方QQ：{$_site['qq']}<br>官方微信号：{$_site['weixin']}</p>
+	</if>
+</div>
+
+<include file="include/footer2" />

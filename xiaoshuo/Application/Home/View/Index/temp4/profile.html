@@ -1,0 +1,108 @@
+<include file="include/header" title="{$title}" />
+<link rel="stylesheet" href="__PUBLIC__/home/css/template3/nav.css">
+   <link rel="stylesheet" type="text/css" href="__PUBLIC__/home/css/footer4.css">
+<div class="rt-bar">
+	<div class="row">
+		<div class="col icon">
+			<a href="javascript:history.go(-1);">
+			<svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 40 40"><path d="M29.56 39.47a2 2 0 0 1-1.38-.56L8.45 20 28.17 1.09A2 2 0 1 1 30.94 4L14.23 20l16.71 16a2 2 0 0 1-1.38 3.44z" fill="#ff730a"></path></svg>
+			</a>
+		</div>
+		<div class="col title" style="margin-right: 1.333rem;">
+			修改账号密码
+		</div>
+	</div>
+</div>
+<style>
+	.pcont{
+		width:100%;
+	}
+	.mb{
+		border-bottom:1px solid #eee;
+	}
+	.pcont ul{
+		margin-top:.5rem;
+		width:100%;
+	}
+	.pcont li{
+		width:100%;
+		margin:.3rem 0;
+	}
+	
+	.pcont li input{
+		font-size: .4rem;
+		width: 100%;
+		margin: 0 auto;
+		height: 1rem;
+		border: none;
+		text-align: center;
+		-webkit-appearance: none;
+	}
+	.pcont li button{
+		width: 60%;
+		height: 1rem;
+		background: #ff730a;
+		border-radius: 5px;
+		color: #fff;
+		border: none;
+		margin: 1rem 20%;
+		-webkit-appearance: none;
+		font-size:.4rem;
+	}
+</style>
+<div class="pcont">
+	<ul>
+		<li class="mb">
+			<input type="text" id="username" placeholder="请输入您的账号" value="{$user.username}">
+		</li>
+		<li class="mb">
+			<input type="password" id="psw" placeholder="请输入您的新密码" value="">
+		</li>
+		<li class="mb">
+			<input type="password" id="tpsw" placeholder="请确定您的新密码" value="">
+		</li>
+		<li>
+			<button onclick="profile();">确定修改</button>
+		</li>
+	</ul>
+</div>
+
+
+<script>
+	function profile(){
+		var data = {
+			username:$('#username').val(),
+			psw:$('#psw').val(),
+			tpsw:$('#tpsw').val(),
+		}
+		if(data.username == ""){
+			alert('请输入您的账号！');
+			return false;
+		}
+		if(data.psw == ""){
+			alert('请输入您的新密码！');
+			return false;
+		}
+		if(data.tpsw == ""){
+			alert('请确定您的新密码！');
+			return false;
+		}
+		if(data.psw != data.tpsw){
+			alert('两次新密码不一致！');
+			return false;
+		}
+		$.post("{:U('profile')}",data,function(d){
+			if(d){
+				if(d.status){
+					alert('修改成功！');
+					location.href = "{:U('my')}";
+				}else{
+					alert(d.info);
+				}
+			}else{
+				alert('请求失败！');
+			}
+		})
+	}
+</script>
+<include file="include/footer4" />

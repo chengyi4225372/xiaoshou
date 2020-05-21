@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0">
+	<!--<meta content="telephone=no" name="format-detection">-->
+	<!--<meta http-equiv="Cache-Control" content="no-transform ">-->
+	<!--<meta http-equiv="Cache-Control" content="no-siteapp">-->
+	<!--<meta name="apple-mobile-web-app-capable" content="yes">-->
+	<!--<meta name="applicable-device" content="mobile">-->
+	<title>{$title}</title>
+	<!-- 这里引入css -->
+<link href="__PUBLIC__/home/css/template5_common.css" rel="stylesheet" type="text/css">
+<link href="__PUBLIC__/home/css/swiper.min.css" rel="stylesheet" type="text/css">
+<link href="__PUBLIC__/home/css/template5_index.css" rel="stylesheet" type="text/css">
+
+<style type="text/css">
+.bd_head_open_vip{
+	overflow: hidden;
+	height: .21rem;
+	margin: .12rem .15rem;
+	text-align: center;
+	font-size: 0;
+}
+
+.bd_head_open_vip a{
+	padding-right: .2rem;
+	display: inline-block;
+	*display: inline;
+	*zoom:1;
+	height: .21rem;
+	background: url(__PUBLIC__/home/img/icon/icon_36.png) no-repeat right center;
+	background-size: .14rem auto;
+	font-family:'PingFang-SC-Regular';
+	font-size: .15rem;
+	color: #d48741;
+	line-height: .21rem;
+}
+</style>
+<script type="text/javascript">
+               
+        (function (doc) {
+            var docEl = doc.documentElement,
+                recalc = function () {
+                    var clientWidth = docEl.clientWidth;
+                    if (!clientWidth) return;
+                    if (clientWidth > 414) {
+                        //docEl.style.fontSize = '115px';
+						docEl.style.fontSize = '110.4px';
+                    } else {
+                        //docEl.style.fontSize = 100 * (clientWidth / 360) + 'px';
+                        docEl.style.fontSize = 100 * (clientWidth / 375) + 'px';
+                    }
+                };
+            recalc();
+        })(document);
+       
+    </script>
+</head>
+<body><!--header begin-->
+<div class="body_sytle">
+<div class="i_nav_fixed_box">
+	<div class="i_nav_box">
+		<div class="i_nav_list">
+		
+			<a href="{:U('Index/index',array('order'=>'sex1','btype'=>2))}" class='nav_but <eq name="_GET.order" value="sex1">hover</eq><empty name="_GET.order">hover</empty>'><strong>男生</strong><span></span></a>
+			<a href="{:U('Index/index',array('order'=>'sex2','btype'=>2))}" class='nav_but <eq name="_GET.order" value="sex2">hover</eq>'><strong>女生</strong><span></span></a>
+		</div>
+		<div class="i_search_box"><a href="javascript:;" onclick="location.href=&#39;{:U('iSearch',array('btype'=>2))}&#39;" class="client-url">搜索你想看的书</a></div>
+	</div>	
+</div>
+
+<div class="i_slide_box">
+	<!-- Swiper -->
+	<div class="swiper-container swiper-container-horizontal swiper-container-wp8-horizontal">
+		<div class="swiper-wrapper">
+			<foreach name="_xsBanner" item="v">
+	 
+			<div class="swiper-slide" data-swiper-slide-index=""><a href="{$v.url}" class="client-url section-data" data-zone="轮播" data-book_id=""><img alt="" src="__PUBLIC__/home/img/icon/banner_bg.png" data-original="{$v.pic}"></a></div>
+			
+			</foreach>		
+							
+			</div>
+		<!-- Add Pagination -->
+		<div class="swiper-pagination swiper-pagination-clickable swiper-pagination-bullets"><span class="swiper-pagination-bullet swiper-pagination-bullet-active"></span><span class="swiper-pagination-bullet"></span><span class="swiper-pagination-bullet"></span></div>
+	</div>
+</div>
+
+<div class="i_classify">
+	<ul>
+		<li><a href="{:U('Index/bookType',array('btype'=>2))}"><i class="icon-fl"></i>分类</a></li>
+		<li><a href="{:U('Index/moreList',array('field'=>'isfw','value'=>2,'btype'=>2))}"><i class="icon-free"></i>免费</a></li>
+		<li><a href="{:U('Index/collectHistory',array('btype'=>2))}"><i class="icon-ranking"></i>最近阅读</a></li>
+		<li><a href="{:U('Index/charge',array('btype'=>2))}"><i class="icon-vip"></i>充值</a></li>
+        <li><a href="{:U('Index/my',array('btype'=>2))}"><i class="icon-hd"></i>个人中心</a></li>
+	</ul>
+</div>
+
+<!--主编推荐 begin-->
+
+<volist name="list" id="v"  key="k">
+<div class="i_module_box">
+	<div class="i_module_tit">
+		<h2>
+			<a class="i_module_list_more client-url" href="{:U('Index/moreList',array('field'=>'areas','value'=>$v['sid'],'btype'=>2))}">更多</a>
+			<strong>{$v.name}</strong>
+		</h2>
+	</div>
+	<if condition="$k elt 2">
+	<div class="i_images_list">
+		<ul class="i_images_ul">
+		<volist name="v['list']" id="vv">
+			<li class="section-block">
+				<a href="{:U('Index/info',array('id'=>$vv['id']))}" class="client-url section-data">
+				<div class="i_images_img"><img alt="{$vv.title}" src="__PUBLIC__/home/img/icon/default_img.png" data-original="{$vv.coverpic}"></div>
+				<h3>{$vv.title}</h3>
+				</a>
+			</li>	
+		</volist>		
+		</ul>
+	</div>
+	<else/>
+	<div class="i_images_text_list">
+		<ul class="i_images_text_ul">
+			<volist name="v['list']" id="vv">
+			<?php 
+				$cates = explode(",",$vv['cateids']);
+				if($vv['btype'] == 1){
+					$cArr = $_mhStore;
+				}else{
+					$cArr = $_xsStore;
+				}
+			?>
+			<li class="section-block">
+				<a href="{:U('Index/info',array('id'=>$vv['id']))}" class="client-url section-data">
+					<div class="i_images_img"><img alt="{$vv.title}" src="__PUBLIC__/home/img/icon/default_img.png" data-original="{$vv.coverpic}"></div>
+					<div class="i_images_txt_box">
+						<h3>{$vv.title}</h3>
+						<p>{$vv.remark}</p>
+						<div class="i_images_txt_other">
+							<strong><i>{$vv['status']==1?连载中:已完结}</i><foreach name="cates" item="vvv" key="kk">
+				<b><if condition="$kk elt 1">{$cArr[$vvv]}</if></b>
+			</foreach></strong><em>39.69万人在追</em>
+						</div>
+					</div>
+				</a>
+			</li>
+			</volist>					
+		</ul>
+	</div>
+	</if>
+</div>
+</volist>
+<div class="i_erweima">
+	<if condition="$mch">
+		<img src="{$mch['qrcode']}">
+		<p>客服公众号：{$mch['weixin']}<br>客服电话：{$mch['qq']}<br>工作时间：09:00-21:00</p>
+	<else />
+		<img src="{$_site['qrcode']}">
+			<p>客服公众号：{$_site['weixin']}<br>客服电话：{$_site['qq']}<br>工作时间：09:00-21:00</p>
+	</if>
+</div>
+<script>
+    // $(function () {
+    //     var fontSize = $(window).width() / 25;
+    //     $("html").css("font-size", fontSize);
+    //     uid = "0";
+    // })
+
+    var ajaxurl = "{:U('iSearch')}";
+	
+
+</script>
+
+
+<script>
+
+
+    function get_other_books2(){
+        var url = "{:U('get_other_books')}";
+        var data = {type:"1"}
+        $.post(url,data,function(data){
+            if(data.status == 1){
+                $('#other_book').html('');
+                $('#other_book').append(data.info);
+            }else{
+                bh_msg_tips(data.info);
+            }
+        })
+    }
+
+</script>
+<script type="text/javascript" src="__PUBLIC__/home/js/zepto.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/home/js/zepto.cookie.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/home/js/zepto.picLazyLoad.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/home/js/swiper.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/home/js/slick.js"></script>
+<script type="text/javascript" src="__PUBLIC__/home/js/template5_index.js"></script>
+
+</body>
+</html>

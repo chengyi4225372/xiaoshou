@@ -1,0 +1,62 @@
+ <!-- Content Header (Page header) -->
+<section class="content-header">
+	<div>
+		<ol class="breadcrumb" style="background: none; margin-bottom: 0px;">
+			<li><a href="{:U('Index/index')}" style="color: #333;"><i class=" fa fa-home"></i> Home</a></li>
+			<li class="active">修改推广链接</li>
+		</ol>
+	</div>
+
+</section>
+
+<section class="content">
+<div class="row">
+	<div class="col-xs-12">
+
+		<div class="box box-primary">
+			<div style="margin-bottom:30px">
+			</div>
+			<form id="main-form" class="form-horizontal" method="post">
+				
+				<div class="form-group">
+					<label class="control-label col-sm-3">推广链接名称</label>
+					<div class="col-sm-6">
+						<input type="text" name="name" class="form-control col-sm-9" value="{$info['name']}">
+						<p class="help-block help-block-error col-sm-7 col-xs-10"></p>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-3">备注</label>
+					<div class="col-sm-6">
+						<input type="text" name="msg" class="form-control col-sm-9" value="{$info['msg']}" maxlength="100">
+						<p class="help-block help-block-error col-sm-7 col-xs-10"></p>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-3">强制关注章节</label>
+					<div class="col-sm-6">
+						<input type="text" name="subchaps" class="form-control col-sm-9" value="{$info['subchaps']}">
+						<p class="help-block help-block-error col-sm-7 col-xs-10"></p>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-3">成本(元)</label>
+					<div class="col-sm-6">
+						<input type="text" name="cost" class="form-control col-sm-9" value="{$info['cost']}">
+						<p class="help-block help-block-error col-sm-7 col-xs-10"></p>
+					</div>
+				</div>
+				<div class="box-footer">
+					<div class="form-group">
+						<div class="col-sm-offset-3 col-sm-9">
+							<button type="button" id="ajaxBtn" class="btn btn-primary">保存</button>
+						</div>
+					</div>
+				</div>
+			</form>
+
+		</div>
+
+	</div>
+</div>
+</section>

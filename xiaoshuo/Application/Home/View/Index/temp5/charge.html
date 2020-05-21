@@ -1,0 +1,165 @@
+<include file="include/header" title="{$title}" />
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/home/css/footer4.css">
+<style>
+.action a{
+    display: block;
+    background: #ff730a;
+    text-align: center;
+    line-height: 1.333rem;
+    border-radius: .2rem;
+    color: #fff;
+    font-size: .4rem;
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+</style>
+
+	<div style="height:50px;">
+		<div style="padding:12px;font-size: .4rem;">当前金额：<lable style="color: #ff8827;">0</lable>书币</div>
+	</div>
+	<div style="background: #f7f7f7;height:15px;"></div>
+<div class="recharge-list">
+		<div style="margin-bottom:15px;width: 100%;font-size: .4rem; padding-left: .3rem;">请选择充值金额 <lable style=" color: #ff8827;">1元=100书币</lable></div>
+	<foreach name="_charge" item="v" key="k">
+		<if condition="$v['isopen']">
+			<if condition="$v['isover'] eq 1">
+				<div class="item <if condition="$v['ischoose']">active</if>" data-id="{$k}">
+					<a href="javascript:void(0);" class="container">
+						<div class="body">
+							<div class="num">
+								终生VIP会员
+							</div>
+							<div class="bio">
+								￥{$v.money}元
+							</div>
+							<div class="text">
+								终生免费看！
+							</div>
+						</div>
+						<label class="<if condition="$v['ishot']">label label-first</if>"></label>
+					</a>
+				</div>
+			<elseif condition="$v['isyear'] eq 1" />
+				<div class="item hot <if condition="$v['ischoose']">active</if>" data-id="{$k}" style="width:100%">
+					<a href="javascript:void(0);" class="container">
+						<div class="body">
+						<!-- 	<div class="num">
+								年费VIP会员
+							</div>
+							<div class="bio">
+								{$v.money}元
+							</div>
+							<div class="text">
+								每天1元，全年免费看！
+							</div> -->
+								<div class="y-voucher-top">
+									   <img src="__PUBLIC__/home/img/year.png" style="width: 150px;">
+									   <p>一年内全站书籍免费看</p>
+								</div>
+						</div>
+						<label class="<if condition="$v['ishot']">label label-first</if>"></label>
+					</a>
+				</div>
+			<elseif condition="$v['ishalf'] eq 1" />
+				<div class="item <if condition="$v['ischoose']">active</if>" data-id="{$k}">
+					<a href="javascript:void(0);" class="container">
+						<div class="body">
+							<div class="num">
+								半年VIP会员
+							</div>
+							<div class="bio">
+								￥{$v.money}元
+							</div>
+							<div class="text">
+								半年时间免费看！
+							</div>
+						</div>
+						<label class="<if condition="$v['ishot']">label label-first</if>"></label>
+					</a>
+				</div>
+			<else />
+				<div class="item hot <if condition="$v['ischoose']">active</if>" data-id="{$k}">
+					<a href="javascript:void(0);" class="container">
+						<div class="body">
+							<div class="num">
+								￥{$v.money}元
+							</div>
+							<div class="bio">
+								{$v['money']*$v['lv']}
+								<if condition="$v['smoney'] gt 0">
+									+{$v['smoney']*$v['lv']}
+								</if>
+								书币
+							</div>
+							<div class="text">
+								多送
+								<if condition="$v['smoney'] gt 0">
+									{$v['smoney']}
+								</if>
+								元
+							</div>
+						</div>
+						<label class="<if condition="$v['ishot']">label2 label-first</if>"></label>
+					</a>
+				</div>
+				
+			</if>
+		</if>
+	</foreach>
+</div>
+<div class="action">
+	<a onclick="payment()" class="btn wap-btn">立即充值</a>
+</div>
+<div class="recharge-notice">
+	          <p>* 阅读币属于虚拟商品，一经购买不得退换</p>
+		      <p>* 充值后阅读币到账可能有延迟,1小时内未到账请与客服联系。</p>
+		      <p>* 工作时间：周一到周五9：30-20：30，周六周日 9：30-18：30</p> 
+</div>
+
+<div id="returnALi"></div>
+<include file="include/footer4" />
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/layer/skin/default/layer.css">
+<script src="__PUBLIC__/layer/layer.js"></script>
+
+<script>
+	var cid = 0;
+    $(function () {
+        $('.recharge-list > .item .container').on('click', function (e) {
+            if ($(this).parent().hasClass('active')) return;
+            $('.recharge-list > .item').removeClass('active');
+            $(this).parent().addClass('active');
+        });
+	});
+	
+	
+	
+	function payment(){
+		layer.closeAll();
+		$('.recharge-list .item').each(function(){
+			if($(this).hasClass('active')){
+				cid = $(this).attr('data-id');
+				return;
+			}
+		});
+		if(cid == 0 || !cid){
+			layer.msg('请选择充值金额！');
+			return false;
+		}
+		layer.load(2);
+		$.post("{:U('Ajax/charge')}",{cid:cid,anid:"{$_GET['anid']}"},function(d){
+			layer.closeAll();
+			if(d){
+				if(d.status){
+					location.href = d.url;
+				}else{
+					layer.msg(d.info);
+				}
+			}else{
+				layer.msg('非法请求！');
+			}
+		});
+	}
+</script>
+</body>
+</html>

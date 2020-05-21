@@ -1,0 +1,71 @@
+<section class="content-header">
+<div>
+	<ol class="breadcrumb" style="background: none; margin-bottom: 0px;">
+		<li><a href="{:U('Index/index')}" style="color: #333;"><i class=" fa fa-home"></i>&nbsp;Home</a></li>
+		<li class="active">听书信息</li>
+		<li class="active">听书轮播</li>
+	</ol>
+</div>
+</section>
+<section class="content">
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box">
+			<div class="box-header">
+				<h3 class="box-title"></h3>
+				<a href="javascript:;" onclick="addTr();" class="btn btn-success">添加轮播</a>
+			</div>
+			<!-- /.box-header -->
+			<div class="box-body">
+				<form class="form-horizontal" style="margin-top:30px" method="POST" enctype="multipart/form-data">
+					<table class="table table-bordered table-hover table-striped text-center">
+						<tbody id="tables">
+							<tr>
+								<th>轮播图片地址</th>
+								<th>链接地址</th>
+								<th>操作</th>
+							</tr>
+							<foreach name="_stBanner" item="v">
+								<tr>
+									<td><input type="text" name="pic[]" class="form-control col-sm-9" value="{$v.pic}"></td>
+									<td><input type="text" name="url[]" class="form-control col-sm-9" value="{$v.url}"></td>
+									<td>
+										<a href="javascript:;" onclick="delTr(this);" class="cannel_vip btn bg-maroon margin">
+											<i class="fa fa-times"></i>删除
+										</a>
+									</td>
+								</tr>
+							</foreach>
+						</tbody>
+					</table>
+					
+					<div class="box-footer">
+						<div class="form-group">
+							<div class="col-sm-offset-3 col-sm-9">
+								<button type="button" id="ajaxBtn" class="btn btn-primary">保存</button>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+</section>
+<script>
+	function addTr(){
+		var html = '';
+			html='<tr><td>';
+			html+='<input type="text" name="pic[]" class="form-control col-sm-9" value="">';
+			html+='</td><td>';
+			html+='<input type="text" name="url[]" class="form-control col-sm-9" value="">';
+			html+='</td><td>';
+			html+='<a href="javascript:;" onclick="delTr(this);" class="cannel_vip btn bg-maroon margin"><i class="fa fa-times"></i>删除</a>';
+			html+='</td></tr>';
+		$('#tables').append(html);
+	}
+	
+	function delTr(ob){
+		$(ob).parents('tr').remove();
+	}
+</script>

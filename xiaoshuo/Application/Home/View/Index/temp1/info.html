@@ -1,0 +1,481 @@
+<include file="include/header" title="{$info.title}" />
+
+<div class="cover-box">
+	<div class="bg">
+		<img src="{$info.infopic}">
+		<div class="gradient"></div>
+	</div>
+	<div class="container">
+		<div class="title">{$info.title}</div>
+		<div class="tags">
+			<?php 
+				$cates = explode(",",$info['cateids']);
+				if($info['btype'] == 1){
+					$cArr = $_mhStore;
+				}else{
+					$cArr = $_xsStore;
+				}
+			?>
+			<if condition="$info['btype'] eq 1">
+				<div class="label" style="padding-right:4px;">
+					<div class="item">
+						<a href="javascript:void(0);" style="color:orange">漫	画</a>
+					</div>
+				</div>
+			<else />
+				<div class="label" style="padding-right:4px;">
+					<div class="item">
+						<a href="javascript:void(0);" style="color:orange">小说</a>
+					</div>
+				</div>
+			</if>
+			<foreach name="cates" item="v" key="k">
+				<div class="label" style="padding-right:4px;">
+					<div class="item">
+						<a href="javascript:void(0);">{$cArr[$v]}</a>
+					</div>
+				</div>
+			</foreach>
+		</div>
+	</div>
+	<div class="action schou">
+		<a href="javascript:history.go(-1);" class="back">
+			<svg width="12" height="20" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 40"><path d="M21.56 39.47a2 2 0 0 1-1.38-.56L.44 20 20.18 1.09A2.01 2.01 0 1 1 22.95 4L6.23 20l16.72 16a2 2 0 0 1-1.38 3.44z" fill="#fff"></path></svg>
+		</a>
+		<a href="javascript:void(0);" class="btn <if condition="$collect">gray</if>">
+			<if condition="$collect">
+				已收藏
+			<else />
+				<svg width="10" height="10" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path fill="#fff" d="M20 8h-8V0H8v8H0v4h8v8h4v-8h8V8"/></svg>
+				收藏
+			</if>
+		</a>
+	</div>
+</div>
+<nav class="bm-tabs">
+	<div class="item">
+		<a href="javascript:void(0)" type="info" class="active">详情</a>
+	</div>
+	<div class="item">
+		<a href="javascript:void(0)" type="chapters" id="btn_chap" class="">选集</a>
+	</div>
+</nav>
+<div class="ac-box" id="book-info" style="display: block;">
+	<article class="article">
+		<div class="head">
+			<div class="title">作品简介</div>
+		</div>
+		<div class="body">{$info.remark}</div>
+		<div class="author">作者：{$info.author}</div>
+	</article>
+	<div class="bar">
+		<div class="col" style="text-align: left">
+			<i class="icon-hot"></i> 人气值 {$info.hots}万
+		</div>
+		<div class="col" style="text-align: center">
+			<i class="icon-hot" style="background-image: url(./Public/home/images/svg/coment.png)"></i> 评论数 {$info.comments}
+		</div>
+		<div class="col" style="text-align: right">
+			<i class="icon-mark"></i> {$info.likes}人已收藏
+		</div>
+	</div>
+</div>
+<div class="ac-box mb-tabar" id="chapters" style="display: none;">
+	<if condition="$info['btype'] eq 2">
+		<div class="ch">
+			<div class="title">
+				{:getZd('iswz',$info['iswz'])} <span class="small"> 更新到{$info.allchapter}章</span>
+			</div>
+		</div>
+		<div class="list" id="html_box">
+			<?php
+				$paychapter = $info['paychapter'];
+				$chaps = 15;
+				if($info['allchapter']<15){
+					$chaps = $info['allchapter'];
+				}
+				//查询是否已读
+				for($i=1;$i<=$chaps;$i++){
+					$read = M('readhistory')->where(array('user_id'=>$user['id'],'anid'=>$info['id'],'chaps'=>$i))->find();
+					if($i>=$paychapter){
+						?>
+							<div class="item <if condition="!$read">lock</if>">
+								<a href="javascript:chooseChaps({$info['id']},{$i});" class="">{$i} 章
+									<if condition="!$read">
+									<span style="float:right;margin-right:0.5rem;color:#ff730a;font-size:0.9em;">{$info.money|intval} 书币</span>
+									</if>
+								</a>
+							</div>
+						<?php
+					}else{
+						?>
+							<div class="item">
+								<a href="javascript:chooseChaps({$info['id']},{$i});" class="">{$i} 章</a>
+							</div>
+						<?php
+					}
+				}
+			?>
+		</div>
+		<div class="action">
+			<a href="javascript:void(0)" class="btn show-all chapter_all">查看更多章节 <i class="icon-arrow"></i></a>
+		</div>
+	<else />
+		<div class="ch">
+			<div class="title">
+				{:getZd('iswz',$info['iswz'])} <span class="small">全部章节({$info.allchapter})</span>
+			</div>
+		</div>
+
+		<div class="chaps">
+			<ul id="allchaps">
+				<?php
+					$paychapter = $info['paychapter'];
+					//查询是否已读\
+					$chaps = 15;
+					if($info['allchapter']<15){
+						$chaps = $info['allchapter'];
+					}
+					for($i=1;$i<=$chaps;$i++){
+						$read = M('readhistory')->where(array('user_id'=>$user['id'],'anid'=>$info['id'],'chaps'=>$i))->find();
+						$chaps = M('anime_chapter')->where(array('anid'=>$info['id'],'chaps'=>$i))->find();
+
+						if($chaps['coverpic']){
+							$imgs[0] = $chaps['coverpic'];
+						}else{
+							$imgs = explode(",",$chaps['info']);
+						}
+						if($i>=$paychapter){
+							?>
+								<li onclick="chooseChaps({$info['id']},{$i});">
+									<img class="coverimg" src="{$imgs[0]}" />
+									<div class="txts">
+										<h1>{$chaps['title']}</h1>
+										<if condition="!$read">
+											<p><img class="doll" src="__PUBLIC__/home/images/doll.png" />{$info.money|intval} 书币</p>
+										</if>
+										<span>{$chaps.create_time|date="Y-m-d",###}</span>
+									</div>
+								</li>	
+							<?php
+						}else{
+							?>
+								<li onclick="chooseChaps({$info['id']},{$i});">
+									<img class="coverimg" src="{$imgs[0]}" />
+									<div class="txts">
+										<h1>{$chaps['title']}</h1>
+										<span>{$chaps.create_time|date="Y-m-d",###}</span>
+									</div>
+								</li>
+							<?php
+						}
+					}
+				?>
+			</ul>
+		</div>
+	</if>
+</div>
+
+<div class="info-prize">
+	<div class="title">本书已收到<span class="money"> {$info['prize']} </span>元打赏 共<span class="nums">{$prizeNums}</span>人打赏</div>
+	<div class="texts">
+		<ul>
+			<foreach name="prizeList" item="v">
+			<li>
+				<div class="txt">
+					<span></span>
+					<div class="bom">
+						<img src="{$v.headimg}" />
+						<div class="umoney">
+							<p>{$v.nickname}</p>
+							<p>{$v.prize}元</p>
+						</div>					
+					</div>
+				</div>
+			</li>
+			</foreach>
+		</ul>
+	</div>
+	<button class="prize-btn" onclick="$('.prize').slideDown();">打赏</button>
+</div>
+
+<div class="prize">
+	<div class="msk" onclick="$('.prize').slideUp();"></div>
+	<div class="items">
+		<div class="title">请选择打赏金额</div>
+		<ul>
+			<foreach name="_prize" item="v"  key="k">
+				<if condition="$k eq 1">
+					<li _money="{$v}"><span class="active">{$v}元</span></li>
+				<else />
+					<li _money="{$v}"><span>{$v}元</span></li>
+				</if>
+			</foreach>
+		</ul>
+		<div class="">
+			<button class="aBtn" onclick="postPrize();">确定</button>
+			<button class="aBtn cBtn" onclick="$('.prize').slideUp();">取消</button>
+		</div>
+	</div>
+</div>
+
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/layer/skin/default/layer.css">
+<script src="__PUBLIC__/layer/layer.js"></script>
+<script>
+	var money = "{$_prize[1]}";
+	$('.prize .items ul li').click(function(){
+		$('.prize .items ul li').find('span').removeClass('active');
+		$(this).find('span').addClass('active');
+		money = $(this).attr("_money");
+	});
+	
+	function postPrize(){
+		layer.load(2);
+		$.post("{:U('Ajax/postPrize')}",{money:money,anid:"{$info['id']}"},function(d){
+			if(d){
+				layer.closeAll();
+				if(d.status){
+					location.href = d.url;
+				}else{		
+					layer.msg(d.info);
+				}
+			}else{
+				layer.closeAll();
+				alert('请求失败！');
+			}
+		})
+	}
+	
+</script>
+
+<div id="xji">
+	<div class="bm-box mt-10">
+		<div class="head" style="font-size: 12px;">
+			<div class="title">
+				最新评论({$info.comments})
+			</div>
+			<div class="pull-right">
+				<a href="{:U('Index/comments',array('anid'=>$info['id']))}" class="change">全部评论&gt;</a>
+			</div>
+		</div>
+		<div class="books-row">
+			<if condition="$comments">
+				<foreach name="comments" item="v">
+				<div class="bm-box mui-table-view-cell" style="padding: 5px 15px;margin-bottom:0.133rem;margin-left:10px;width:100%;">
+					<a href="javascript:;" style="display: inline-block;margin: 0px -15px;overflow: hidden;width:100%;">
+						<img class="mui-media-object" src="{$v.headimg}" style="float:left; margin-right:10px;">
+						<div class="mui-media-body" style="font-size: 12px;">
+							{$v.nickname}
+							<span style="float: right;margin-right: 14px;">{$v.create_time|date="Y-m-d H:i:s",###}</span>
+							<p>
+								{$v.content}
+							</p>
+						</div>
+					</a>
+				</div>
+				</foreach>
+			<else />
+				<div class="bm-box  mui-table-view-cell" style="padding: 11px 15px;margin-bottom:0.333rem;margin-left:10px;">
+					<div class="mui-media-body">
+						<p>暂无评论</p>
+					</div>
+				</div>
+			</if>
+		</div>
+	</div>
+	<div class="bm-box mt-10">
+		<div class="head">
+			<div class="title dot">
+				猜你喜欢
+			</div>
+		</div>
+		<div class="books-row">
+			<foreach name="guess" item="vo">
+			<div class="item">
+				<a href="{:U('info',array('id'=>$vo['id']))}">
+					<img class="lazy" src="{$vo.coverpic}" style="width:110px;height:146px;" />
+					<div class="title">{$vo.title}</div>
+					<div class="text">更新至{$vo.allchapter}章</div>
+				</a>
+			</div>
+			</foreach>
+		</div>
+	</div>
+</div>
+<div class="mask-box delete-selected-confirm" style="display: none;"></div>
+<div class="modal confirm-modal delete-selected-confirm" style="display: none;">
+	<div class="inner">
+		<div class="confirm-box">
+			<div class="body">
+				<div class="title">
+					您的帐户余额不足，是否进行充值？
+				</div>
+			</div>
+			<div class="action">
+				<a href="javascript:void(0);" class="btn" onclick="$('.mask-box').hide();$('.modal').hide();">取消</a>
+				<a href="javascript:void(0);" class="btn cancel" onclick="location.href=&#39;{:U('Index/charge',array('anid'=>$_GET['id']))}&#39;">确定</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	var page = 1;
+	var isCks = "{$_GET['isCks']}";//是否是点击目录返回
+	var btype = "{$info.btype}";//漫画小说类型
+	var wait = true;//是否加载更多
+	function getChaps(){
+		bh_msg_tips('正在加载中...');
+		$.post("{:U('Ajax/loadChaps')}",{id:"{$info['id']}",page:page},function(d){
+			if(d){
+				$('#bh_msg_lay').hide();
+				if(d.status == 1){
+					bh_msg_tips(d.info);
+				}else if(d.status == 2){
+					$('.show-all').hide();
+					$('#html_box').append(d.info);
+				}else if(d.status == 3){
+					$('#html_box').append(d.info);
+				}else{
+					bh_msg_tips('加载失败！');
+				}
+			}else{
+				$('#bh_msg_lay').hide();
+				bh_msg_tips('请求失败！');
+			}
+		})
+	}
+	//点击章节
+	function chooseChaps(anid,chaps){
+		$.post("{:U('Ajax/nextChaps')}",{anid:anid,chaps:chaps},function(d){
+			if(d){
+				console.log(d);
+				if(d.status == 1){
+					$('.mask-box').show();
+					$('.modal').show();
+				}else if(d.status == 2){
+					location.href = d.url;
+				}else{
+					alert("异常错误！");
+				}
+			}else{
+				alert("请求失败！");
+			}
+		});
+	}
+
+	
+    $(function () {      
+        $('.bm-tabs .item a').click(function () {
+            var p_tabs = $(this).parents('.bm-tabs');
+            p_tabs.find("div a").removeClass("active");
+            $(this).addClass("active");
+            var type = $(this).attr('type');
+            if (type == 'info') {
+                $('#book-info').show();
+                $('#other-box').show();
+                $('#chapters').hide();				
+				$('#xji').show();
+            } else {
+                $('#book-info').hide();
+                $('#other-box').hide();
+                $('#chapters').show();
+				$('#xji').hide();
+				//漫画下拉进行加载
+				if(btype == "1"){
+					$(window).bind("scroll", function (event) {
+						if(!wait) return;
+						var top = document.documentElement.scrollTop + document.body.scrollTop;
+						var textheight = $(document).height();
+						if (textheight - top - $(window).height() <= 100) {
+							page++;
+							getMore();
+						}
+					});
+				}
+            }
+        });
+       
+		if(isCks == 1){
+			$('.bm-tabs .item a').click();
+		}
+		
+		
+        $('.schou .btn:not(.chapter_all,.continu)').click(function () {
+            var is_gray_ = $(this).hasClass("gray");
+            $.post("{:U('Ajax/collect')}", { id: "{$info.id}" });
+            if (is_gray_) {
+                $(this).removeClass("gray");
+                $(this).html('<svg width="10" height="10" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path fill="#fff" d="M20 8h-8V0H8v8H0v4h8v8h4v-8h8V8"/></svg>收藏');
+            }
+            else {
+                $(this).addClass("gray");
+                $(this).html("已收藏");
+            }
+        });
+		
+		//查看全部章节
+		$('.show-all').click(function () {
+			getChaps();
+			page++;
+        });
+
+    });
+	
+	//查看更多章节
+	function getMore(){
+		$.post("{:U('Ajax/loadMoreChaps')}",{id:"{$info['id']}",page:page},function(d){
+			if(d){
+				console.log(d);
+				if(d.status){
+					$('#allchaps').append(d.info);
+				}else{
+					wait = false;
+				}
+			}else{
+				bh_msg_tips('请求失败！');
+				wait = true;
+			}
+		})
+	}
+	
+	function bh_msg_tips(msg) {
+		var oMask = document.createElement("div");
+		oMask.id = "bh_msg_lay";
+		oMask.style.position = "fixed";
+		oMask.style.left = "0";
+		oMask.style.top = "50%";
+		oMask.style.zIndex = "100";
+		oMask.style.textAlign = "center";
+		oMask.style.width = "100%";
+		oMask.innerHTML = "<span style='background: rgba(0, 0, 0, 0.65);color: #fff;padding: 10px 15px;border-radius: 3px; font-size: 14px;'>" + msg
+			+ "</span>"; document.body.appendChild(oMask);
+		setTimeout(function () {
+			$("#bh_msg_lay").remove();
+		}, 2000);
+	}
+</script>
+
+<div <if condition="$info['btype'] eq 2">style="clear:both;height:1.333rem"</if>></div>
+<div class="book-bar">
+	<div class="inner">
+		<div class="body">
+			<span class="chapter">1章</span>
+			<span class="title">第一章</span>
+		</div>
+		<div class="action">
+			<a href="{:U('Index/readAnime',array('anid'=>$info['id'],'chaps'=>1))}" class="btn continu">开始阅读</a>
+		</div>
+	</div>
+</div>
+
+
+<script>
+	window.shareData = {
+		img: "{$info['coverpic']|complete_url}", 
+		link: "<?php echo complete_url(U('info',array('id' => $info['id'])));?>",
+		title: "{$info['sharetitle']}",
+		desc: "{$info['sharedesc']}",
+	};	
+</script>
+<include file="include/share" />

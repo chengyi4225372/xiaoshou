@@ -1,0 +1,96 @@
+<section class="content-header">
+	<div>
+		<ol class="breadcrumb" style="background: none; margin-bottom: 0px;">
+			<li><a href="{:U('Index/index')}" style="color: #333;"><i class=" fa fa-home"></i> Home</a></li>
+			<li class="active">推广信息</li>
+			<li class="active">推广回收</li></ol>
+	</div>
+</section>
+
+<!-- Main content -->
+<section class="content">
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="box">
+				<div class="box-header">
+					<h3 class="box-title"></h3>
+					<div class="box-tools" style="position: static;">
+						
+						<form class="form-inline" method="post">
+							<div class="input-group ">
+								<input type="text" class="form-control " name="title" value="{$_GET['title']}" placeholder="漫画名称">
+							</div>
+							<div class="input-group" style="width: 350px;">
+								<input type="text" name="name" class="form-control pull-right" placeholder="推广名称" value="{$_GET['title']}">
+								<div class="input-group-btn">
+									<button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+								</div>
+							</div>
+						</form>
+					</div>
+				<!-- /.box-header -->
+					<div class="tab-content">
+						<div class="box-body table-responsive" id="outerChannel">
+							<table class="table table-bordered table-hover table-striped popularizeTable" style="word-wrap:break-word;">
+								<tbody><tr>
+									<th>渠道id</th>
+									<th>推广链接</th>
+									<th>入口章节</th>
+									<th>删除时间</th>
+									<th>操作</th>
+								</tr>	
+								<foreach name="list" item="v">
+								<tr>
+									<td>{$v.id}</td>
+									<td>
+										<div style="display: flex;flex-direction: column;">
+											<span>{$v.name}</span>
+											<span>{$v.url}</span>
+											<span class="createDate">创建日期:{$v.create_time|date="Y-m-d H:i:s",###}</span>
+										</div>
+									</td>
+									<td>
+										<div style="display: flex;flex-direction: column;align-items: flex-start;justify-content: center;">
+											<span>{$v.title}</span>
+											<span class="c666">{$v.atitle}</span>
+										</div>
+									</td>
+									<td>{$v.update_time|date="Y-m-d H:i:s",###}</td>
+									<td>
+										<a href="javascript:;" class="btn btn-info" onclick="setStatus({$v.id});">还原</a>
+									</td>
+								</tr>
+								</foreach>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</section>
+<script>
+	
+//链接还原
+function setStatus($id){
+	if($id){
+		layer.confirm("确定要还原这条链接",function(){
+			$.post("{:U('setStatus')}",{id:$id},function(d){
+				if(d){
+					if(d.status){
+						layer.alert(d.info,function(){
+							location.href=d.url;
+						});
+					}else{
+						layer.alert(d.info);
+					}
+				}else{
+					layer.alert('请求失败');
+				}
+			})
+		})
+	}
+}
+	
+</script>

@@ -1,0 +1,447 @@
+<include file="include/header" title="{$info.title}" />
+<div class="cover-box">
+	<div class="bg">
+		<img src="{$info.infopic}">
+		<div class="gradient"></div>
+	</div>
+	<div class="container">
+		<div class="title">{$info.title}</div>
+		<div class="tags">
+			<?php 
+				$cates = explode(",",$info['cateids']);
+				$cArr = $_stStore;
+			?>
+			<if condition="$info['btype'] eq 1">
+				<div class="label" style="padding-right:4px;">
+					<div class="item">
+						<a href="javascript:void(0);" style="color:orange">漫	画</a>
+					</div>
+				</div>
+			<elseif condition="$info['btype'] eq 2" />
+				<div class="label" style="padding-right:4px;">
+					<div class="item">
+						<a href="javascript:void(0);" style="color:orange">小说</a>
+					</div>
+				</div>
+			<else />
+				<div class="label" style="padding-right:4px;">
+					<div class="item">
+						<a href="javascript:void(0);" style="color:orange">听书</a>
+					</div>
+				</div>
+			</if>
+			<foreach name="cates" item="v" key="k">
+				<div class="label" style="padding-right:4px;">
+					<div class="item">
+						<a href="javascript:void(0);">{$cArr[$v]}</a>
+					</div>
+				</div>
+			</foreach>
+		</div>
+	</div>
+	<div class="action schou">
+		<a href="javascript:history.go(-1);" class="back">
+			<svg width="12" height="20" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 40"><path d="M21.56 39.47a2 2 0 0 1-1.38-.56L.44 20 20.18 1.09A2.01 2.01 0 1 1 22.95 4L6.23 20l16.72 16a2 2 0 0 1-1.38 3.44z" fill="#fff"></path></svg>
+		</a>
+		<a href="javascript:void(0);" class="btn <if condition="$collect">gray</if>">
+			<if condition="$collect">
+				已收藏
+			<else />
+				<svg width="10" height="10" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path fill="#fff" d="M20 8h-8V0H8v8H0v4h8v8h4v-8h8V8"/></svg>
+				收藏
+			</if>
+		</a>
+	</div>
+</div>
+
+<div class="ac-box" id="book-info" style="display: block;">
+	<article class="article">
+		<div class="head">
+			<div class="title">作品简介</div>
+		</div>
+		<div class="body">{$info.remark}</div>
+		<div class="author">作者：{$info.author}</div>
+	</article>
+	<div class="bar">
+		<div class="col" style="text-align: left">
+			<i class="icon-hot"></i> 人气值 {$info.hots}万
+		</div>
+		<div class="col" style="text-align: center">
+			<i class="icon-hot" style="background-image: url(./Public/home/images/svg/coment.png)"></i> 评论数 {$info.comments}
+		</div>
+		<div class="col" style="text-align: right">
+			<i class="icon-mark"></i> {$info.likes}人已收藏
+		</div>
+	</div>
+</div>
+
+<div class="chapters">
+	<div class="title">章节列表</div>
+	<ul id="allchaps">
+		<!-- <li>
+			<div class="chap">1.第一章节</div>
+			<i>30书币</i>
+			<span class="play"></span>
+		</li>		
+		<li>
+			<div class="chap">1.第一章节</div>
+			<i>30书币</i>
+			<span class="playing"></span>
+		</li> -->
+	</ul>
+</div>
+
+<div class="ac-box">
+	<div class="action" style="padding: .5rem .32rem .32rem .32rem;">
+		<a href="javascript:void(0)" class="btn show-all chapter_all">查看更多章节 <i class="icon-arrow"></i></a>
+	</div>
+</div>
+
+<div class="info-prize">
+	<div class="title">本书已收到<span class="money"> {$info['prize']} </span>元打赏 共<span class="nums">{$prizeNums}</span>人打赏</div>
+	<div class="texts">
+		<ul>
+			<foreach name="prizeList" item="v">
+			<li>
+				<div class="txt">
+					<span></span>
+					<div class="bom">
+						<img src="{$v.headimg}" />
+						<div class="umoney">
+							<p>{$v.nickname}</p>
+							<p>{$v.prize}元</p>
+						</div>					
+					</div>
+				</div>
+			</li>
+			</foreach>
+		</ul>
+	</div>
+	<button class="prize-btn" onclick="$('.prize').slideDown();">打赏</button>
+</div>
+
+<div class="prize">
+	<div class="msk" onclick="$('.prize').slideUp();"></div>
+	<div class="items">
+		<div class="title">请选择打赏金额</div>
+		<ul>
+			<foreach name="_prize" item="v"  key="k">
+				<if condition="$k eq 1">
+					<li _money="{$v}"><span class="active">{$v}元</span></li>
+				<else />
+					<li _money="{$v}"><span>{$v}元</span></li>
+				</if>
+			</foreach>
+		</ul>
+		<div class="">
+			<button class="aBtn" onclick="postPrize();">确定</button>
+			<button class="aBtn cBtn" onclick="$('.prize').slideUp();">取消</button>
+		</div>
+	</div>
+</div>
+
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/layer/skin/default/layer.css">
+<script src="__PUBLIC__/layer/layer.js"></script>
+<script>
+	var money = "{$_prize[1]}";
+	$('.prize .items ul li').click(function(){
+		$('.prize .items ul li').find('span').removeClass('active');
+		$(this).find('span').addClass('active');
+		money = $(this).attr("_money");
+	});
+	
+	function postPrize(){
+		layer.load(2);
+		$.post("{:U('Ajax/postPrize')}",{money:money,anid:"{$info['id']}"},function(d){
+			if(d){
+				layer.closeAll();
+				if(d.status){
+					location.href = d.url;
+				}else{		
+					layer.msg(d.info);
+				}
+			}else{
+				layer.closeAll();
+				alert('请求失败！');
+			}
+		})
+	}
+	
+</script>
+
+<div id="xji">
+	<div class="bm-box mt-10">
+		<div class="head" style="font-size: 12px;">
+			<div class="title">
+				最新评论({$info.comments})
+			</div>
+			<div class="pull-right">
+				<a href="{:U('Index/comments',array('anid'=>$info['id']))}" class="change">全部评论&gt;</a>
+			</div>
+		</div>
+		<div class="books-row">
+			<if condition="$comments">
+				<foreach name="comments" item="v">
+				<div class="bm-box mui-table-view-cell" style="padding: 5px 15px;margin-bottom:0.133rem;margin-left:10px;width:100%;">
+					<a href="javascript:;" style="display: inline-block;margin: 0px -15px;overflow: hidden;width:100%;">
+						<img class="mui-media-object" src="{$v.headimg}" style="float:left; margin-right:10px;">
+						<div class="mui-media-body" style="font-size: 12px;">
+							{$v.nickname}
+							<span style="float: right;margin-right: 14px;">{$v.create_time|date="Y-m-d H:i:s",###}</span>
+							<p>
+								{$v.content}
+							</p>
+						</div>
+					</a>
+				</div>
+				</foreach>
+			<else />
+				<div class="bm-box  mui-table-view-cell" style="padding: 11px 15px;margin-bottom:0.333rem;margin-left:10px;">
+					<div class="mui-media-body">
+						<p>暂无评论</p>
+					</div>
+				</div>
+			</if>
+		</div>
+		<if condition="$guess">
+			<div class="bm-box mt-10">
+				<div class="head">
+					<div class="title dot">
+						猜你喜欢
+					</div>
+				</div>
+				<div class="books-row">
+					<foreach name="guess" item="vo">
+					<div class="item">
+						<a href="{:U('info',array('id'=>$vo['id']))}">
+							<img class="lazy" src="{$vo.coverpic}" style="width:110px;height:146px;" />
+							<div class="title">{$vo.title}</div>
+							<div class="text">更新至{$vo.allchapter}话</div>
+						</a>
+					</div>
+					</foreach>
+				</div>
+			</div>
+		</if>
+	</div>
+</div>
+<div class="mask-box delete-selected-confirm" style="display: none;"></div>
+<div class="modal confirm-modal delete-selected-confirm" style="display: none;" id="charge">
+	<div class="inner">
+		<div class="confirm-box">
+			<div class="body">
+				<div class="title">
+					您的帐户余额不足，是否进行充值？
+				</div>
+			</div>
+			<div class="action">
+				<a href="javascript:void(0);" class="btn" onclick="$('.mask-box').hide();$('.modal').hide();">取消</a>
+				<a href="javascript:void(0);" class="btn cancel" onclick="location.href=&#39;{:U('Index/charge',array('anid'=>$_GET['id']))}&#39;">确定</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="playBar">
+	<div class="left" id="title"></div>
+	<div class="right">
+		<div onclick="prevPlay();"><span class="prev"></span></div>
+		<div id="play"><span class="pause"></span></div>
+		<div onclick="nextPlay();"><span class="next"></span></div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	var page = 1;
+	var audio;
+	var index = -1;
+	$(function(){
+		getMore();
+		audio = document.createElement('audio');
+		audioEnd();
+	});
+
+	//查看更多章节
+	function getMore(){
+		$.post("{:U('Ajax/getStoryList')}",{id:"{$info['id']}",page:page},function(d){
+			if(d){
+				console.log(d);
+				if(d.status){
+					$('#allchaps').append(d.info);
+				}else{
+					bh_msg_tips(d.info);
+				}
+			}else{
+				bh_msg_tips('请求失败！');
+			}
+		})
+	}
+
+	//li点击播放
+	function play(ob){
+		index = $(ob).index();
+		Audio();
+	}
+	
+	//下方play点击
+	$('#play').click(function(){
+		Audio();
+	})
+	
+	
+	//上一首
+	function prevPlay(){
+		var cur = index - 1;
+		if(cur<0){
+			return;
+		}else{
+			index--;
+			Audio();
+		}
+	}
+	
+	//下一首
+	function nextPlay(){
+		var cur = index+1;
+		if(cur>$('#allchaps li').length-1){
+			return;
+		}else{
+			index++;
+			Audio();
+		}
+	}
+	
+	
+	//显示操作
+	function showFoot(){
+		if (audio.paused) {
+			$('.playBar').find('#play>span').removeClass('pause').addClass('play');
+		}else {
+			$('.playBar').find('#play>span').removeClass('play').addClass('pause');
+		}
+		$('.playBar').show();
+	}
+	
+	
+	//播放操作
+	function Audio(){
+		//定义播放的li
+		var $li = $('#allchaps li').eq(index);
+		var path = $li.attr("_path");
+		var title = $li.attr("_title");
+		//当前集数
+		var $chaps = $li.attr('_chaps');
+		var $paychaps = $li.attr('_paychaps');
+		
+		//赋值标题
+		$('.playBar>#title').html(title);
+		
+		$li.parent().find('span').removeClass('playing').addClass('play');
+		$li.find('span').removeClass('play').addClass('playing');
+		$('.playBar').find('#play>span').removeClass('play').addClass('pause');
+		$('.playBar').show();
+		
+		//判断是否当前播放的
+		if(path == audio.src){
+			$li.parent().find('span').removeClass('playing').addClass('play');
+			if (audio.paused) {
+				$li.find('span').removeClass('play').addClass('playing');
+				audio.play();
+			} else {
+				$li.find('span').removeClass('playing').addClass('play');
+				audio.pause();
+			}
+			showFoot();
+		}else{
+		
+			bh_msg_tips('音频读取中...');
+			if($chaps>=$paychaps){
+				$.post("{:U('Ajax/paynumPlay')}",{chaps:$chaps,id:"{$info.id}"},function(d){
+					if(d){
+						if(d.status){
+							$('#xji').css('margin-bottom','1.43rem');	
+							audio.src = path;
+							audio.play();
+							$('#bh_msg_lay').remove();
+						}else{
+							$li.find('span').removeClass('playing').addClass('play');
+							audio.pause();
+							$('.mask-box').show();
+							$('.modal').show();
+						}
+						showFoot();
+					}else{
+						alert('请求失败！');
+					}
+				});
+			}else{
+				if (audio.src != path) {
+					audio.src = path;
+					audio.play();
+				} else {
+					if (audio.paused) {
+						audio.play();
+					} else {
+						audio.pause();
+					}
+				}
+				
+				showFoot();
+			}
+		}
+	}
+	
+	
+	function audioEnd() {
+		audio.addEventListener("ended", function() {
+			nextPlay();
+		}, false);
+	}
+	
+	$('.schou .btn:not(.chapter_all,.continu)').click(function () {
+		var is_gray_ = $(this).hasClass("gray");
+		$.post("{:U('Ajax/collect')}", { id: "{$info.id}" });
+		if (is_gray_) {
+			$(this).removeClass("gray");
+			$(this).html('<svg width="10" height="10" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path fill="#fff" d="M20 8h-8V0H8v8H0v4h8v8h4v-8h8V8"/></svg>收藏');
+		}
+		else {
+			$(this).addClass("gray");
+			$(this).html("已收藏");
+		}
+	});
+	
+	//查看全部章节
+	$('.show-all').click(function () {
+		page++;
+		getMore();
+	});
+
+	
+	function bh_msg_tips(msg) {
+		var oMask = document.createElement("div");
+		oMask.id = "bh_msg_lay";
+		oMask.style.position = "fixed";
+		oMask.style.left = "0";
+		oMask.style.top = "50%";
+		oMask.style.zIndex = "100";
+		oMask.style.textAlign = "center";
+		oMask.style.width = "100%";
+		oMask.innerHTML = "<span style='background: rgba(0, 0, 0, 0.65);color: #fff;padding: 10px 15px;border-radius: 3px; font-size: 14px;'>" + msg
+			+ "</span>"; document.body.appendChild(oMask);
+		setTimeout(function(){
+			$('#bh_msg_lay').remove();
+		},1500);
+	}
+</script>
+
+
+<script>
+	window.shareData = {
+		img: "{$info['coverpic']|complete_url}", 
+		link: "<?php echo complete_url(U('stInfo',array('id' => $info['id'])));?>",
+		title: "{$info['sharetitle']}",
+		desc: "{$info['sharedesc']}",
+	};	
+</script>
+<include file="include/share" />

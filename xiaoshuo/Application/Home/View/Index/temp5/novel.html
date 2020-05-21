@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+
+<html style="font-size: 53.72px;">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0">
+    <meta content="telephone=no" name="format-detection">
+    <meta http-equiv="Cache-Control" content="no-transform ">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="applicable-device" content="mobile">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/home/css/template4.css">
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/home/css/footer4.css">
+		
+    <script type="text/javascript" src="__PUBLIC__/home/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/public_3_1.js"></script>
+
+    <style>
+        body {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+		.recommend .entry li a img{width:100%;object-fit: cover;}
+		img{object-fit: cover;}
+	    .book li { width: 33.33%;}
+		.free .entry li { width: 33.33%;}
+		.like .entry li { width: 33.33%;}
+    </style>
+</head>
+<body><!--header begin-->
+<div class="header">
+    <div class="inner">
+        <div class="logo">
+		<!-- <img src="__PUBLIC__/home/img/logo.png"> -->
+		
+		</div>
+        <div class="entry">
+            <ul>
+                <li><a href="javascript:;" onclick="location.href='{:U('Index/index')}'">漫画</a></li>
+                <li><a href="javascript:;" class="active">小说</a></li>
+			    <li><a href="javascript:;" onclick="location.href='{:U('Index/story')}'">听书</a></li>
+				<li><a href="javascript:;" onclick="location.href='{:U('Index/video')}'">视频</a></li>
+            </ul>
+        </div>
+        <div class="sear"><a onclick="show_ser_box();"><i class="icon-ss"></i></a></div><!--搜索 begin-->
+        <div class="search" id="show_ser_box" style="display: none;">
+            <div class="cs-box">
+                <button type="button" class="btn" id="show_cleare_btn" onclick="hide_ser_box();">取消</button>
+                <button type="button" class="btn" id="show_sear_btn" onclick="key_search_href();"
+                        style="display: none;">搜索
+                </button>
+                <div class="field"><input type="text" name="keyword" id="search_keyword" maxlength="18" placeholder=""
+                                          onkeyup="keyup_search(this,&#39;top&#39;)">
+                    <div class="action"><a href="javascript:;" style="display: none;" id="closeid"
+                                           onclick="close_clear();"><i class="icon-close"></i></a></div>
+                </div>
+            </div>
+        </div><!--搜索 end--></div>
+</div><!--header end-->
+<div class="search-result" id="page_html"
+     style="position: fixed; top: 0; left: 0; z-index: 50; width: 100%; padding-bottom: 0;"></div>
+
+<div class="media">
+    <foreach name="_xsBanner" item="v">
+        <div><a href="{$v.url}"><img src="{$v.pic}"></a></div>
+    </foreach>
+</div>
+
+<div class="classify">
+    <ul>
+        <li><a href="{:U('Index/bookType',array('btype'=>2))}"><i class="icon-fl"></i>分类</a></li>
+        <li><a href="{:U('Index/rank',array('btype'=>2))}"><i class="icon-ranking"></i>排行</a></li>
+   		<li><a href="{:U('Index/collectHistory',array('btype'=>2))}"><i class="icon-vip"></i>记录</a></li>
+        <li><a href="{:U('Index/moreList',array('field'=>'isfw','value'=>2,'btype'=>2))}"><i class="icon-free"></i>免费</a></li>
+    </ul>
+</div><!--classify end-->
+<div class="hot_label">
+    <foreach name="xsStore" item="v">
+        <div><a class="label_title" href="{:U('Index/bookType',array('btype'=>2))}">{$v}</a></div>
+    </foreach>
+</div>
+
+
+<!--主编推荐 begin-->
+<div class="recommend bor-top" style="border-top: 1px solid #f2f2f2;">
+    <div class="title"><h3>精选小说</h3><span class="dot"></span></div>
+    <div class="entry" id="edit_box">
+        <div class="slider autoplay" style="margin-left: 15px;">
+            <foreach name="list" item="v">
+                <if condition="$v['sid'] eq 1">
+                    <foreach name="v['list']" item="vv">
+                        <div>
+                            <li>
+                                <a href="{:U('Index/info',array('id'=>$vv['id']))}">
+                                    <img src="{$vv.infopic}">
+                                    <p>{$vv.title}</p>
+                                </a>
+                            </li>
+                        </div>
+                    </foreach>
+                </if>
+            </foreach>
+        </div>
+    </div>
+</div><!--主编推荐 end--><!-- 短篇小说 begin -->
+<div class="recommend hot-box bor-top">
+    <div class="title"><h3>人气小说</h3><a href="{:U('Index/moreList',array('field'=>'areas','value'=>3,'btype'=>2))}">更多<i class="icon-arrow"></i></a></div>
+    <div class="entry">
+        <foreach name="list" item="v">
+            <if condition="$v['sid'] eq 2">
+                <foreach name="v['list']" item="vv">
+                    <div class="item">
+                        <a href="{:U('Index/info',array('id'=>$vv['id']))}">
+                            <img src="{$vv.infopic}" class="avatar">
+                            <div class="body">
+                                <span class="t">{$vv.title}</span>
+                                <span class="author">{$vv.author}&nbsp</span>
+                                <span class="btn">立即阅读</span>
+                                <p>{$vv.remark}</p>
+                            </div>
+                        </a>
+                    </div>
+                </foreach>
+            </if>
+        </foreach>
+
+    </div>
+</div><!-- 短篇小说 end --><!-- 热门小说 begin -->
+<div class="recommend hot-box bor-top">
+    <div class="title"><h3>新品上架</h3><a href="{:U('Index/moreList',array('field'=>'areas','value'=>4,'btype'=>2))}">更多<i class="icon-arrow"></i></a></div>
+    <div class="entry">
+
+        <foreach name="list" item="v">
+            <if condition="$v['sid'] eq 3">
+                <foreach name="v['list']" item="vv">
+                    <div class="item">
+                        <a href="{:U('Index/info',array('id'=>$vv['id']))}">
+                            <img src="{$vv.infopic}" class="avatar">
+                            <div class="body">
+                                <span class="t">{$vv.title}</span>
+                                <span class="author">{$vv.author}</span>
+                                <span class="btn">立即阅读</span>
+                                <p style="margin-top: 20px;">{$vv.remark}</p>
+                            </div>
+                        </a>
+                    </div>
+                </foreach>
+            </if>
+        </foreach>
+
+    </div>
+</div>
+
+<style>
+    .enter_channel {
+        background: #fff;
+        padding: 10px 9px;
+    }
+
+    .enter_channel li {
+        width: 50%;
+        float: left;
+    }
+
+    .enter_channel li a {
+        margin: 0 5px;
+        display: block;
+    }
+
+    .enter_channel li a img {
+        width: 100%;
+        display: block;
+        margin: 0 auto;
+    }
+</style>
+<div class="recommend hot-box new-book bor-top">
+    <div class="title"><h3>热门推荐</h3><a href="{:U('Index/moreList',array('field'=>'areas','value'=>1,'btype'=>2))}">更多<i class="icon-arrow"></i></a></div>
+    <div class="entry">
+        <div class="book">
+            <ul>
+                <foreach name="list" item="v">
+                    <if condition="$v['sid'] eq 3">
+                        <volist name="v['list']" id="vv" offset="0" length="3">
+                            <li>
+                                <a href="{:U('Index/info',array('id'=>$vv['id']))}">
+                                    <img src="{$vv.infopic}">
+                                    <p>{$vv.title}</p>
+                                </a>
+                            </li>
+                        </volist>
+                    </if>
+                </foreach>
+            </ul>
+        </div>
+
+        <foreach name="list" item="v">
+            <if condition="$v['sid'] eq 3">
+                <volist name="v['list']" id="vv" offset="3" length="6">
+                    <div class="item">
+                        <a href="{:U('Index/info',array('id'=>$vv['id']))}">
+                            <img src="{$vv.infopic}" class="avatar">
+                            <div class="body">
+                                <span class="t">{$vv.title}</span>
+                                <span class="author">{$vv.author}</span>
+                                <span class="btn">立即阅读</span>
+                                <p>{$vv.remark}</p>
+                            </div>
+                        </a>
+                    </div>
+                </volist>
+            </if>
+        </foreach>
+    </div>
+</div>
+<div class="recommend free bor-top">
+    <div class="title">
+        <h3>限时免费</h3>
+     <!--    <span class="time" id="downdate_box" startdate="2018/12/10 07:00:00">倒计时: <i
+            class="num">9</i> <small>:</small> <i class="num">45</i> <small>:</small> <i class="num">35</i></span> -->
+	</div>
+    <div class="entry">
+        <ul>
+		   <foreach name="noPay" item="v">
+            <li>
+			  <a href="{:U('Index/info',array('id'=>$v['id']))}">
+			     <img src="{$v.infopic}">
+				 <i class="icon-free"></i>
+                 <p>{$v.title}</p>
+			  </a>
+			</li>
+          </foreach>
+        </ul>
+    </div>
+</div>
+
+<div class="recommend like bor-top">
+    <div class="title"><h3>猜你喜欢</h3><a href="javascript:get_other_books2();"><i class="icon-change"></i>换一批</a></div>
+    <div class="entry">
+        <ul id="other_book">
+		 <foreach name="guess" item="v">
+         <li>
+			  <a href="{:U('Index/info',array('id'=>$v['id']))}">
+			     <img src="{$v.infopic}">
+				 <i class="icon-free"></i>
+                 <p>{$v.title}</p>
+			  </a>
+		 </li>
+		 </foreach>
+    </div>
+</div>
+
+<div class="copyright bor-top mar-foot">
+	    <span>
+		    <a href="{:U('Index/novel')}">首页</a><small></small>
+			<a href="{:U('Index/charge')}">充值</a><small></small>
+			<a href="{:U('Index/kefu')}">客服中心</a><small></small>
+			<a href="{:U('Index/my')}">个人中心</a>
+			</span>
+
+</div>
+
+<include file="include/footer4" />
+
+<style>    @media only screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) {
+    /* 这代表IPX */
+    /* 目前这种设备像素比 和 尺寸是很“奇葩”、特殊的，基本可以确定是 IPX */
+    #footer_nav {
+        padding-bottom: 10px;
+    }
+}
+.footer li a {
+    font-size: 1.4rem;
+}
+</style>
+<div class="return-top" id="icon-top" style="display: none;"><a href="javascript:;"><i class="icon-top"></i></a></div>
+
+
+
+
+
+<script>
+    // $(function () {
+    // var fontSize = $(window).width() / 25;
+    // $("html").css("font-size", fontSize);
+    // uid = "0";
+
+// })
+    var ajaxurl = "{:U('iSearch')}";
+</script>
+<script>
+
+
+    function get_other_books2(){
+        var url = "{:U('get_other_books')}";
+        var data = {type:"2"}
+        $.post(url,data,function(data){
+            if(data.status == 1){
+                $('#other_book').html('');
+                $('#other_book').append(data.info);
+            }else{
+                bh_msg_tips(data.info);
+            }
+        })
+    }
+
+</script>
+<script type="text/javascript" src="__PUBLIC__/home/js/slick.js"></script>
+<script type="text/javascript" src="__PUBLIC__/home/js/index.js"></script>
+
+</body>
+</html>

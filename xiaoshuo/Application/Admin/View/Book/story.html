@@ -1,0 +1,254 @@
+<link rel="stylesheet" href="__PUBLIC__/admin/css/switch.css">
+<section class="content-header">
+<div>
+	<ol class="breadcrumb" style="background: none; margin-bottom: 0px;">
+		<li><a href="{:U('Index/index')}" style="color: #333;"><i class=" fa fa-home"></i>&nbsp;Home</a></li>
+		<li class="active">听书信息</li>
+		<li class="active">听书列表</li>
+	</ol>
+</div>
+</section>
+<section class="content">
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box">
+			<div class="box-header">
+				<h3 class="box-title"></h3>
+				<a href="{:U('Book/editStory')}" class="btn btn-success">添加听书</a>
+				<div class="box-tools">
+					<form class="form-inline" method="post">
+						<div class="form-group">
+							<select name="isnew" class="form-control" default="{$_GET['isnew']}">
+								<option value="">新书筛选（全部）</option>
+								<option value="1">新书</option>
+								<option value="2">非新书</option>
+							</select>
+						</div>
+						<div class="form-group">
+							<select name="islong" class="form-control" default="{$_GET['islong']}">
+								<option value="">所有</option>
+								<option value="1">长篇</option>
+								<option value="2">短篇</option>
+							</select>
+						</div>
+						<div class="form-group">
+							<select name="issex" class="form-control" default="{$_GET['issex']}">
+								<option value="">所有</option>
+								<option value="1">男频</option>
+								<option value="2">女频</option>
+							</select>
+						</div>
+						<div class="form-group">
+							<select class="form-control" name="iswz" default="{$_GET['iswz']}">
+								<option value="">更新进度(全部)</option>
+								<option value="1">连载中</option>
+								<option value="2">已完结</option>
+							</select>
+						</div>
+						<div class="form-group">
+							<div class="input-group input-group-md" style="width: 150px;">
+								<input type="text" name="title" class="form-control pull-right" placeholder="听书名称" value="{$_GET['title']}">
+								<div class="input-group-btn">
+									<button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+			<!-- /.box-header -->
+			<div class="box-body">
+				<table class="table table-bordered table-hover table-striped text-center">
+					<tbody>
+						<tr>
+							<th>封面</th>
+							<th>书名</th>
+							<th>作者</th>
+							<th>总章节</th>
+							<th>进度</th>
+							<th>属性</th>
+							<th>长篇/短篇</th>
+							<th>男频/女频</th>
+							<th>上下架</th>
+							<th>是否显示</th>
+							<th>查看分集</th>
+							<th>操作</th>
+						</tr>
+						<foreach name="list" item="v">
+							<tr>
+								<td>
+									<img src="{$v.coverpic}" width="50" height="70">
+								</td>
+								<td>
+									{$v.title}
+									<if condition="$v['isnew'] eq 1">
+									<span class="btn btn-danger btn-xs" style="background: #ff0000">新书</span>
+									</if>
+								</td>
+								<td>{$v.author}</td>
+								<td>{$v.allchapter}</td>
+								<td>{:getZd('iswz',$v['iswz'])}</td>
+								<td>{:getZd('isfw',$v['isfw'])}</td>
+								<td>{:getZd('islong',$v['islong'])}</td>
+								<td>{:getZd('issex',$v['issex'])}</td>
+								<td>
+									<div class="switch switch-small checkbox has-switch" data-title="is_push" data-on="success" onclick="clickCheckbox({$v.id},this);">
+										<div class="switch-animate <if condition="$v['status'] eq 1">switch-on<else />switch-off</if>">
+										<input type="checkbox" checked="">
+										<span class="switch-left switch-small switch-success">ON</span><label class="switch-small">&nbsp;</label><span class="switch-right switch-small">OFF</span>
+										</div>
+									</div>
+								</td>
+								<td>
+									<div class="switch switch-small checkbox has-switch" data-title="is_push" data-on="success" onclick="clickShow({$v.id},this);">
+										<div class="switch-animate <if condition="$v['ishow'] eq 1">switch-on<else />switch-off</if>">
+										<input type="checkbox" checked="">
+										<span class="switch-left switch-small switch-success">ON</span><label class="switch-small">&nbsp;</label><span class="switch-right switch-small">OFF</span>
+										</div>
+									</div>
+								</td>
+								<td>
+									<a href="{:U('Book/lookChaps',array('id'=>$v['id']))}" class="btn btn-info">
+										<i class="fa fa-edit"></i>查看分集
+									</a>
+								</td>
+								<td>
+									<a href="javascript:;" onclick="myModal({$v['id']})" style="margin-right:10px;" class="btn btn-danger">
+										<i class="fa fa-cloud-upload"></i>上传续集
+									</a>
+									<a href="{:U('Book/editStory',array('id'=>$v['id']))}" class="btn btn-info">
+										<i class="fa fa-edit"></i>修改
+									</a>
+									<a href="{:U('Custom/add',array('id'=>$v['id']))}" target="_blank" class="cannel_vip btn bg-olive margin">
+										<i class="fa fa-commenting"></i>&nbsp;客服消息
+									</a>
+									<a href="javascript:;" onclick="deleteAmTables('anime',{$v.id})" class="cannel_vip btn bg-maroon margin">
+										<i class="fa fa-times"></i>删除
+									</a>
+								</td>
+							</tr>
+						</foreach>
+					</tbody>
+				</table>
+			</div>
+			<!-- /.box-body -->
+			<div class="page">{$page|default="<p style='text-align:center'>暂时没有数据</p>"}</div>
+		</div>
+	</div>
+</div>
+</section>
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        ×
+				</button>
+				<h4 class="modal-title" id="myModalLabel">
+                        上传续集
+				</h4>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-xs-4 text-right" style="line-height: 34px;">
+                            续集ZIP压缩包：
+					</div>
+					<div class="col-xs-7">
+						<input type="file" name="fenji" id="file" class="form-control col-sm-9"  placeholder="请上传续集ZIP文件" />
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">
+                        关闭
+				</button>
+				<button type="button" class="btn btn-primary" id="submit-xu">
+                        确定
+				</button>
+			</div>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal -->
+</div>
+
+
+<script>
+	var anid = 0;
+	function myModal(aid){
+		anid = aid;
+		$('#myModal').modal('show');
+	}
+	
+	
+	$('#submit-xu').click(function(){
+		var formData = new FormData();
+		if($('#file').length>0){
+			//小说、漫画ZIP
+			formData.append('file', $('#file')[0].files[0]);
+		}else{
+			layer.msg('请上传续集ZIP文件');
+			return false;
+		}
+		formData.append("anid",anid);
+		formData.append("type",3);
+		$.ajax({
+			url:"{:U('sequel')}",
+			type:"post",
+			data:formData,
+			cache: false,
+			processData: false,
+			contentType: false,
+			beforeSend: function () {
+				// 禁用按钮防止重复提交
+				layer.load(2);
+				$("#submit-xu").attr({ disabled: "disabled" });
+			},
+			success:function(data){
+				console.log(data);
+				layer.closeAll();
+				layer.alert("操作成功！",function(){
+					location.reload();
+				});
+			},
+			error:function(e){
+				layer.alert("网络错误，请重试！！");
+			}
+		});
+	})
+
+	function clickCheckbox(id,ob){
+		$.post("{:U('setStatus')}",{id:id},function(d){
+			if(d){
+				if($(ob).find(".switch-off").length>0){
+					$(ob).find(".switch-animate").removeClass('switch-off');
+					$(ob).find(".switch-animate").addClass('switch-on');
+				}else{
+					$(ob).find(".switch-animate").removeClass('switch-on');
+					$(ob).find(".switch-animate").addClass('switch-off');
+				}
+				layer.alert(d.info);
+			}else{
+				layer.msg('请求失败！');
+			}
+		});
+	}
+	function clickShow(id,ob){
+		$.post("{:U('setShow')}",{id:id},function(d){
+			if(d){
+				if($(ob).find(".switch-off").length>0){
+					$(ob).find(".switch-animate").removeClass('switch-off');
+					$(ob).find(".switch-animate").addClass('switch-on');
+				}else{
+					$(ob).find(".switch-animate").removeClass('switch-on');
+					$(ob).find(".switch-animate").addClass('switch-off');
+				}
+				layer.alert(d.info);
+			}else{
+				layer.msg('请求失败！');
+			}
+		});
+	}
+</script>

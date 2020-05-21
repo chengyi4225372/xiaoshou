@@ -1,0 +1,23 @@
+<include file="include/header" title="{$title}" />
+
+<div class="sl-content" style="margin-bottom:1.33rem;">
+	<foreach name="list" item="v">
+	<a href="{:U('sinfo',array('sellerid'=>$v['id']))}">
+		<div class="sl-items">
+			<div class="msk"></div>
+			<img class="coverpic" src="{$v.coverpic}">
+			<div class="txt">
+				
+				<img class="logo" src="{$v.logo}" />
+				<div class="title">
+					<h1>{$v.title}</h1>
+					<p>{$v.remark}</p>
+				</div>
+			</div>
+			<span class="smoney">分享赚钱¥{$v.smoney}元</span>
+		</div>
+	</a>
+	</foreach>
+</div>
+
+<include file="include/footer2" />

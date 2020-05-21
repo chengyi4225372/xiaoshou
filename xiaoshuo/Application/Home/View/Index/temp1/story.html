@@ -1,0 +1,193 @@
+<include file="include/header" title="{$title}" />
+<style>
+.erweima{
+    text-align: center;
+    padding:25px 0;
+    background: white;
+}
+.erweima img{
+    margin:0 auto;
+    width:200px;
+    height:200px;
+}
+.erweima p{
+    font-size: 14px;
+	margin-top: 0;
+	margin-bottom: 5px;		
+	color: #8f8f94;
+}
+.books-col .item{border-bottom: 1px solid #f2f2f2;border-top:.2667rem;}
+.books-col .item a{display: block;position: relative; overflow: hidden;}
+.books-col .item a img{width: 100%;height: 260px;display: block;background-image: url(../images/default.jpg);background-repeat: no-repeat;background-size: 100%;border-bottom: 1px solid #eee;}
+.books-col .item a .title{height: 24px;font-size: 0.45rem;display: block;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
+.books-col .item a .author{font-size: 0.3rem;color: #666;display: block;line-height: 24px;}
+.books-col .item a .btn{position: absolute;right: 15px;top: 8px;font-size: 0.38rem;width: 80px;height: 0.9rem;line-height: 0.9rem; text-align: center;border: 1px solid #fc992f;border-radius: 5px;color: #ff890b;}
+.books-col .item a p{font-size: 0.4rem;color: #999;line-height: 20px;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 1;-webkit-box-orient: vertical;overflow: hidden;margin-top: .2rem;}
+.books-col .item .title i{float: right;font-size: .35rem;color: #5d5757;font-style: normal;margin: .1rem .3rem;}
+.navselect{width: 60%;height: 28px;margin-left: 20px;background: #bb462c;border-radius: 3px; margin-top: 8px;border: 1px solid #ffffff}
+.navimg{margin-top: 5px;margin-left: 10px;width: 25%}
+.navbars{height: 1.2rem;background-color: #ff5420;display: flex;}
+.flts{position: fixed;left: 0;top: 0;z-index: 4;right: 0;}
+.btns{float: right;margin-top: 4px;margin-right: 5px;}
+.navselect label{
+	position: relative;
+	top: 5px;
+	font-size: 14px;
+	left: 10px;
+	color: #ffffff;
+}
+</style>
+<div class="navbars flts">
+	<div class="navimg">
+	   <img src="{$_logo['img']}" width="85" height="36">
+	</div>
+	<div class="navselect" onclick="location.href='{:U('Index/iSearch')}'">
+		<label>请输入关键词搜索</label>
+		<a href="{:U('Index/iSearch')}" class="btns">
+		   <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 48 48"><path d="M35.94 35.94l7.71 7.71" fill="none" stroke="#fff" stroke-width="3"></path><circle cx="23.3" cy="23.3" r="18.5" fill="none" stroke="#fff" stroke-width="3"></circle><path d="M11.72 23.15A12 12 0 0 1 24.5 12" fill="none" stroke="#fff" stroke-linecap="round" stroke-width="3"></path></svg>
+		</a>
+	</div>
+	<!--<nav class="tab-box">-->
+	<!--<div class="item">-->
+		<!--<a href="" class="active">点击搜索</a>-->
+	<!--</div>-->
+	<!--<div class="item">-->
+	    <!--<a href="{:U('Index/index')}" class="active">漫画</a>-->
+	<!--</div>-->
+	<!--<div class="item">-->
+		<!--<a href="{:U('Index/novel')}">小说</a>-->
+	<!--</div>-->
+	<!--<div class="item">-->
+		<!--<a href="{:U('Index/video')}">视频</a>-->
+	<!--</div>-->
+	<!--</nav>-->
+	<!--<div class="action">-->
+		<!--<a href="{:U('Index/iSearch')}" class="btn">-->
+		<!--<svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 48 48"><path d="M35.94 35.94l7.71 7.71" fill="none" stroke="#fff" stroke-width="3"></path><circle cx="23.3" cy="23.3" r="18.5" fill="none" stroke="#fff" stroke-width="3"></circle><path d="M11.72 23.15A12 12 0 0 1 24.5 12" fill="none" stroke="#fff" stroke-linecap="round" stroke-width="3"></path></svg>-->
+		<!--</a>-->
+	<!--</div>-->
+</div>
+<div id="banner-container">
+	<div class="portal-slick mt-navbar slick-initialized slick-slider">
+		<div aria-live="polite" class="slick-list draggable" tabindex="0">
+			<div class="swiper-container swiper-container-horizontal swiper-container-ios swiper-container-wp8-horizontal">
+				<div class="swiper-wrapper">
+					<foreach name="_stBanner" item="v">
+						<div class="item swiper-slide">
+							<a href="{$v.url}">
+								<img class="slide_loading" src="{$v.pic}">
+							</a>
+						</div>
+					</foreach>
+				</div>
+				<div class="swiper-pagination swiper-pagination-bullets swiper-pagination-bullets-dynamic" ></div>
+			</div>
+		</div>
+	</div>
+</div>
+<nav class="portal-nav">
+	<div class="item">
+		<a href="{:U('Index/novel')}">
+		<i style="background-image: url(&#39;http://cgnovel.oss-cn-shanghai.aliyuncs.com/Image/20a0a9e9bb8440529b0a01a256c0370b.png&#39;)"></i>
+		<div class="title">
+			小说
+		</div>
+		</a>
+	</div>
+	<div class="item">
+		<a href="{:U('Index/Index')}">
+		<i style="background-image: url(&#39;http://cgnovel.oss-cn-shanghai.aliyuncs.com/Image/127836b975164ed99ae0b358d6abfa92.png&#39;)"></i>
+		<div class="title">
+			漫画
+		</div>
+		</a>
+	</div>
+	<div class="item">
+		<a href="{:U('Index/video')}">
+        <i style="background-image: url(&#39;http://cgnovel.oss-cn-shanghai.aliyuncs.com/Image/46b16c5391eb438f8eaf7b4ac18c15ca.png&#39;)"></i>
+		<div class="title">
+			电影
+		</div>
+		</a>
+	</div>
+	<div class="item">
+		<a href="{:U('Index/story')}">
+			<i style="background-image: url(&#39;http://cgnovel.oss-cn-shanghai.aliyuncs.com/Image/2bbe2fa5331c4dc0ba8e851397979e23.png&#39;)"></i>
+			<div class="title">
+			听书
+		</div>
+		</a>
+	</div>
+</nav>
+<foreach name="list" item="v">
+	<div class="bm-box mt-10">
+		<div class="head">
+			<div class="title dot">
+				{$v.name}
+			</div>
+			<div class="pull-right">
+				<a href="{:U('Index/moreList',array('field'=>'areas','value'=>$v['sid'],'btype'=>3))}">
+					更多 
+					<svg width="7" height="12" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 14 24"><title>right-arrow</title><path d="M1.91 1.93L12.06 12 1.91 22" fill="none" stroke="#ff5420" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+				</a>
+			</div>
+		</div>
+		<div class="books-row">
+			<foreach name="v['list']" item="vv">
+				<div class="item">
+					<a href="{:U('Index/stInfo',array('id'=>$vv['id']))}">
+						<img class="lazy"  src="{$vv.coverpic}" style="background: rgb(238, 238, 238); display: block;">
+						<div class="title">{$vv.title}</div>
+					</a>
+				</div>
+			</foreach>
+		</div>
+	</div>
+</foreach>
+
+
+<style>
+	
+</style>
+
+<if condition="$noPay">
+<div class="bm-box mt-10">
+	<div class="head">
+		<div class="title dot">
+			人气推荐
+		</div>
+		<div class="pull-right">
+		</div>
+	</div>
+	<div class="books-col">
+		<foreach name="noPay" item="v">
+			<div class="item">
+				<a href="{:U('Index/stInfo',array('id'=>$v['id']))}">
+					<img  src="{$v.coverpic}" style="background: rgb(238, 238, 238); display: block;">
+					<div class="body" style="padding:.3rem;border-bottom: 10px solid #F5F5F5;">
+						<span class="title">{$v.title}<i>更新至{$v.allchapter}话</i></span>
+						<p style="">{$v.remark}</p>
+					</div>
+				</a>
+			</div>
+		</foreach>
+	</div>
+</div>
+</if>
+
+
+<script>
+	$(function () {
+        var swiper = new Swiper('.swiper-container', {
+            autoplay: {
+                delay: 3000,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                dynamicBullets: true,
+            },
+        });
+    });
+</script>
+<include file="include/footer" />

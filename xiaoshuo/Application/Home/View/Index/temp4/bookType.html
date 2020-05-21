@@ -1,0 +1,58 @@
+<include file="include/header5" title="{$title}" />
+
+<!-- 这是正文 -->
+
+<div class="body_sytle">
+	
+	<div class="c_list_box">
+		
+		<div class="c_list_tab_box">
+			<a href="javascript:;"  class="hover"  sex="1">男生</a>
+			<a href="javascript:;"  sex="2">女生</a>
+		</div>
+		
+		<ul class="c_list_ul">
+		 <volist name="store" id="v"  offset="6" length="6">
+			
+			<li class="sex_1"><a href="{:U('Index/BookTypeinfo',array('order'=>'sex1','btype'=>2,'cateids'=>$key))}"><span>{$v}</span></a></li>
+		</volist>
+			
+		<volist name="store" id="vv"  offset="0" length="6">
+			
+			<li class="sex_2"><a href="{:U('Index/BookTypeinfo',array('order'=>'sex1','btype'=>2,'cateids'=>$key))}"><span>{$vv}</span></a></li>
+		</volist>
+			
+			
+		</ul>
+	</div>
+	
+</div>
+<script type="text/javascript" src="__PUBLIC__/home/js/zepto.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/home/js/zepto.cookie.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/home/js/zepto.picLazyLoad.min.js"></script>			
+<script type="text/javascript" src="__PUBLIC__/home/js/template5_common.js"></script>
+<!-- 这里引入js -->
+<script type="text/javascript">
+	$(function(){
+		var sex  = 1;
+		loadCategories(sex);
+		$(".c_list_tab_box > a").click(function(){
+			$(this).addClass("hover");
+			$(this).siblings().removeClass("hover");
+			var sex = $(this).attr("sex");
+			loadCategories(sex);
+		});
+	})
+
+	function loadCategories(sex){
+		var opposite = (sex==1) ? 2 : 1;
+		$(".sex_"+opposite).hide();
+		
+		$(".sex_"+sex).show();
+	}
+
+
+</script>
+
+</body>
+</html>

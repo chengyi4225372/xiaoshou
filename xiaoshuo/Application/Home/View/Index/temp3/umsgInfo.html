@@ -1,0 +1,37 @@
+<include file="include/header" title="{$title}" />
+<style>
+   .umsg-title{
+	    padding: .3rem;
+		border-bottom: 1px solid #eee;
+   }
+   .umsg-title h1{
+	    font-size:.45rem;
+		font-weight:600;
+   }
+   .umsg-title p{
+		margin-top: .2rem;
+		color: #666;
+		font-size: .35rem;
+   }
+   .umsg-content{
+		padding: .2rem;
+   }
+   .umsg-content span{
+		font-size:.38rem!important;
+   }
+   .umsg-content p{
+		font-size:.38rem!important;
+   }
+   .umsg-content img{
+		width:100%!important;
+   }
+</style>
+<div class="umsg-title">
+	<h1>{$info.title}</h1>
+	<p>发布时间:{$info.create_time|date="Y-m-d H:i:s",###}</p>
+</div>
+<div class="umsg-content">
+	{$info.body}
+</div>
+</body>
+</html>

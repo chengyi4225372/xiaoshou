@@ -1,0 +1,150 @@
+<include file="include/header3" title="{$title}" />
+<link href="__PUBLIC__/home/css/template3/person.css" rel="stylesheet">
+<style>
+.l-center-pay{
+ font-size: .47rem;
+}
+
+</style>
+<div class="mui-content person-content">
+	<div class="person-top" ></div>
+	<div class="person-info">
+		<div class="person-Photo">
+            <img src="{$user.headimg}" id="headimg" onclick="headimg();"/>
+		</div>
+		<div class="person-infoRight">
+			<div class="person-userName">
+                <span id="nickname">{$user.nickname}</span>  
+				<div class="person-sex">
+					<i class="icon-source-list icon-sex"></i>
+				</div>
+			</div>
+			<div class="person-id">
+				<span>ID：{$user.id}</span>
+			</div>
+		</div>
+		<div class="person-coin">
+			<a href="">
+				<span class="l-center-pay"><i class="icon-source-list icon-gold"></i><var class="span-gold">{$user.money}</var>书币</span>
+			</a>
+	        <if condition="$user['viptime'] gt 0">
+				<span class="y-vip-menu">
+                <i class="y-vip-remind l-center-remind"></i>         
+                    <i class="icon-source-list icon-vip"></i>
+                    <span class="l-unVip" style="font-size: .47rem;">VIP:{$user['viptime']|date="Y-m-d",###}</span>            
+                </span>	
+			<elseif condition="$user['viptime'] lt 0" />
+				<span class="y-vip-menu">
+                <i class="y-vip-remind l-center-remind"></i>
+                    <i class="icon-source-list icon-vip"></i>
+                    <span class="l-unVip">终生VIP</span>
+                </span>
+			<else/>
+				<span class="y-vip-menu">
+                <i class="y-vip-remind l-center-remind"></i>
+                 <a onclick="location.href='{:U('Index/vip')}'">
+                    <i class="icon-source-list icon-vip-none"></i>
+                    <span class="l-unVip">开通年费 </span>
+                </a>
+                </span>
+			</if>		
+		</div>
+	</div>
+	<script>
+		function headimg(){
+			$.post("{:U('Ajax/sync_profile')}",function(d){
+				if(d){
+					if(d.status){
+						$('#headimg').attr('src',d.info.headimg);
+						$('#nickname').html(d.info.nickname);
+						bh_msg_tips('更新头像成功')
+					}else{
+						bh_msg_tips(d.info);
+					}
+				}else{
+					bh_msg_tips('请求失败！');
+				}
+			})
+		}
+	</script>
+	<div class="person-list y-person-list">
+		<ul class="mui-table-view">
+			<li class="mui-table-view-cell person-listLi">
+				<a class="mui-navigate-right" href="{:U('charge')}"><i class="icon-source-list icon-recharge-center"></i>立即充值</a>
+			</li>
+			<li class="mui-table-view-cell person-listLi">
+				<a class="mui-navigate-right" href="{:U('collectHistory')}"><i class="icon-source-list y-center-task"></i>书签</a>
+			</li>
+			<li class="mui-table-view-cell person-listLi">
+				<a class="mui-navigate-right" href="{:U('readHistory')}"><i class="icon-source-list icon-record"></i>阅读历史</a>
+			</li>
+			<li class="mui-table-view-cell person-listLi">
+				<a class="mui-navigate-right" href="{:U('Index/report')}"><i class="icon-source-list y-center-record"></i>账单明细</a>
+			</li>
+			<li class="mui-table-view-cell person-listLi">
+                <a class="mui-navigate-right" href="{:U('Index/qrcode')}"><i class="icon-source-list icon-help-center"></i>推广有礼</a>
+            </li>
+            <li class="mui-table-view-cell person-listLi">
+                <a class="mui-navigate-right" href="{:U('umsg')}"><i class="icon-source-list icon-help-center"></i>我的消息</a>
+            </li>
+			<li class="mui-table-view-cell person-listLi">
+                <a class="mui-navigate-right" href="{:U('joinUs')}"><i class="icon-source-list icon-autobuy"></i>加盟代理</a>
+            </li>
+		</ul>
+	</div>
+
+	<div class="person-list " <if condition="$plat">style="border-bottom:1px solid #f2f1f1;"</if>>
+		<ul class="mui-table-view">
+			<li class="mui-table-view-cell person-listLi">
+				<i class="icon-source-list icon-autobuy"></i>自动购买付费章节
+				<div class="mui-switch <if condition="$user['autobuy']">mui-active</if>" onclick="autoBuy()">
+					<div class="mui-switch-handle"></div>
+				</div>
+			</li>
+			<!--<li class="mui-table-view-cell person-listLi">-->
+				<!--<a class="mui-navigate-right" href="{:U('Index/feedBack')}"><i class="icon-source-list icon-feedback"></i>意见反馈</a>-->
+			<!--</li>-->
+
+		</ul>
+	</div>
+	<style>
+		.logout{
+		    display: block;
+			background: #ffa921;
+			color: #fff;
+			width: 50%;
+			height: 1.35rem;
+			text-align: center;
+			line-height: 1.35rem;
+			border-radius: 2rem;
+			margin: 1rem 25% .5rem 25%;
+			font-size: .5rem;
+		}
+		.logout:link,a:visited{
+            color: #fff;
+        }
+        .logout:hover,a:focus,a:active{
+            color: #fff;
+        }
+	</style>
+	<if condition="$plat">
+		<div class="person-list ">
+			<a class="logout" href="{:U('Index/logout')}">退出登录</a>
+		</div>
+	</if>
+</div>
+<script>
+    function autoBuy(){
+        if($('#autoBuy').prop('checked')){
+            $('#autoBuy').prop("checked",true);
+        }else{
+            $('#autoBuy').prop("checked",false);
+        }
+        $.post("{:U('Ajax/autoBuy')}",function(d){
+            if(!d){
+                bh_msg_tips('请求失败！');
+            }
+        })
+    }
+</script>
+<include file="include/footer3" />

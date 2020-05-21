@@ -1,0 +1,189 @@
+<section class="content-header">
+	<div>
+		<ol class="breadcrumb" style="background: none; margin-bottom: 0px;">
+			<li><a href="{:U('Index/index')}" style="color: #333;"><i class=" fa fa-home"></i> Home</a></li>
+		</ol>
+	</div>
+
+</section>
+<section class="content">
+	<div class="row">
+		<div class="col-md-4 col-sm-4 col-xs-12">
+			<div class="info-box">
+				<span class="info-box-icon bg-aqua"><i class="fa fa-envelope-o"></i></span>
+
+				<div class="info-box-content">
+					<span class="info-box-text">当日充值</span>
+					<span class="info-box-number">{$dcharge|default="0.00"}</span>
+				</div>
+				<!-- /.info-box-content -->
+			</div>
+			<!-- /.info-box -->
+		</div>
+		<div class="col-md-4 col-sm-4 col-xs-12">
+			<div class="info-box">
+				<span class="info-box-icon bg-green"><i class="fa fa-flag-o"></i></span>
+
+				<div class="info-box-content">
+					<span class="info-box-text">本月充值</span>
+					<span class="info-box-number">{$ycharge|default="0.00"}</span>
+				</div>
+				<!-- /.info-box-content -->
+			</div>
+			<!-- /.info-box -->
+		</div>
+		<div class="col-md-4 col-sm-4 col-xs-12">
+			<div class="info-box">
+				<span class="info-box-icon bg-yellow"><i class="fa fa-files-o"></i></span>
+
+				<div class="info-box-content">
+					<span class="info-box-text">累计充值</span>
+					<span class="info-box-number">{$acharge|default="0.00"}</span>
+				</div>
+				<!-- /.info-box-content -->
+			</div>
+			<!-- /.info-box -->
+		</div>
+		<div class="col-md-4 col-sm-4 col-xs-12">
+			<div class="info-box">
+				<span class="info-box-icon bg-yellow"><i class="fa fa-files-o"></i></span>
+
+				<div class="info-box-content">
+					<span class="info-box-text">累计成本</span>
+					<span class="info-box-number">{$cben|default="0.00"}</span>
+				</div>
+				<!-- /.info-box-content -->
+			</div>
+			<!-- /.info-box -->
+		</div>
+		<div class="col-md-4 col-sm-4 col-xs-12">
+			<div class="info-box">
+				<span class="info-box-icon bg-red"><i class="fa fa-dollar"></i></span>
+
+				<div class="info-box-content">
+					<span class="info-box-text">累计利润</span>
+					<span class="info-box-number">{$lirun|default="0.00"}</span>
+				</div>
+				<!-- /.info-box-content -->
+			</div>
+			<!-- /.info-box -->
+		</div>
+		<div class="col-md-4 col-sm-4 col-xs-12">
+			<div class="info-box">
+				<span class="info-box-icon bg-blue"><i class="fa fa-star-o"></i></span>
+
+				<div class="info-box-content">
+					<span class="info-box-text">未结算</span>
+					<span class="info-box-number">{$wmoney|default="0.00"}</span>
+				</div>
+				<!-- /.info-box-content -->
+			</div>
+			<!-- /.info-box -->
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-12">
+			<div class="box">
+				<div class="box-header with-border">
+					<div class="panel-heading">
+						<h3 class="panel-title"><i class="fa fa-calendar"></i> 每日汇总统计</h3>
+					</div>
+				</div>
+				<div class="box-body">
+					<table class="table table-bordered table-hover table-striped">
+						<tbody>
+							<tr>
+								<th colspan="10">
+									<form class="form-inline" id="form" method="post" style="float: left;">
+										<div class="input-group input-group-sm">
+											<input type="text" name="time1" autocomplete="off" class="form-control reservationtime" placeholder="开始时间" value="{$_GET['time1']}">
+										</div>
+										<span>-</span>
+										<div class="input-group input-group-sm">
+											<input type="text" name="time2" autocomplete="off" class="form-control reservationtime" placeholder="结束时间" value="{$_GET['time2']}">
+										</div>
+										<div class="input-group input-group-sm">
+											<input type="button" value="查询" onclick="search();" class="btn btn-sm btn-success">
+										</div>
+										<div class="input-group input-group-sm">
+											<input type="button" value="导出" onclick="exportCvs();" class="btn btn-sm btn-success" style="background:#03A9F4;border:1px solid #03A9F4;">
+										</div>
+									</form>
+									<script>
+										function search(){
+											$('#form').attr('action',"{:U('index')}");
+											$('#form').submit();
+										}
+										function exportCvs(){
+											$('#form').attr('action',"{:U('Export/exportIndex')}");
+											$('#form').submit();
+										}
+									</script>
+								</th>
+							</tr>
+							<tr>
+								<td>日期</td>
+								<td>充值金额（元）</td>
+								<td>付费人数</td>
+								<td>付费笔数</td>
+								<td>新增用户</td>
+								<td>新用户关注</td>
+								<td>新用户付费率</td>
+								<td>新用户充值金额（元）</td>
+								<td>累计用户数</td>
+								<td>累计粉丝量</td>							
+							</tr>
+							<foreach name="list" item="v">
+							<tr>
+								<td>{$v.date}</td>
+								<td>{$v.charge_total}</td>
+								<td>{$v.payperson}</td>
+								<td>{$v.paynums}</td>
+								<td>{$v.joinperson}</td>
+								<td>{$v.subperson}</td>
+								<td>
+									<?php 
+										$lv = sprintf("%0.2f",$v['payperson']/$v['joinperson'])*100;
+										echo $lv."%";
+									?>
+								</td>
+								<td>{$v.joinpersoncharge|default="0"}</td>
+								<td>{$v.allusers}</td>
+								<td>{$v.allsubusers}</td>
+							</tr>
+							</foreach>
+						</tbody>
+					</table>
+				</div>
+				<div class="page">{$page|default="<p style='text-align:center'>暂时没有数据</p>"}</div>
+			</div>
+		</div>
+	</div>	
+</section>
+
+<script>
+        $.fn.datetimepicker.dates['zh-CN'] = {
+            days: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"],
+            daysShort: ["日", "一", "二", "三", "四", "五", "六", "日"],
+            daysMin: ["日", "一", "二", "三", "四", "五", "六", "日"],
+            months: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+            monthsShort: ["一", "二", "三", "四", "五", "六", "七", "八", "九", "十", "十一", "十二"],
+            meridiem: ["上午", "下午"],
+            today: "今天"
+        };
+
+        $('.reservationtime').datetimepicker({
+            format: 'yyyy-mm-dd',
+            language: 'zh-CN',
+            weekStart: 1,
+            todayBtn: 1,
+            autoclose: 1,
+            todayHighlight: 1,
+            startView: 2,
+            minView: 2,
+            forceParse: 0,
+            showMeridian: 1
+        });
+</script>
+	

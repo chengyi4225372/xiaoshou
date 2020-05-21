@@ -1,0 +1,3 @@
+﻿导入数据库
+修改数据库配置文件Application\Common\Conf\db.php
+后台地址admin.php    admin  admin888

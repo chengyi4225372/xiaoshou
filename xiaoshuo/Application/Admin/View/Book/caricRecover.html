@@ -1,0 +1,100 @@
+<link rel="stylesheet" href="__PUBLIC__/admin/css/switch.css">
+<section class="content-header">
+<div>
+	<ol class="breadcrumb" style="background: none; margin-bottom: 0px;">
+		<li><a href="{:U('Index/index')}" style="color: #333;"><i class=" fa fa-home"></i>&nbsp;Home</a></li>
+		<li class="active">漫画信息</li>
+		<li class="active">漫画回收</li>
+	</ol>
+</div>
+</section>
+<section class="content">
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box">
+			<div class="box-header">
+				<h3 class="box-title"></h3>
+				<div class="box-tools"  style="left:10px;">
+					<form class="form-inline" method="post">
+						<div class="form-group">
+							<div class="input-group input-group-md" style="width: 250px;">
+								<input type="text" name="title" class="form-control pull-right" placeholder="漫画名称" value="{$_GET['title']}">
+								<div class="input-group-btn">
+									<button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+			<!-- /.box-header -->
+			<div class="box-body">
+				<table class="table table-bordered table-hover table-striped text-center">
+					<tbody>
+						<tr>
+							<th>封面</th>
+							<th>书名</th>
+							<th>作者</th>
+							<th>总章节</th>
+							<th>进度</th>
+							<th>属性</th>
+							<th>长篇/短篇</th>
+							<th>男频/女频</th>
+							<th>上下架</th>
+						</tr>
+						<foreach name="list" item="v">
+							<tr>
+								<td>
+									<img src="{$v.coverpic}" width="50" height="70">
+								</td>
+								<td>
+									{$v.title}
+									<if condition="$v['isnew'] eq 1">
+									<span class="btn btn-danger btn-xs" style="background: #ff0000">新书</span>
+									</if>
+								</td>
+								<td>{$v.author}</td>
+								<td>{$v.allchapter}</td>
+								<td>{:getZd('iswz',$v['iswz'])}</td>
+								<td>{:getZd('isfw',$v['isfw'])}</td>
+								<td>{:getZd('islong',$v['islong'])}</td>
+								<td>{:getZd('issex',$v['issex'])}</td>
+								<td>
+									<div class="switch switch-small checkbox has-switch" data-title="is_push" data-on="success" onclick="clickCheckbox({$v.id},this);">
+										<div class="switch-animate <if condition="$v['status'] eq 1">switch-on<else />switch-off</if>">
+										<input type="checkbox" checked="">
+										<span class="switch-left switch-small switch-success">ON</span><label class="switch-small">&nbsp;</label><span class="switch-right switch-small">OFF</span>
+										</div>
+									</div>
+								</td>
+							</tr>
+						</foreach>
+					</tbody>
+				</table>
+			</div>
+			<!-- /.box-body -->
+			<div class="page">{$page|default="<p style='text-align:center'>暂时没有数据</p>"}</div>
+		</div>
+	</div>
+</div>
+</section>
+<script>
+	function clickCheckbox(id,ob){
+		$.post("{:U('setStatus')}",{id:id},function(d){
+			if(d){
+				if($(ob).find(".switch-off").length>0){
+					$(ob).find(".switch-animate").removeClass('switch-off');
+					$(ob).find(".switch-animate").addClass('switch-on');
+				}else{
+					$(ob).find(".switch-animate").removeClass('switch-on');
+					$(ob).find(".switch-animate").addClass('switch-off');
+				}
+				layer.alert(d.info,function(d){
+					location.reload();
+				});
+			}else{
+				layer.msg('请求失败！');
+			}
+		});
+	}
+</script>

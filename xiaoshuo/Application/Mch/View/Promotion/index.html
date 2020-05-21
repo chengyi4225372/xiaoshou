@@ -1,0 +1,123 @@
+<link rel="stylesheet" href="__PUBLIC__/admin/css/switch.css">
+<style>
+	.content-box {
+		padding: 0 5px;
+	}
+
+	.content-box-header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		height: 55px;
+		padding: 0 8px 0 40px;
+		font-size: 16px;
+		border: 1px solid #cdcdcd;
+		background: #f3f3f3;
+		box-sizing: border-box;
+	}
+
+	.content-box-body {
+		background: #e1e1e1;
+		border: 1px solid #cdcdcd;
+		border-top: none;
+		height: 480px;
+	}
+
+	.content-box-body .point {
+		padding: 10px;
+		color: #6f6f70;
+		height: 90px;
+		font-size: 13px;
+	}
+
+	.content-box-body .show {
+		border: 1px solid #cdcdcd;
+		background: #f3f3f3;
+	}
+
+	.show-container {
+		padding: 0 10px
+	}
+
+	.pt5 {
+		padding-top: 5px;
+	}
+
+	.show-container {
+		font-size: 16px;
+	}
+
+	.col-sm-3 {
+		padding-left: 5px;
+		padding-right: 5px;
+	}
+
+	.mid_center {
+		margin: 25px auto;
+		display: block;
+	}
+</style>
+<section class="content-header">
+	<div>
+		<ol class="breadcrumb" style="background: none; margin-bottom: 0px;">
+			<li><a href="{:U('Index/index')}" style="color: #333;"><i class=" fa fa-home"></i> Home</a></li>
+			<li class="active">消息推送</li>
+			<li class="active">智能推送</li>
+		</ol>
+    </div>
+</section>
+<section class="content row" style="padding-top: 20px">
+	<foreach name="list" item="v" key="k">
+		<div class="col-sm-3">
+			<div class="content-box">
+				<div class="content-box-header">
+					<div class="left">
+						{$v.title}
+					</div>
+					<div class="right pt5">
+						<div class="switch switch-small checkbox has-switch" data-title="is_push" data-on="success" onclick="clickCheckbox({$k},this);">
+							<div class="switch-animate <if condition="$v['status'] eq 1">switch-on<else />switch-off</if>">
+							<input type="checkbox" checked="">
+							<span class="switch-left switch-small switch-success">ON</span><label class="switch-small">&nbsp;</label><span class="switch-right switch-small">OFF</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="content-box-body">
+					<div class="point">
+						<span class="glyphicon glyphicon-star"></span>
+						{$v.desc}
+					</div>
+					<div class="show-container">
+						<div class="show">
+							<img src="{$v.img}" style="width: 100%">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</foreach>
+</section>
+
+<script>
+	function clickCheckbox(id,ob){
+		var $ob = $(ob).find('.switch-animate');
+		$.post("{:U('setPromotion')}",{id:id},function(d){
+			if(d){
+				if(d.status == 1){
+					$ob.removeClass('switch-on');
+					$ob.removeClass('switch-off');
+					$ob.addClass('switch-on');
+					layer.msg(d.info);
+				}else{
+					$ob.removeClass('switch-on');
+					$ob.removeClass('switch-off');
+					$ob.addClass('switch-off');
+					layer.msg(d.info);
+				}
+			}else{
+				layer.msg('请求失败！');
+			}
+		});
+	}
+</script>

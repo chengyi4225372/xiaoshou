@@ -1,98 +1,190 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to Woolin Auto</title>
-    <script type="text/javascript" src="assets/javascript/util.js"></script>
-    <link rel="stylesheet" type="text/css" href="assets/css/register_style.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-</head>
-<body>
+    <meta name="Generator" content="ECSHOP v4.0.6" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="Keywords" content="" />
+    <meta name="Description" content="" />
 
-<div class="wrapper">
-        <div class="login_box">
-        <div class="login_header">
-        <h1>Welcome to Woolin Auto!</h1>Login in or sign up below!
+    <title>用户中心_我是一家测试商城 - Powered by ECShop</title>
+
+
+
+    <link rel="shortcut icon" href="favicon.ico" />
+    <link rel="icon" href="animated_favicon.gif" type="image/gif" />
+    <link href="themes/fd15/style.css" rel="stylesheet" type="text/css" />
+    <LINK rel=stylesheet type=text/css href="themes/fd15/images/login_reg.css">
+
+    <script type="text/javascript" src="js/common.js"></script><script type="text/javascript" src="js/user.js"></script><script type="text/javascript" src="js/transport.js"></script><body>
+
+<script type="text/javascript" src="js/transport2.js"></script><script type="text/javascript" src="js/utils.js"></script><link href="themes/fd15/images/ec12.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    var process_request = "正在处理您的请求...";
+</script>
+<script language='javascript' src='themes/fd15/js/fdjs.js' type='text/javascript' charset='utf-8'></script>
+<script language='javascript' src='themes/fd15/js/fdjs.json.js' type='text/javascript' charset='utf-8'></script>
+<div class="reg_top" style="padding-top:10px"> <a href="index.php" name="top"><img src="themes/fd15/images/logo.gif" /></a> </div>
+<div class="clear0"></div>
+<div class="blank"></div>
+
+<div class="container">
+    <div id="body">
+        <div class="loginWrap">
+            <div class="loginPic"> <img class="pic" src="themes/68ecshopcom_jumei/images/loginPic.jpg" alt=""> <a href="index.php" class="piclink"></a>
+                <div class="loginBord">
+                    <div class="loginTit"> <span class="fl">会员登录</span> <span class="fr"> <i class="grey">还没有注册账号？</i> <a href="user.php?act=register">立即注册</a></span> </div>
+                    <form name="formLogin" action="user.php" method="post" onSubmit="return userLogin()">
+                        <div class="inputGroup noticWrap">
+                            <div class="inputWrap">
+                                <div class="user-icon"></div>
+                                <input class="inputborder" name="username" autocomplete="off" placeholder="用户名" type="text" style="border:0"/>
+                            </div>
+                        </div>
+                        <div class="inputGroup noticWrap">
+                            <div class="inputWrap">
+                                <div class="pass-icon"></div>
+                                <input class="inputborder" name="password" placeholder="密码" type="password"/>
+                            </div>
+                        </div>
+                        <div class="formLine clearfix">
+                            <div class="check_radio fl">
+                                <input type="checkbox" value="1" name="remember" id="remember"/>
+                                <label for="remember"> 请保存我这次的登录信息。</label>
+                            </div>
+                            <a href="user.php?act=get_password" class="fr"> 忘记密码?</a> </div>
+                        <input type="hidden" name="act" value="act_login" />
+                        <input type="hidden" name="back_act" value="" />
+                        <input class="loginbtn" name="submit" value="登 录" type="submit"/>
+                    </form>
+                </div>
+                <div class="shadow_l"></div>
+                <div class="shadow_r"></div>
+            </div>
+        </div>
+        <div class="blank"></div>
+    </div>
 </div>
 
-<div id="first">
-        <form name="log_form" action="register.php" method="POST" onsubmit="return log_chkonsubmit()">
-        <input type="text" id="log_username" name="log_username" placeholder="Username" value="" required>
-<span id="log_username_msg"></span>
-        <br>
-
-        <input type="password" name="log_password" placeholder="Password" autocomplete="on">
-
-<br>
-
-<input type="submit" name="login_button" value="Login">
-        <br>
-        <a href="#" id="signup" class="signup">Need an account? Register now!</a>
-</form>
-</div>
-
-<br>
 
 
-<div id="second">
-        <form name="register_form" action="register.php" method="POST" onsubmit="return chkonsubmit();">
-        <input type="text" id="reg_username" name="reg_username" placeholder="Username" value="" required>
-<div id="reg_username_msg"></div>
-        <div id="reg_username_msg2"></div>
-        <br>
-        <input type="text" id="reg_fname" name="reg_fname" placeholder="First Name" value="" required>
-<div id="reg_fname_msg"></div>
-        <br>
-        <input type="text" id="reg_lname" name="reg_lname" placeholder="Last Name" value="" required>
-<div id="reg_lname_msg"></div>
-        <br>
-        <input type="text" id="reg_passport" name="reg_passport" placeholder="Passport Id" value="" required>
-<div id="reg_passport_msg"></div>
-        <br>
-        <input type="text" id="reg_telnum" name="reg_telnum" placeholder="Telephone number" value="" required>
-<div id="reg_telnum_msg"></div>
-        <br>
 
-        <input type="email" id="reg_email" name="reg_email" placeholder="Email" value="" required>
-<div id="reg_em2_msg"></div>
-        <br>
-        <input type="email" id="reg_email2" name="reg_email2" placeholder="Confirm Email" value="" required>
-<div id="reg_em1_msg"></div>
-        <br>
-        <input type="password" id="reg_password" name="reg_password" placeholder="Password" autocomplete="on" required>
-<div id="reg_passwd_msg"></div>
-        <br>
-        <input type="password" id="reg_password2" name="reg_password2" placeholder="Confirm Password" autocomplete="on" required>
-<div id="reg_passwd2_msg"></div>
-        <br>
-        <input type="submit" name="register_button" value="Register">
 
-<br>
 
-<!--<?php-->
-            <!--// if(in_array("<span style='color: #14C800;'>You're all set! Goahead and login!</span><br>", $error_array)) echo "<span style='color: #14C800;'>You're all set! Go ahead and login!</span><br>";-->
-            <!--$_SESSION['$error_array'] = "";-->
-            <!--?>-->
 
-<br>
-<a href="#" id="signin" class="signin">Already have an account? Sign in here!</a>
-<script type="text/javascript" src="assets/javascript/register.js"></script>
-</form>
+<div class="blank"></div>
+<div class="footads"><IMG alt="广告说明" src="themes/fd15/images/footad.jpg"></div>
 
-</div>
+<div class="footer">
+    <div class="footHelp">
+        <table  border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <td>                <a href="category.php?id=95"
 
-</div>
-</div>
 
-<div class="aboutus">
-        Welcome to Woolin Auto!<br>
-        We provide the best mask for you, and your healthy!<br>
-        Three hit masks helps you through tough days!<br>
-</div>
-<!-- Three span should be in a horizon! -->
-<!-- TODO: finish following, when enter buying page,
-            ask user to login or register -->
-</div>
-</body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                >剑网3</a>
+                    |
+                    <a href="message.php"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    >留言板</a>
+                    |
+                    <a href="user.php"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                       target="_blank"
+                    >用户中心</a>
+                    |
+                    <a href="message.php"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    >留言板</a>
+                    |
+                    <a href="article_cat.php?id=4"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    >3G资讯</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+
+    <div class="footer_info"> &copy; 2005-2020 测试商城 版权所有，并保留所有权利。  888     Tel: 4006781125234          <a href="http://wpa.qq.com/msgrd?V=1&amp;Uin=123013025&amp;Site=测试商城&amp;Menu=yes" target="_blank"><img src="http://wpa.qq.com/pa?p=1:123013025:4" height="16" border="0" alt="QQ" /> 123013025</a>
+        <a href="http://amos1.taobao.com/msg.ww?v=2&uid=%E9%A6%96%E4%BB%93%E8%B4%B8%E6%98%93%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8&s=2" target="_blank"><img src="http://amos1.taobao.com/online.ww?v=2&uid=%E9%A6%96%E4%BB%93%E8%B4%B8%E6%98%93%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8&s=2" width="16" height="16" border="0" alt="淘宝旺旺" />首仓贸易有限公司</a>
+        <br />
+        ICP备案证书号:<a href="http://www.miibeian.gov.cn/" target="_blank">沪ICP备123456</a><br />
+        共执行 67 个查询，用时 0.015300 秒，在线 109 人，Gzip 已禁用，占用内存 3.031 MB<br />
+        <a href="https://xyunqi.com/products/ecshop?from=nav" target="_blank" style=" font-family:Verdana; font-size:11px;">Powered&nbsp;by&nbsp;<strong><span style="color: #3366FF">ECShop</span>&nbsp;<span style="color: #FF9966">v4.0.6</span></strong></a>&nbsp;<a href="http://www.ecshop.com/license.php?product=ecshop_b2c&url=http%3A%2F%2Fecshop.test1.shopex123.com%2F" target="_blank"
+        >&nbsp;&nbsp;Licensed</a><br />
+        <div >
+            <div class="clear10"></div>
+        </div>
+    </div>
+    </body>
+
 </html>

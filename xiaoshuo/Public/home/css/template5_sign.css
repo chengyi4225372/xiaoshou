@@ -1,0 +1,67 @@
+@charset "utf-8";
+.head_tit_box{
+	background-color: #feedbe;
+}
+.s_main{
+	overflow: hidden;
+	background-color: #fff;
+}
+.s_img{
+	overflow: hidden;
+	margin: 0rem auto;
+	height:2.38rem;
+	padding-bottom:.29rem;
+	background:#feedbe url(../img/icon/line_icon1.jpg) no-repeat center bottom;
+	background-size:100%;
+}
+.s_img:before {
+	content:"";
+	display:block;
+	margin: 0 auto;
+	margin-top:.3rem;
+	width: 1.8rem;
+	height: 1.8rem;
+	background:#feedbe url(../img/icon/icon_sign_defualt.png) no-repeat center bottom;
+	background-size:100%;
+}
+.is_sign .s_img:before {
+	background:#feedbe url(../img/icon/icon_sign_succees.png) no-repeat center bottom;
+	background-size:100%;
+}
+
+.s_main h1{
+	margin-top:.38rem;
+	height: .36rem;
+	color: #FFB473;
+	font-size: .225rem;
+	text-align: center;
+	line-height: .36rem;
+}
+.s_main strong{
+	display: block;
+	overflow: hidden;
+	height: .36rem;
+	font-size: .15rem;
+	color: #513D3D;
+	text-align: center;
+	line-height: .36rem;
+}
+.s_main strong span{
+	display: inline;
+	font-size: .15rem;
+	color: #FFB473;
+}
+.content_null_but_box a{
+	width:2.58rem;
+	height: .36rem;
+	font-size: .16rem;
+	line-height: .36rem;
+	background:#FFB473;
+}
+
+
+.content_null_but_box a.sign_0 {display:block;}
+.content_null_but_box a.sign_1 {display:none;}
+.is_sign .content_null_but_box a.sign_0 {display:none;}
+.is_sign .content_null_but_box a.sign_1 {display:block;}
+

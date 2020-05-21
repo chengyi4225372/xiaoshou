@@ -1,0 +1,156 @@
+<include file="include/header3" title="{$title}" />
+<link href="__PUBLIC__/home/css/template3/home.css" rel="stylesheet">
+<link href="__PUBLIC__/home/css/template3/person.css" rel="stylesheet">
+<style>
+      .active .container .voucher-card{
+        border-color: #ff730b;
+        background: #fdf2e9;
+    }
+</style>
+<div class="mui-content cor-content y-mui-content">
+	<header class="mui-bar mui-bar-nav w-header y-pay-header">
+		<h1 class="mui-title">充值中心</h1>
+	</header>
+	<div class="mui-content w-content">
+
+        <div class="voucher-List">
+            <ul class="mui-table-view mui-grid-view">
+            <foreach name="_charge" item="v" key="k">
+                <if condition="$v['isopen']">
+                    <if condition="$v['isover'] eq 1">
+                        <div class="first-charge-notic select-pay item" data-id="{$k}">
+                            <a href="javascript:void(0);" class="container">
+                                <div class="voucher-card" id="y-voucher-card">
+                                    <div class="y-voucher-left"><img
+                                            src="__PUBLIC__/home/images/template3/y-yearvip.png"></div>
+                                    <div class="y-voucher-right">
+                                        <div class="voucher-Discount" id="y-voucher-Discount">{$v.money}元</div>
+                                        <div class="voucher-money">终生VIP会员！</div>
+                                        <div class="more-get-money" id="y-more-get-money">&nbsp;&nbsp;&nbsp;终生免费看！</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+
+                        <elseif condition="$v['isyear'] eq 1"/>
+                        <div class="first-charge-notic select-pay item" data-id="{$k}">
+                            <a href="javascript:void(0);" class="container">
+                                <div class="voucher-card" id="y-voucher-card">
+                                    <div class="y-voucher-left"><img
+                                            src="__PUBLIC__/home/images/template3/y-yearvip.png"></div>
+                                    <div class="y-voucher-right">
+                                        <div class="voucher-Discount" id="y-voucher-Discount">{$v.money}元</div>
+                                        <div class="voucher-money">年费VIP会员！</div>
+                                        <div class="more-get-money" id="y-more-get-money">每天1元&nbsp;&nbsp;&nbsp;全年免费看！
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <elseif condition="$v['ishalf'] eq 1"/>
+                        <div class="first-charge-notic select-pay item" data-id="{$k}">
+                            <a href="javascript:void(0);" class="container">
+                                <div class="voucher-card" id="y-voucher-card">
+                                    <div class="y-voucher-left"><img
+                                            src="__PUBLIC__/home/images/template3/y-yearvip.png"></div>
+                                    <div class="y-voucher-right">
+                                        <div class="voucher-Discount" id="y-voucher-Discount">{$v.money}元</div>
+                                        <div class="voucher-money">半年VIP会员！</div>
+                                        <div class="more-get-money" id="y-more-get-money">&nbsp;&nbsp;&nbsp;半年时间免费看！
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <else/>
+                        <!--<ul class="mui-table-view mui-grid-view">-->
+                            <li class="mui-table-view-cell select-pay select-pay2 mui-col-xs-6 item" data-id="{$k}">
+                                <a href="javascript:void(0);" class="container">
+                                    <div class="voucher-card">
+                                        <div class="voucher-Discount">{$v.money}元</div>
+                                        <div class="voucher-money">
+                                            {$v['money']*$v['lv']}
+                                            <if condition="$v['smoney'] gt 0">
+                                                +{$v['smoney']*$v['lv']}
+                                            </if>
+                                            书币
+                                        </div>
+                                        <div class="more-get-money">
+                                            送
+                                            <if condition="$v['smoney'] gt 0">{$v['smoney']}</if>
+                                            元
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                        <!--</ul>-->
+                    </if>
+                </if>
+            </foreach>
+            </ul>
+        </div>
+
+		<div class="click-pay" onclick="payment()" style="background-color: #fde23d; border:none;width: 92%;color: #121212; height: 50px;line-height: 50px;margin:18px auto;text-align: center;border-radius: 30px;">确定充值</div>
+		<div class="voucher-cue">
+			<p class="voucher-notice-title">温馨提示：</p>
+			<p>1、人民币与书币的汇率为：1元＝100书币。</p>
+			<p>2、本平台漫画和小说的付款章节书币分别有：28书币、50书币、100书币等。根据内容的不同书币价格也不同！</p>
+			<p>3、"年费VIP会员"的意思是：全站所有的漫画和小说一年之内全部免费阅读！</p>
+			<p>4、"终生VIP会员"的意思是：全站所有的漫画和小说终生全部免费阅读！</p>
+			<p>5、由于书币是特殊虚似商品，一经购买，不可退换，购买前请注意！</p>
+		
+		</div>
+		<div class="voucher-info">
+			<div class="voucher-userName">充值账户：Alex Xie</div>
+			<div class="voucher-balance">账户余额：<b>0金币</b></div>
+		</div>
+	</div>
+
+</div>
+<include file="include/footer3" />
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/layer/skin/default/layer.css">
+<script src="__PUBLIC__/layer/layer.js"></script>
+<script>
+    var cid = 0;
+    $(function () {
+        $('.container').on('click', function (e) {
+            //alert('111');
+            if ($(this).parent().hasClass('active')) return;
+            $('.item').removeClass('active');
+            $(this).parent().addClass('active');
+        });
+    });
+
+
+
+    function payment(){
+        layer.closeAll();
+        $('.item').each(function(){
+            if($(this).hasClass('active')){
+                cid = $(this).attr('data-id');
+                return;
+            }
+        });
+        console.log(cid);
+        if(cid == 0 || !cid){
+            layer.msg('请选择充值金额！');
+            return false;
+        }
+        layer.load(2);
+        $.post("{:U('Ajax/charge')}",{cid:cid,anid:"{$_GET['anid']}"},function(d){
+            layer.closeAll();
+            if(d){
+                if(d.status){
+                    location.href = d.url;
+                }else{
+                    layer.msg(d.info);
+                }
+            }else{
+                layer.msg('非法请求！');
+            }
+        });
+    }
+</script>

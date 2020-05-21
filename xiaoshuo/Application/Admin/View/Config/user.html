@@ -1,0 +1,60 @@
+ <!-- Content Header (Page header) -->
+<section class="content-header">
+	<div>
+		<ol class="breadcrumb" style="background: none; margin-bottom: 0px;">
+			<li>
+				<a href="{:U('Index/index')}" style="color: #333;">
+				<i class=" fa fa-home">
+				&nbsp;</i>Home</a>
+			</li>
+			<li class="active">站点设置</li>
+			<li class="active">账号信息</li>
+		</ol>
+	</div>
+</section>
+<section class="content">
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="box box-primary">
+				<form class="form-horizontal" style="margin-top:30px" method="POST" action="" enctype="multipart/form-data">
+					<div class="box-body">
+						<div class="form-group">
+							<label for="name" class="control-label col-sm-3">登录用户名</label>
+							<div class="col-sm-6">
+								<input type="text" name="name" class="form-control col-sm-9" value="{$_user['name']}">
+								<p class="help-block help-block-error col-sm-7 col-xs-10"></p>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="pass" class="control-label col-sm-3">登录密码</label>
+							<div class="col-sm-6">
+								<input type="password" name="pass" class="form-control col-sm-9" value="">
+								<p class="help-block help-block-error col-sm-7 col-xs-10"></p>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label for="pass" class="control-label col-sm-3">确认密码</label>
+							<div class="col-sm-6">
+								<input type="password" name="tpass" class="form-control col-sm-9" value="">
+								<p class="help-block help-block-error col-sm-7 col-xs-10"></p>
+							</div>
+						</div>
+						
+					</div>
+					<!-- /.box-body -->
+
+					<div class="box-footer">
+						<div class="form-group">
+							<div class="col-sm-offset-3 col-sm-9">
+								<button type="button" id="ajaxBtn" class="btn btn-primary">保存</button>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+	    <script type="text/javascript" src="__PUBLIC__/home/js/jqey-3.3.js"></script>
+		</div><!-- /.col -->
+	</div>
+</section>

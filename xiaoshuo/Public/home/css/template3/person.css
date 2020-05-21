@@ -1,0 +1,268 @@
+/*------------个人中心页面------------*/
+.y-mui-content {background-color: #ffffff; }
+.mui-content {background-color: #f2f1f1;}
+.person-content {  margin-bottom: 60px;  }
+.person-top {  width: 100%; height: 140px; background-size: 100% }
+.person-top img{width: 100%}
+.person-info {   padding: 39px 0px 0 0px; margin-top: -80px; width: 100%;   background-image:url("../../images/template3/waveBg.png") ; background-repeat: no-repeat; background-size: 100%;}
+.person-Photo {  width: 100%; text-align: center;  background: #fff  }
+.person-infoRight{ height: 65px; text-align: center; background: #fff}
+.person-Photo img {position: relative; margin-top: -80px; width: 95px;  height: 95px; border-radius: 50%; border: 6px solid #fff;}
+.person-userName, .person-coin {  line-height: 32px;  }
+.person-userName {  color: #222;  font-weight: 300;  font-size: 16px;  }
+.person-id{ font-size: 13px; color: #fff; text-align: center}
+.person-id span { display: inline-block;  padding: 0 9px; background-color: #ffa921; border-radius: 10px;}
+.person-sex ,.person-year {  display: inline-block; border-radius: 6px}
+.person-sex i {  font-size: 14px;  }
+.person-userName .person-sex .icon-sex{  width: 22px;  height: 22px;   display: inline-block;  vertical-align: top; background-image: url("../../images/template3/boy.png") !important; background-repeat: no-repeat;  background-position: center; background-size: 16px !important; margin-top: 6px;  }
+.person-userName .sex-girl .icon-sex{  width: 22px;  height: 22px;   display: inline-block;  vertical-align: top; background-image: url("../../images/template3/girl.png") !important; background-repeat: no-repeat;  background-position: center; background-size: 16px !important; margin-top: 6px;  }
+.person-userName .person-year .icon-year{  width: 22px;  height: 22px;   display: inline-block;  vertical-align: top;  background-position: 1px -159px; margin-top: 6px;  }
+.person-coin {  color: #000000; background: #fff;  font-weight: normal;  font-size: 14px; padding: 12px 0 4px 0  }
+.person-coin span{ width: 49%;  position: relative; display: inline-block; text-align: center  }
+.person-coin span.y-open{ width: 100%}
+.person-coin span p{ font-size: 12px; padding: 0; margin: 0}
+.person-coin span var{ font-style: normal}
+.person-coin span .icon-gold{  width: 28px;  height: 28px;  margin: 0 auto;  display: block; background-image: url("../../images/template3/money.png") !important; background-repeat: no-repeat; background-size: 26px; background-position: center;  vertical-align: top;   }
+.person-coin span .icon-experience{   width: 32px;   height: 28px;  margin: 0 auto;  display: block; background-size: 200px;  vertical-align: top;  background-position: -89px -116px;  }
+.person-coin span .icon-vip{   width: 32px;  height: 28px;  margin: 0 auto;  display: block;  vertical-align: top; background-image: url("../../images/template3/annual.png") !important; background-repeat: no-repeat; background-size: 31px; background-position: center; }
+.person-coin span .icon-vip-none{   width: 32px;  height: 28px;  margin: 0 auto;  display: block;  vertical-align: top; background-image: url("../../images/template3/unannual.png") !important; background-repeat: no-repeat; background-size: 31px; background-position: center;   }
+.person-coin span:first-child:after{  content: ''; width: 1px; height: 38px; position: absolute;top: 8px; right: 0px; background: #eee;  }
+/*.person-coin span:nth-child(2):after{  content: ''; width: 1px; height: 38px; position: absolute;top: 8px; right: 0px; background: #eee;  }*/
+.person-coin span:last-child{ margin-right: 0}
+.l-center-pay { color: #000}
+.person-sign {  color: #FF6F6F;  border: 1px solid #FF6F6F;  text-align: center;  width: 65px;  height: 30px;
+	position: absolute;  right: 15px;  bottom: 15px;  line-height: 30px;  font-size: 14px;  border-radius: 20px;  }
+.person-sign.person-signed {  color: #777;  border: 1px solid #ccc;  background: #fff;  }
+.person-list {  margin-top: 0;  }
+.person-list li{font-size: 15px; color: #000; padding: 15px;}
+
+.community-cleanUp {  color: #fff;  font-size: 16px;  position: absolute;  right: 8px;  top: 0;  line-height: 50px;  }
+.com-achieve {  display: none;}
+.mui-checkbox.com-checkbox3 {  position: absolute;  top: 0;  left: 2px;  z-index: 11;  }
+.mui-checkbox.com-checkbox3 label {  padding-right: 46px;  }
+.com-checkbox3 input[type=checkbox] {  position: absolute;  top: 43%;  left: 10px;  display: inline-block;  width: 28px;  height: 26px;  border: 0;  outline: 0!important;  background-color: transparent;  -webkit-appearance: none;  }
+.com-operation3{ color: #515151}
+.com-operation3 .com-delete{ width: 100%;  height: 100%;  text-align: center;  line-height: 60px;  float: left;}
+.com-checkbox3{  display: none;  }
+.com-list-main{  transition: 0.3s all;  }
+.w-Listmargin{  transform: translateX(35px);  transition: 0.3s all;  }
+/*覆盖边框样式*/
+.person-list .mui-table-view:before{  height: 0;  }
+.person-list .mui-table-view:after{  height: 0;  }
+.person-list .mui-switch{border: 1px solid #ddd; height: 26px}
+.person-list .mui-switch .mui-switch-handle{-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.4);  box-shadow: 0 1px 2px rgba(0,0,0,.4); top: 0; left: 0; height: 24px;}
+.person-list .mui-switch:before{  top:2px;  font-size: 12px;}
+.person-list .mui-table-view-cell:after{ right: 15px; background-color: #f2f1f1 !important;}
+.person-list .mui-navigate-right:after, .person-list .mui-push-left:after, .person-list .mui-push-right:after { color: #dedddd !important;}
+.mui-table-view-cell.person-listLi>a:not(.mui-btn) {  margin: -15px;  }
+.mui-table-view-cell.person-listLi a {  color: #000;  font-weight: normal;  font-size: 15px;  }
+.mui-table-view-cell.person-listLi i {  margin-right: 10px;  }
+.mui-table-view-cell.person-listLi a .person-badge {  background: #FF6F6F;  color: #fff;  font-weight: 300;  }
+.person-list .icon-recharge-center{  width: 20px;  height: 20px;   display: inline-block;  vertical-align: top; background-image: url("../../images/template3/recharge.png") !important; background-repeat: no-repeat; background-size: 16px; background-position: center;}
+.person-list .icon-record{  width: 20px;  height: 20px;   display: inline-block;  vertical-align: top;  background-image: url("../../images/template3/record.png") !important; background-repeat: no-repeat; background-size: 16px; background-position: center;}
+.person-list .icon-cnews{  width: 20px;  height: 20px;   display: inline-block;  vertical-align: top;  background-position: -25px -127px;background-size: 170px;}
+.person-list .icon-feedback{  width: 20px;  height: 20px;   display: inline-block;  vertical-align: top;  background-image: url("../../images/template3/feedBack.png") !important; background-repeat: no-repeat; background-size: 16px; background-position: center;}
+.person-list .icon-help-center{  width: 20px;  height: 20px;   display: inline-block;  vertical-align: top; background-image: url("../../images/template3/helpCenter.png") !important; background-repeat: no-repeat; background-size: 16px; background-position: center;}
+.person-list .icon-autobuy{   width: 20px;  height: 20px;   display: inline-block;  vertical-align: top;  background-image: url("../../images/template3/autoBuy.png") !important; background-repeat: no-repeat; background-size: 16px; background-position: center;}
+
+.first-charge-notic{ width: 100%; line-height: 1px; margin-bottom: 15px;}
+.first-charge-notic img{ width: 100%}
+.first-charge-notic .icon-firstcharge{ width: 20px;  height: 20px;   display: inline-block;  vertical-align: top;  background-position: -27px -152px;background-size: 170px; margin: 1px 5px 0 3px;}
+
+/*年费VIP*/
+#y-person-Headframe{  background-image: url("../../images/template3/headframe.png");  background-repeat: no-repeat;  width: 140px;  height: 140px;  display: block;  position: relative;  margin: 0 auto;  top: 10px;  }
+.y-vip-menu a{ color:#000; font-size: .5rem;}
+#y-vip-icon {background-image: url("../../images/template3/hot-2.png");background-repeat: no-repeat;background-size: 36px; }
+.y-vip-remind{  position: absolute;  width: 30px;  height: 20px;  display: block; background-image: url("../../images/template3/ques.png");  background-repeat: no-repeat;  background-size: 11px;  right: 26%;  top: -2px;  }
+#y-voucher-card{ display: flex; padding-top: 10px; }
+.y-voucher-left{ width: 40%}
+.y-voucher-left img{ width: 85px; height: 85px;}
+.y-voucher-right{ width: 50%; padding: 8px 0;}
+#y-voucher-Discount{ }
+#y-more-get-money{ color: #ff8827;}
+/* 适配 */
+@media screen and (max-width: 320px) {
+	.l-center-remind{background-position: 12px 3px !important; background-size: 9px !important;}
+}
+@media screen and (min-width: 321px) and (max-width: 375px) {
+    .l-center-remind{background-position: 6px 1px !important}
+}
+.l-unVip { color: #fd8043}
+/*------------充值中心页面------------*/
+
+/*覆盖背景颜色*/
+.person-content .mui-content{ background: #fff}
+.voucher-info {   margin: 20px 30px 0 30px;  }
+.voucher-userName {  float: left;  text-align: left;  font-size: 16px;  font-weight: 300;  color: #333; width: 100%; height: 30px;  }
+.voucher-balance {  font-weight: 300;  color: #333;  font-size: 16px; }
+.voucher-balance b{ font-weight: normal; color: #ff6f6f}
+.voucher-balance a{ color: #ff6f6f; float: right}
+.voucher-List {  padding:25px 15px 10px 15px; background: #ffffff  }
+.voucher-card { border:2px solid #dedede;  width: 100%;  padding-top: 11px;   background: #ffffff;  border-radius: 5px;  text-align: center;  line-height: 20px;  margin-bottom: 14px;  }
+.voucher-List li:nth-child(3) .voucher-card{background-image: url("../../images/template3/hot.png");background-repeat: no-repeat;background-size: 36px; }
+.voucher-card .voucher-give{ background-image: url("../../images/template3/pic_zsjpk.png");background-repeat: no-repeat; background-size: 90px; background-position: center; height: 34px; line-height: 28px;
+	font-size: 14px;font-weight: 300;color: #fb9b03}
+.voucher-card .voucher-give .icon-jinbs{    width: 20px;
+	height: 20px;
+	display: inline-block;
+	vertical-align: top;
+	background-position: -124px -239px;
+	background-size: 150px; margin-right: 3px}
+.voucher-card .voucher-money {  color: #8a8a8a; width: 100%; text-align: center; height: 22px; line-height: 22px;  font-size: 14px;  font-weight: 300; }
+.voucher-card .more-get-money{ line-height: 20px; height: 34px;  font-size: 14px; font-weight: 600; color: #ff8827; background-repeat: no-repeat; background-position: right bottom; background-size: auto 70%}
+/*.voucher-card .more-get-money b{ border-radius: 30px; margin-right: 6px; width: 22px; line-height: 22px; text-align: center;  height: 22px; margin-top: 6px; color: #FF6F6F; display: inline-block;  background: #ffed82}*/
+.voucher-Discount {  color: #000 ; font-size: 18px;  font-weight: 400;  padding-top: 5px;   }
+.voucher-Discount .icon-jinbb{    width: 20px;  height: 20px;  display: inline-block;  vertical-align: top;  background-position: -150px -290px;  background-size: 180px; margin-left: 5px}
+.select-pay1 .voucher-card .voucher-Discount{ color:#ff8827!important;}
+.voucher-List .mui-table-view.mui-grid-view {  padding: 0;  background: none;  }
+.voucher-List .mui-table-view.mui-grid-view .mui-table-view-cell {  padding: 0;  margin-right: 0;  }
+.voucher-List .mui-table-view.mui-grid-view .mui-table-view-cell:nth-child(odd) {  padding-right: 7px;  }
+.voucher-List .mui-table-view.mui-grid-view .mui-table-view-cell:nth-child(even) {  padding-left: 7px;  }
+.voucher-List .mui-table-view:before{  height: 0;  }
+.voucher-List .mui-table-view:after{  height: 0;  }
+.voucher-List ul{padding: 0; margin: 0}
+.voucher-List ul li a{ padding: 0!important; margin: 0!important;}
+.voucher-cue {  margin: 30px 15px 0;  }
+.voucher-cue .warm-img{ background-image: url("../../images/template3/help-wxts.png"); background-repeat: no-repeat; background-size: 100% auto; height: 100px; text-indent: -9999px}
+.voucher-cue p {  font-size: 14px;  font-weight: 300;  color: #999;  line-height: 30px; margin-bottom: 0 ; padding: 0 20px; }
+.voucher-cue p img{  vertical-align: middle; padding-left: 5px;}
+.voucher-cue span{  font-size: 14px; font-weight: normal; padding: 5px; border:none  }
+.voucher-cue .qq-kf{  width: 90%; height: 50px; line-height: 50px; background-color: #f7093a; font-size: 18px; font-weight: bold; color: #fff;display: block; margin: 20px auto; text-align: center; border-radius: 10px;}
+.voucher-cue .qq-kf span
+.y-voucher-cue-qq{
+    margin-top: 5px;
+}
+
+.voucher-notice {  margin: 30px 15px 0;  }
+.voucher-notice p {  font-size: 13px;  font-weight: 300;  color: #999;  line-height: 20px;  }
+.voucher-notice-title{ margin-bottom: 5px!important; font-size: 14px!important; color: #666!important;}
+
+/*------------我的记录页面------------*/
+
+/*覆盖顶部table标题样式*/
+.record-time {  float: left;  line-height: 22px;  font-size: 14px;  font-weight: 300;  color: #222;margin-left: 25px  }
+.record-time p ,.record-Discount p {  font-size: 11px;  color: #8A8A8A;  }
+.record-Discount {  float: right; line-height: 22px;   font-size: 16px;  color: #FF6F6F;  font-weight: 300; text-align: right  }
+.record-Discount.blue{ color: #0d76ef}
+.mui-content.w-content>.mui-table-view.record-list:first-child {  margin-top: 0;  }
+.record-list .mui-table-view-cell:after,
+.help-listLi.mui-table-view-cell:after,
+.news-listLi.mui-table-view-cell:after {  right: 0px;  background-color: #eee; left: 0px }
+.record-list span.time{ height: 35px; line-height: 35px; font-size: 13px; background: #f4f4f4; padding: 0 15px; display: block; color: #666}
+.mui-table-view:before{ height: 0px; background: none}
+.record-list li .list-dot{ position: absolute; left: 15px;  top:40%; width: 8px; height: 8px;background: #ccc;  border-radius: 50%}
+.record-list li:nth-child(1) .list-dot{background: #fecc44;}
+.record-list li:nth-child(2) .list-dot{background: #8bb4f8;}
+
+/*------------帮助中心页面------------*/
+
+.help-title {  font-size: 16px;  font-weight: 300;  color: #222;  height: 50px;  line-height: 50px;  margin: 50px 15px 0;  }
+
+/*边框线条样式覆盖*/
+
+.help-list .mui-table-view:before{  height: 0;  }
+.help-list .mui-table-view:after{  background-color: #eee;  }
+.help-list .mui-table-view-cell.mui-active{  background: #fff;  }
+.mui-table-view-cell.mui-collapse.help-listLi .mui-table-view {  margin: 10px -50px 0 0; line-height: 30px;  }
+.help-list .help-listLi .help-question {  font-size: 15px;  font-weight: 300;  color: #555;  line-height: 35px;  }
+.help-answer {  font-size: 14px;  font-weight: 300;  color: #999;  }
+
+
+/*------------意见反馈页面------------*/
+
+.feedback-form {  border-bottom: 1px solid #ddd; margin-top: 10px;  }
+.feedback-form textarea {  border: none;  height: 200px;  font-size: 14px;  }
+.feedback-btn {  margin: 15px 15px 0;  }
+.feedback-btn button {  border: none;  color: #121212;  padding: 10px 0;  font-size: 16px;  width: 100%;  border-radius: 10px;  }
+.feedback-form textarea::-webkit-input-placeholder {  color: #BDBDBD;  font-size: 14px;  font-weight: 300;  }
+.feedback-form textarea:-moz-placeholder {  color: #BDBDBD;  font-size: 14px;  font-weight: 300;  }
+.feedback-form textarea::-moz-placeholder {  color: #BDBDBD;  font-size: 14px;  font-weight: 300;  }
+.feedback-form textarea:-ms-input-placeholder {  color: #BDBDBD;  font-size: 14px;  font-weight: 300;  }
+
+
+/*----------- 社区消息页面-----------*/
+
+/*关注页面*/
+.news-listLi img {  width: 50px;  height: 50px;  border-radius: 50%;  margin-right: 10px;  }
+.news-listLi .news-icon .icon-attention{  width: 30px;  height: 30px;   display: inline-block;  vertical-align: top;  background-position: -152px -140px;background-size: 200px; margin-top: 3px;  }
+.news-listLi .news-userName {  font-size: 14px;  font-weight: 300;  color: #FF6F6F;  width: 60%;  margin-top: 5px;  }
+.news-listLi .news-userName p {  font-size: 12px;  padding-top: 4px;  }
+.news-listLi .news-icon {  position: absolute;  right: 15px;  top: 11px;  text-align: center;  }
+.news-listLi .news-icon p {  font-size: 10px;  }
+
+
+/*2018-7-30新加无年费样式*/
+.y-person-coin-style2{
+    background-color: #ffffff;
+    padding: 11px 15px;
+    position: relative;
+    overflow: hidden;
+    font-size: 15px;
+}
+.y-person-coin-style2 a{
+    color: #000;
+    width: 100%;
+    height: 100%;
+    display: inline-block;
+}
+.y-person-coin-style2 i{
+    vertical-align: top;
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    margin-right: 10px;
+    background-position: center center;
+    background-size: 20px;
+    background-image: url("../../images/template3/y-person-coin.png");
+}
+.y-person-coin-style2 span{
+    position: absolute;
+    right: 15px;
+    color: #dedddd;
+    font-size: 15px;
+}
+
+/*2018-9-7新加个人中心样式*/
+.y-person-list .mui-table-view .mui-table-view-cell:last-child:after{
+    height: 1px;
+}
+.y-center-task{
+     width: 20px;
+     height: 20px;
+     display: inline-block;
+     vertical-align: top;
+     background-image: url("../../images/template3/y-center-task.png") !important;
+     background-repeat: no-repeat;
+     background-size: 16px;
+     background-position: center;
+ }
+.y-center-record{
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    vertical-align: top;
+    background-image: url("../../images/template3/y-center-record.png") !important;
+    background-repeat: no-repeat;
+    background-size: 16px;
+    background-position: center;
+}
+.y-person-list .mui-table-view .mui-navigate-right span{
+    width: 100%;
+    color: #fd8043;
+    font-size: .5rem;
+    text-align: right;
+    position: absolute;
+    right: 40px;
+    line-height: 22px;
+}
+.label-hot{
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    right: -5px;
+/*     background: url(../../img/hot.png)no-repeat !important; */
+    z-index: 3;
+    top: -10px;
+    border: 1px solid #ddd;
+  
+}
