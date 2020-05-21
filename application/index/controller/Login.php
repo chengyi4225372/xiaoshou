@@ -24,4 +24,9 @@ class Login extends Controller{
 
         return false;
     }
+
+
+    public function reg(){
+        return $this->fetch();
+    }
 }
