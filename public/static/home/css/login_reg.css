@@ -23,7 +23,7 @@ body{ background:#FFF}
 	background-position:-78px -14px
 }
 .loginPic {
-	background:url(loginPic.jpg) no-repeat;
+	background:url(../images/loginPic.jpg) no-repeat;
 	position:relative;
 	width:960px;
 	height:360px;
@@ -635,7 +635,7 @@ background-image:none
 }
 .login_page .signup_button {
 	overflow:hidden;
-	background:url(login.jpg) no-repeat 0 -82px transparent;
+	background:url(../images/login.jpg) no-repeat 0 -82px transparent;
 	border:0;
 	cursor:pointer;
 	display:block;
@@ -650,7 +650,7 @@ background-image:none
 	height:42px
 }
 .login_page .loginup_button a {
-	background:url(login.jpg) 0 -82px;
+	background:url(../images/login.jpg) 0 -82px;
 	display:block;
 	width:122px;
 	height:42px;
@@ -732,7 +732,7 @@ div.f-input-tip-container .error {
 	margin:10px 0;
 	font-size:18px;
 	color:#fff;
-	background:url(login.jpg) 0 -82px;
+	background:url(../images/login.jpg) 0 -82px;
 	cursor:pointer
 }
 .cl {
@@ -757,7 +757,7 @@ div.f-input-tip-container .error {
 	float:left;
 	width:43px;
 	height:43px;
-	background:url(signup_logo.jpg) -50px 0 no-repeat;
+	background:url(../images/signup_logo.jpg) -50px 0 no-repeat;
 	vertical-align:text-bottom
 }
 .success_wrapper .check_mail {
@@ -799,7 +799,7 @@ div.f-input-tip-container .error {
 	margin:0 auto
 }
 .emai_top, .email_center .fail_icon, .email_center .send_email, .email_center .login_email, .email_center .success_icon, .success_con .to_jumei, .invite_con .invitation_logo, .share_links .share_button, .about_invition .it {
-	background:url(logo.jpg) #fdf8fa no-repeat
+	background:url(../images/logo.jpg) #fdf8fa no-repeat
 }
 .emai_top {
 	width:100%;

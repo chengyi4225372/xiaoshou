@@ -25,6 +25,7 @@ class Member extends Base {
        if($this->request->isPost()){
            $data['users'] = input('post.users','','trim');
            $data['pwd']   = md5(input('post.pwd','','trim'));
+           $data['role']   =input('post.role');
            $data['create_time']   = time();
 
            $res = Db::name($this->table)->insertGetId($data);
@@ -52,7 +53,8 @@ class Member extends Base {
         if($this->request->isPost()){
             $mid = input('post.mid');
             $data['users'] = input('post.users','','trim');
-            $data['pwd'] = input('post.pwd','','trim');
+            $data['pwd']   = input('post.pwd','','trim');
+            $data['role']  = input('post.role');
             if(empty($mid) || !isset($mid)){
                 return false;
             }

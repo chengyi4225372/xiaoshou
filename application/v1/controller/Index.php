@@ -10,8 +10,9 @@ namespace  app\v1\controller;
 use think\Controller;
 use think\Db;
 use think\Request;
+use app\v1\controller\Base;
 
-class Index extends Controller {
+class Index extends Base {
 
    public function index(){
 

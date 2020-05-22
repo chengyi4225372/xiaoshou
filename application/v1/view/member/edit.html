@@ -12,6 +12,18 @@
             </div>
         </div>
 
+    <div class="layui-form-item">
+        <label for="username" class="layui-form-label">
+            <span class="x-red">*</span>所属角色
+        </label>
+        <div class="layui-input-inline">
+            <select id="role" name="shipping" class="valid">
+                <option {eq name="$infos.role" value="1"} aria-checked=""{/eq} value="1">超级管理员</option>
+                <option {eq name="$infos.role" value="2"} aria-checked=""{/eq} value="2">销售经理</option>
+            </select>
+        </div>
+    </div>
+
         <div class="layui-form-item">
             <label for="pwd" class="layui-form-label">
                 <span class="x-red">*</span>密码
@@ -38,6 +50,7 @@
         var user  =$.trim($('#user').val());
         var pwd   =$.trim($('#pwd').val());
         var mid   =$('#mid').val();
+        var role  =$('#role').val();
 
         if(user =='' || user == undefined){
             layer.msg('请输入用户名');
@@ -52,9 +65,9 @@
 
         var urls = "{:url('member/edit')}";
 
-        $.post(urls,{'users':user,'pwd':pwd,'mid':mid},function(ret){
+        $.post(urls,{'users':user,'pwd':pwd,'mid':mid,'role':role},function(ret){
             if(ret.code == 200){
-                layer.msg(ret.msg,{icon:6});
+                //layer.msg(ret.msg,{icon:6});
                     window.location.href="{:url('member/index')}";
             }
 

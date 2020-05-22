@@ -20,49 +20,20 @@
 <script type="text/javascript" src="/static/home/js/utils.js"></script>
 <script language='javascript' src='/static/home/js/fdjs.js' type='text/javascript' charset='utf-8'></script>
 <script language='javascript' src='/static/home/js/fdjs.json.js' type='text/javascript' charset='utf-8'></script>
-<div class="reg_top" style="padding-top:10px"> <a href="/" name="top"><img src="/static/home/images/logo.gif" /></a> </div>
+<div class="reg_top" style="padding-top:10px">
+    <a href="/" name="top"><img src="/static/home/images/logo.gif" /></a> </div>
 <div class="clear0"></div>
 <div class="blank"></div>
 <div class="block">
-
-
-
-
     <div class="step_all step_2"></div>
 
     <script type="text/javascript" src="/static/home/js/region.js"></script>
-    <script type="text/javascript">
-    region.isAdmin = false;
-    var consignee_not_null = "收货人姓名不能为空！";
-    var country_not_null = "请您选择收货人所在国家！";
-    var province_not_null = "请您选择收货人所在省份！";
-    var city_not_null = "请您选择收货人所在城市！";
-    var district_not_null = "请您选择收货人所在区域！";
-    var invalid_email = "您输入的邮件地址不是一个合法的邮件地址。";
-    var address_not_null = "收货人的详细地址不能为空！";
-    var tele_not_null = "电话不能为空！";
-    var tele_or_mob_not_null = "电话或手机至少填写一项！";
-    var shipping_not_null = "请您选择配送方式！";
-    var payment_not_null = "请您选择支付方式！";
-    var goodsattr_style = "1";
-    var tele_invaild = "电话号码不是有效的号码";
-    var zip_not_num = "邮政编码只能填写数字";
-    var mobile_invaild = "手机号码不是合法号码";
 
 
-    onload = function() {
-        if (!document.all)
-        {
-            document.forms['theForm'].reset();
-        }
-    }
 
-</script>
-
-    <form action="flow.php" method="post" name="theForm" id="theForm" onsubmit="return checkConsignee(this)">
         <div class="flowBox">
             <h6><span>收货人信息</span></h6>
-            <script type="text/javascript" src="/static/home/js/transport.js"></script>
+            <!--<script type="text/javascript" src="/static/home/js/transport.js"></script>-->
             <table width="99%" align="center" border="0" cellpadding="5" cellspacing="1" bgcolor="#dddddd">
             <tr>
                 <td bgcolor="#ffffff">收货人姓名:</td>
@@ -81,25 +52,21 @@
             </tr>
             <tr>
                 <td colspan="4" align="center" bgcolor="#ffffff">
-                    <input type="submit" name="Submit" class="bnt_blue_2" value="配送至这个地址" />
+                    <input type="button" name="Submit" class="bnt_blue_2" value="配送至这个地址" onclick="location.href='{:url('goods/order')}'" />
                     <input type="hidden" name="step" value="consignee" />
                     <input type="hidden" name="act" value="checkout" />
                     <input name="address_id" type="hidden" value="" />
                 </td>
             </tr>
         </table>
-        </div>        </form>
-
-
-
-
-
+        </div>
 
 </div>
 <div class="blank5"></div>
 
 <div class="ipl flow_goods">
-</div><script type="Text/Javascript" language="JavaScript">
+</div>
+<script type="Text/Javascript" language="JavaScript">
     <!--
 
     function selectPage(sel)
@@ -109,165 +76,9 @@
 
     //-->
 </script>
-<script type="text/javascript">
-    window.onload = function()
-    {
-        Compare.init();
-        fixpng();
-    }
-    var button_compare = '';
-    var exist = "您已经选择了%s";
-    var count_limit = "最多只能选择4个商品进行对比";
-    var goods_type_different = "\"%s\"和已选择商品类型不同无法进行对比";
-    var compare_no_goods = "您没有选定任何需要比较的商品或者比较的商品数少于 2 个。";
-    var btn_buy = "购买";
-    var is_cancel = "取消";
-    var select_spe = "请选择商品属性";
-</script>
-
-
 <div class="blank"></div>
 <div class="clear10"></div>
 
-<div class="footer_wrap">
-
-
-    <div class="footer footerbg">
-        <div class="footads"><A href=""></A><A href=""></A><A href=""></A><A href=""></A></div>
-        <div class="footHelp">
-            <table  border="0" cellspacing="0" cellpadding="0">
-                <tr>
-                    <td>                <a href="category.php?id=95"
-
-
-                    >剑网3</a>
-                        |
-                        <a href="message.php"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                        >留言板</a>
-                        |
-                        <a href="user.php"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                           target="_blank"
-                        >用户中心</a>
-                        |
-                        <a href="message.php"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                        >留言板</a>
-                        |
-                        <a href="article_cat.php?id=4"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                        >3G资讯</a>
-                    </td>
-                </tr>
-            </table>
-        </div>
-
-
-
-
-
-        <div class="footer_info"> &copy; 2005-2020 测试商城 版权所有，并保留所有权利。  888     Tel: 4006781125234          <a href="http://wpa.qq.com/msgrd?V=1&amp;Uin=123013025&amp;Site=测试商城&amp;Menu=yes" target="_blank"><img src="http://wpa.qq.com/pa?p=1:123013025:4" height="16" border="0" alt="QQ" /> 123013025</a>
-            <a href="http://amos1.taobao.com/msg.ww?v=2&uid=%E9%A6%96%E4%BB%93%E8%B4%B8%E6%98%93%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8&s=2" target="_blank"><img src="http://amos1.taobao.com/online.ww?v=2&uid=%E9%A6%96%E4%BB%93%E8%B4%B8%E6%98%93%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8&s=2" width="16" height="16" border="0" alt="淘宝旺旺" />首仓贸易有限公司</a>
-            <br />
-            ICP备案证书号:<a href="http://www.miibeian.gov.cn/" target="_blank">沪ICP备123456</a><br />
-            共执行 135 个查询，用时 0.033740 秒，在线 104 人，Gzip 已禁用，占用内存 3.648 MB<br />
-            <a href="https://xyunqi.com/products/ecshop?from=nav" target="_blank" style=" font-family:Verdana; font-size:11px;">Powered&nbsp;by&nbsp;<strong><span style="color: #3366FF">ECShop</span>&nbsp;<span style="color: #FF9966">v4.0.6</span></strong></a>&nbsp;<a href="http://www.ecshop.com/license.php?product=ecshop_b2c&url=http%3A%2F%2Fecshop.test1.shopex123.com%2F" target="_blank"
-            >&nbsp;&nbsp;Licensed</a><br />
-            <div >
-                <div class="clear10"></div>
-            </div>
-        </div>
-        <script type="text/javascript">
-
-            window.__Object_toJSONString = Object.prototype.toJSONString;
-            delete Object.prototype.toJSONString;
-
-
-        </script></body>
-<script type="text/javascript">
-    var process_request = "正在处理您的请求...";
-    var username_empty = "- 用户名不能为空。";
-    var username_shorter = "- 用户名长度不能少于 3 个字符。";
-    var username_invalid = "- 用户名只能是由字母数字以及下划线组成。";
-    var password_empty = "- 登录密码不能为空。";
-    var password_shorter = "- 登录密码不能少于 6 个字符。";
-    var confirm_password_invalid = "- 两次输入密码不一致";
-    var email_empty = "- Email 为空";
-    var email_invalid = "- Email 不是合法的地址";
-    var agreement = "- 您没有接受协议";
-    var msn_invalid = "- msn地址不是一个有效的邮件地址";
-    var qq_invalid = "- QQ号码不是一个有效的号码";
-    var home_phone_invalid = "- 家庭电话不是一个有效号码";
-    var office_phone_invalid = "- 办公电话不是一个有效号码";
-    var mobile_phone_invalid = "- 手机号码不是一个有效号码";
-    var msg_un_blank = "* 用户名不能为空";
-    var msg_un_length = "* 用户名最长不得超过7个汉字";
-    var msg_un_format = "* 用户名含有非法字符";
-    var msg_un_registered = "* 用户名已经存在,请重新输入";
-    var msg_can_rg = "* 可以注册";
-    var msg_email_blank = "* 邮件地址不能为空";
-    var msg_email_registered = "* 邮箱已存在,请重新输入";
-    var msg_email_format = "* 邮件地址不合法";
-    var msg_blank = "不能为空";
-    var no_select_question = "- 您没有完成密码提示问题的操作";
-    var passwd_balnk = "- 密码中不能包含空格";
-    var username_exist = "用户名 %s 已经存在";
-    var compare_no_goods = "您没有选定任何需要比较的商品或者比较的商品数少于 2 个。";
-    var btn_buy = "购买";
-    var is_cancel = "取消";
-    var select_spe = "请选择商品属性";
-</script>
+{include file="common/foot" /}
+</body>
 </html>

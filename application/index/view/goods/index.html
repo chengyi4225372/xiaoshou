@@ -94,8 +94,11 @@
         </form>
         <table width="100%" align="center" border="0" cellpadding="5" cellspacing="0" class="fd30_tt" >
             <tr>
-                <td ><a href="./"><img src="/static/home/images/continue.gif" alt="continue" /></a><input type="button" value="清空购物车" class="fd30_clear" onclick="location.href='flow.php?step=clear'" /></td>
-                <td  > <div class="fr"> <a href="flow.php?step=checkout" class="fd30_checkout">去结算</a></div>
+                <td><a href="./"><img src="/static/home/images/continue.gif" alt="continue"/></a>
+                    <input type="button"
+                       value="清空购物车" class="fd30_clear" onclick="location.href=''"/>
+                </td>
+                <td  > <div class="fr"> <a href="{:url('goods/address')}" class="fd30_checkout">去结算</a></div>
                     <div class="fr">
                         <span>购物金额小计 ￥100.00</span></div>
                 </td>
@@ -114,122 +117,6 @@
 <div class="clear10"></div>
 
 <div class="footer_wrap">
-<div class="footer footerbg">
-        <div class="footads"><A href=""></A><A href=""></A><A href=""></A><A href=""></A></div>
-        <div class="footHelp">
-            <table  border="0" cellspacing="0" cellpadding="0">
-                <tr>
-                    <td>                <a href="category.php?id=95"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                    >剑网3</a>
-                        |
-                        <a href="message.php"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                        >留言板</a>
-                        |
-                        <a href="user.php"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                           target="_blank"
-                        >用户中心</a>
-                        |
-                        <a href="message.php"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                        >留言板</a>
-                        |
-                        <a href="article_cat.php?id=4"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                        >3G资讯</a>
-                    </td>
-                </tr>
-            </table>
-        </div>
-
-
-
-
-
-        <div class="footer_info"> &copy; 2005-2020 测试商城 版权所有，并保留所有权利。  888     Tel: 4006781125234          <a href="http://wpa.qq.com/msgrd?V=1&amp;Uin=123013025&amp;Site=测试商城&amp;Menu=yes" target="_blank"><img src="http://wpa.qq.com/pa?p=1:123013025:4" height="16" border="0" alt="QQ" /> 123013025</a>
-            <a href="http://amos1.taobao.com/msg.ww?v=2&uid=%E9%A6%96%E4%BB%93%E8%B4%B8%E6%98%93%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8&s=2" target="_blank"><img src="http://amos1.taobao.com/online.ww?v=2&uid=%E9%A6%96%E4%BB%93%E8%B4%B8%E6%98%93%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8&s=2" width="16" height="16" border="0" alt="淘宝旺旺" />首仓贸易有限公司</a>
-            <br />
-            ICP备案证书号:<a href="http://www.miibeian.gov.cn/" target="_blank">沪ICP备123456</a><br />
-            共执行 138 个查询，用时 0.032519 秒，在线 105 人，Gzip 已禁用，占用内存 3.486 MB<br />
-            <a href="https://xyunqi.com/products/ecshop?from=nav" target="_blank" style=" font-family:Verdana; font-size:11px;">Powered&nbsp;by&nbsp;<strong><span style="color: #3366FF">ECShop</span>&nbsp;<span style="color: #FF9966">v4.0.6</span></strong></a>&nbsp;<a href="http://www.ecshop.com/license.php?product=ecshop_b2c&url=http%3A%2F%2Fecshop.test1.shopex123.com%2F" target="_blank"
-            >&nbsp;&nbsp;Licensed</a><br />
-            <div >
-                <div class="clear10"></div>
-            </div>
-        </div>
-        <script type="text/javascript">
-
-            window.__Object_toJSONString = Object.prototype.toJSONString;
-            delete Object.prototype.toJSONString;
-
-
-        </script>
+{include file="common/foot" /}
 </body>
 </html>

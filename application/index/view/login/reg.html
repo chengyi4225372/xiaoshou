@@ -8,26 +8,21 @@
     <title>用户中心_我是一家测试商城</title>
     <link href="/static/home/css/style.css" rel="stylesheet" type="text/css" />
     <LINK rel=stylesheet type=text/css href="/static/home/css/login_reg.css">
-
+    <script src="/static/home/js/jquery.min.js" charset="utf-8"></script>
+    <script src="/static/admin/lib/layui/layui.js" charset="utf-8"></script>
     <script type="text/javascript" src="/static/home/js/common.js"></script>
-    <script type="text/javascript" src="/static/home/js/user.js"></script>
     <script type="text/javascript" src="/static/home/js/transport.js"></script>
 <body>
 
 <script type="text/javascript" src="/static/home/js/transport2.js"></script>
 <script type="text/javascript" src="/static/home/js/utils.js"></script>
 <link href="/static/home/css/ec12.css" rel="stylesheet" type="text/css"/>
-<script type="text/javascript">
-    var process_request = "正在处理您的请求...";
-</script>
+
 <script language='javascript' src='/static/home/js/fdjs.js' type='text/javascript' charset='utf-8'></script>
 <script language='javascript' src='/static/home/js/fdjs.json.js' type='text/javascript' charset='utf-8'></script>
 <div class="reg_top" style="padding-top:10px"> <a href="{:url('index/index')}" name="top"><img src="/static/home/images/logo.gif" /></a> </div>
 <div class="clear0"></div>
 <div class="blank"></div>
-
-
-
 <div class="container">
     <div id="body">
         <div class="login_main">
@@ -37,11 +32,11 @@
                     <h1>注册会员</h1>
                 </div>
                 <div class="content_body">
-                    <form action="user.php" method="post" name="formUser" onsubmit="return register();" class="signup-user-form">
+                    <form name="formUser"  class="signup-user-form">
                         <div class="input_container email">
                             <label>用户名</label>
                             <label class="input_field">
-                                <input class="f_input"  size="30" name="username" id="username" type="text" onblur="is_registered(this.value);"/>
+                                <input class="f_input"  size="30" name="username" id="username" type="text" />
                             </label>
                             <div class="f-input-tip-container">
                                 <div class="f_input_tip_text" id="username_notice"></div>
@@ -50,47 +45,43 @@
                         <div class="input_container email">
                             <label>email</label>
                             <label class="input_field">
-                                <input class="f_input"  size="30" name="email" id="email" type="text" onblur="checkEmail(this.value);"/>
+                                <input class="f_input"  size="30" name="email" id="email" type="text" />
                             </label>
                             <div class="f-input-tip-container">
                                 <div class="f_input_tip_text" id="email_notice"></div>
                             </div>
                         </div>
+
                         <div class="input_container password">
                             <label>密码</label>
                             <label class="input_field">
-                                <input class="f_input" name="password" id="password1" type="password" onblur="check_password(this.value);" onkeyup="checkIntensity(this.value)"/>
+                                <input class="f_input" name="password" id="password1" type="password"/>
                             </label>
+                            <!--
                             <div class="f-input-tip-container">
                                 <div class="f_input_tip_text" id="password_notice"></div>
                             </div>
                             <div style="clear: both;"></div>
+
                             <p class="safe-tip">
                                 <label id="pwd_lower" class="">弱</label>
                                 <label id="pwd_middle" class="">中</label>
                                 <label id="pwd_high" class="">强</label>
                             </p>
+                              -->
                         </div>
-                        <div class="input_container password_confir">
-                            <label>确认密码</label>
+
+
+
+                        <div class="input_container"><label>手机 </label>
                             <label class="input_field">
-                                <input class="f_input" name="confirm_password" id="confirm_password" type="password" onblur="check_conform_password(this.value);"/>
-                            </label>
-                            <div class="f-input-tip-container">
-                                <div class="f_input_tip_text" id="conform_password_notice"></div>
-                            </div>
+                            <input name="extend_field5" type="text" size="25" class="f_input"/></label>
                         </div>
-
-
-
-                        <div class="input_container"> <label >手机          </label> <label class="input_field">
-                            <input name="extend_field5" type="text" size="25" class="f_input" /></label>          </div>
-
 
                         <div class="email_subscribe check_radio">
                             <label>
                                 <input name="agreement" type="checkbox" value="1" checked="checked" />
-                                我已看过并接受《<a href="article.php?cat_id=-1" style="color:blue" target="_blank">用户协议</a>》</label>
+                                我已看过并接受《<a href="javascript;" style="color:blue" target="_blank">用户协议</a>》</label>
                         </div>
                         <div class="cl"></div>
                         <div class="act">
@@ -103,8 +94,7 @@
             </div>
             <div id="sidebar" class="login_page">
                 <div class="siderbar_head"> 我已有账号，我要登录？ </div>
-                <div class="loginup_button"><a href="user.php" rel="nofollow">立即登录</a></div>
-                <div class="loginup_button"> <a href="user.php?act=get_password">您忘记密码了吗？</a></div>
+                <div class="loginup_button"><a href="{:url('login/login')}" rel="nofollow">立即登录</a></div>
             </div>
             <div class="r_bar"></div>
         </div>
@@ -113,103 +103,9 @@
     </div>
 </div>
 
-
-
-
-
 <div class="blank"></div>
 <div class="footads"><IMG alt="广告说明" src="/static/home/images/footad.jpg"></div>
 
-<div class="footer">
-    <div class="footHelp">
-        <table border="0" cellspacing="0" cellpadding="0">
-            <tr>
-                <td><a href="category.php?id=95"
-
-
-                >剑网3</a>
-                    |
-                    <a href="message.php"
-
-
-                    >留言板</a>
-                    |
-                    <a href="user.php"
-
-
-                       target="_blank"
-                    >用户中心</a>
-                    |
-                    <a href="message.php"
-
-
-                    >留言板</a>
-                    |
-                    <a href="article_cat.php?id=4"
-
-
-                    >3G资讯</a>
-                </td>
-            </tr>
-        </table>
-    </div>
-
-
-    <div class="footer_info"> &copy; 2005-2020 测试商城 版权所有，并保留所有权利。 888 Tel: 4006781125234 <a
-            href="http://wpa.qq.com/msgrd?V=1&amp;Uin=123013025&amp;Site=测试商城&amp;Menu=yes" target="_blank"><img
-            src="http://wpa.qq.com/pa?p=1:123013025:4" height="16" border="0" alt="QQ"/> 123013025</a>
-        <a href="http://amos1.taobao.com/msg.ww?v=2&uid=%E9%A6%96%E4%BB%93%E8%B4%B8%E6%98%93%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8&s=2"
-           target="_blank"><img
-                src="http://amos1.taobao.com/online.ww?v=2&uid=%E9%A6%96%E4%BB%93%E8%B4%B8%E6%98%93%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8&s=2"
-                width="16" height="16" border="0" alt="淘宝旺旺"/>首仓贸易有限公司</a>
-        <br/>
-        ICP备案证书号:<a href="http://www.miibeian.gov.cn/" target="_blank">沪ICP备123456</a><br/>
-        共执行 68 个查询，用时 0.015898 秒，在线 105 人，Gzip 已禁用，占用内存 3.034 MB<br/>
-        <a href="https://xyunqi.com/products/ecshop?from=nav" target="_blank"
-           style=" font-family:Verdana; font-size:11px;">Powered&nbsp;by&nbsp;<strong><span style="color: #3366FF">ECShop</span>&nbsp;<span
-                style="color: #FF9966">v4.0.6</span></strong></a>&nbsp;<a
-                href="http://www.ecshop.com/license.php?product=ecshop_b2c&url=http%3A%2F%2Fecshop.test1.shopex123.com%2F"
-                target="_blank"
-        >&nbsp;&nbsp;Licensed</a><br/>
-        <div>
-            <div class="clear10"></div>
-        </div>
-    </div>
-    <script type="text/javascript">
-
-        window.__Object_toJSONString = Object.prototype.toJSONString;
-        delete Object.prototype.toJSONString;
-
-
-    </script>
+{include file="common/foot" /}
 </body>
-<script type="text/javascript">
-    var process_request = "正在处理您的请求...";
-    var username_empty = "- 用户名不能为空。";
-    var username_shorter = "- 用户名长度不能少于 3 个字符。";
-    var username_invalid = "- 用户名只能是由字母数字以及下划线组成。";
-    var password_empty = "- 登录密码不能为空。";
-    var password_shorter = "- 登录密码不能少于 6 个字符。";
-    var confirm_password_invalid = "- 两次输入密码不一致";
-    var email_empty = "- Email 为空";
-    var email_invalid = "- Email 不是合法的地址";
-    var agreement = "- 您没有接受协议";
-    var msn_invalid = "- msn地址不是一个有效的邮件地址";
-    var qq_invalid = "- QQ号码不是一个有效的号码";
-    var home_phone_invalid = "- 家庭电话不是一个有效号码";
-    var office_phone_invalid = "- 办公电话不是一个有效号码";
-    var mobile_phone_invalid = "- 手机号码不是一个有效号码";
-    var msg_un_blank = "* 用户名不能为空";
-    var msg_un_length = "* 用户名最长不得超过7个汉字";
-    var msg_un_format = "* 用户名含有非法字符";
-    var msg_un_registered = "* 用户名已经存在,请重新输入";
-    var msg_can_rg = "* 可以注册";
-    var msg_email_blank = "* 邮件地址不能为空";
-    var msg_email_registered = "* 邮箱已存在,请重新输入";
-    var msg_email_format = "* 邮件地址不合法";
-    var msg_blank = "不能为空";
-    var no_select_question = "- 您没有完成密码提示问题的操作";
-    var passwd_balnk = "- 密码中不能包含空格";
-    var username_exist = "用户名 %s 已经存在";
-</script>
 </html>
