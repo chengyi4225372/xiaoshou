@@ -9,7 +9,9 @@ class Index extends Base
     //首页
     public function index()
     {
-        return $this->fetch();
+         $goodslist = Db::name('goods')->where(['status'=>1])->select();
+         $this->assign('list',$goodslist);
+         return $this->fetch();
     }
 
 

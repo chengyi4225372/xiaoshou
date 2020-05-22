@@ -37,7 +37,7 @@
 
 <div class="fd_top1">
     <div class="fd_top">
-        <div class="logo1"><a href="index.php" name="top"><img src="/static/home/images/logo.gif" class="logo" /></a></div>
+        <div class="logo1"><a href="/" name="top"><img src="/static/home/images/logo.gif" class="logo" /></a></div>
         <div class="logo_r">
             <div class="logo2 search">
                 <div class="search_label">
@@ -141,19 +141,7 @@
         <div class="navs_m">
             <ul class="Menulist">
                 <li class="li1"><a href="/" class="cur">首页</a></li>
-                <li><a href="category.php?id=27"
-                >大家电</a></li>
-                <li><a href="category.php?id=317"
-                       target="_blank"
-                >时尚女鞋</a></li>
-                <li><a href="article_cat.php?id=1"
-                >系统分类</a></li>
-                <li><a href="category.php?id=333"
-                >帐篷测测</a></li>
-                <li><a href="article_cat.php?id=7"
-                >配送与支付 </a></li>
-                <li><a href="category.php?id=104"
-                >热卖新款</a></li>
+
             </ul>
         </div>
         <!--<div class="navs_r"> <a href="exchange.php"> 积分商城</a> | <a href="brand.php">全部品牌</a> </div>-->
@@ -206,14 +194,17 @@
 <div id="Tr_cs1"><div class="Tr_cs Tr_cs1">
     <div class="cxjad_m">
         <div class="cxjinfo">
-            <div class="cxjitem"><a href='affiche.php?ad_id=2&amp;uri='
-                                    target='_blank'><img src='/static/home/images/1487558383056641885.jpg' width='1'
-                                                         height='545'
-                                                         border='0'/></a></div>
-            <div class="cxjitem"><a href='affiche.php?ad_id=1&amp;uri='
-                                    target='_blank'><img src='/static/home/images/1487558367605967483.jpg' width='1'
-                                                         height='545'
-                                                         border='0'/></a></div>
+              <!-- 轮播图-->
+            <div class="cxjitem">
+                <a href='javascript;' target='_blank'>
+                    <img src='/static/home/images/1487558383056641885.jpg' width='1' height='545' border='0'/></a>
+            </div>
+
+            <div class="cxjitem">
+                <a href='javascript;' target='_blank'>
+                    <img src='/static/home/images/1487558367605967483.jpg' width='1' height='545' border='0'/></a>
+            </div>
+
         </div>
     </div>
     <div class='TABLE_Sbg'>
@@ -240,22 +231,25 @@
             <!--<h2><span>一手文旅地产</span><a href="category.php?id=261" class="more">更多></a></h2>-->
             <div class="i_prclist hover" id="goods_cat261">
                 <div class="cxjad_m">
+                    {volist name="list" id='vo'}
                     <div class="cxjinfo">
                         <div class="cxjitem">
-                            <div class="p"><a href="{:url('goods/ginfo')}" class="aimg"><img
-                                    src="/static/home/images/4ced182d04ce4fb88c2964dc8fbbf3be.jpg" width="200"
-                                    height="200" alt="虚拟商品测试H5" class="goodsimg"/></a></div>
+                            <div class="p">
+                                <a href="{:url('goods/ginfo')}" class="aimg">
+                                    <img src="{$vo.imgs}" width="200"
+                                    height="200" alt="{$vo.title}" class="goodsimg"/></a></div>
                             <div class="i">
-                                <h3><a href="{:url('goods/ginfo')}" title="">虚拟商品测试H5                        </a></h3>
+                                <h3><a href="{:url('goods/ginfo')}?gid={$vo.id}" title="{$vo.title}">{$vo.title}</a></h3>
                                 <ul class="prices">
                                     <li class="gel-price">
-                                        销售价：<em>￥100</em>
+                                        销售价：<em>￥{$vo.dan|floatval}</em>
                                     </li>
-                                    <li class="gel-mktprice"><em>市场价：</em>￥120</li>
+                                    <!--<li class="gel-mktprice"><em>市场价：</em>￥120</li>-->
                                 </ul>
                             </div>
                         </div>
                     </div>
+                    {/volist}
                 </div>
                 <div class="clear0"></div>
             </div>
