@@ -32,17 +32,15 @@
       <td>
         {if condition="$vo.role eq 1"}
         超级管理员
-        {else /}
-         销售经理
         {/if}
       </td>
       <td>{$vo.create_time|date="Y-m-d,H:i",###}</td>
       <td class="td-manage">
-        <a title="详情" onclick="show(this)" data-href="{:url('users/edit')}?mid={$vo.id}"  href="javascript:;">
+        <a title="详情" onclick="show(this)" data-href="{:url('member/edit')}?mid={$vo.id}"  href="javascript:;">
           <i class="layui-icon">&#xe642;</i>
         </a>
 
-        <a title="删除" onclick="member_del('{:url('users/del')}','{$vo.id}')" href="javascript:;">
+        <a title="删除" onclick="member_del('{:url('member/del')}','{$vo.id}')" href="javascript:;">
           <i class="layui-icon">&#xe640;</i>
         </a>
       </td>

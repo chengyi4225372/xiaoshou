@@ -16,7 +16,7 @@ class Member extends Base {
     protected $table ='users';
 
     public function index(){
-        $data = Db::name($this->table)->where('status',1)->order('id desc')->paginate(15);
+        $data = Db::name($this->table)->where(['status'=>1,'role'=>1])->order('id desc')->paginate(15);
         $this->assign('data',$data);
         return $this->fetch();
     }
@@ -45,7 +45,7 @@ class Member extends Base {
             if(empty($mid) || !isset($mid)){
                 return false;
             }
-            $infos = Db::name($this->table)->where('id',$mid)->where('status',1)->find();
+            $infos = Db::name($this->table)->where(['id'=>$mid,'role'=>1,'status'=>1])->find();
             $this->assign('infos',$infos);
             return $this->fetch();
         }
@@ -78,7 +78,7 @@ class Member extends Base {
             if(empty($mid) || !isset($mid)){
                 return false;
             }
-            $infos = Db::name($this->table)->where('id',$mid)->update(['status'=>0]);
+            $infos = Db::name($this->table)->where(['id'=>$mid,'role'=>1])->update(['status'=>0]);
 
             if($infos !== false){
                 return json(['code'=>200,'msg'=>'删除成功']);

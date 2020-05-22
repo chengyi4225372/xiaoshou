@@ -38,6 +38,16 @@ class Goods extends Base
      * 商品详情
      */
     public function ginfo(){
-        return $this->fetch();
+        if($this->request->isGet()){
+            $mid = input('get.gid');
+            if(empty($mid) || !isset($mid)){
+                return false;
+            }
+
+            $info = Db::name('goods')->where(['status'=>1,'id'=>$mid])->find();
+            $this->assign('info',$info);
+            return $this->fetch();
+        }
+        return false;
     }
 }

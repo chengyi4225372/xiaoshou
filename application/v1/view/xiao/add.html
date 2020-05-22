@@ -5,7 +5,16 @@
             <span class="x-red">*</span>登录名
         </label>
         <div class="layui-input-inline">
-            <input type="text" id="user" value="{$infos.users}" class="layui-input">
+            <input type="text" id="user" value="" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label for="user" class="layui-form-label">
+            <span class="x-red">*</span>真实姓名
+        </label>
+        <div class="layui-input-inline">
+            <input type="text" id="relname" value="{" class="layui-input">
         </div>
     </div>
 
@@ -14,7 +23,7 @@
             <span class="x-red">*</span>邮箱
         </label>
         <div class="layui-input-inline">
-            <input type="text" id="email" value="{$infos.email}" class="layui-input">
+            <input type="text" id="email" value="" class="layui-input">
         </div>
     </div>
 
@@ -23,7 +32,7 @@
             <span class="x-red">*</span>联系电话
         </label>
         <div class="layui-input-inline">
-            <input type="text" id="tel" value="{$infos.tel}" class="layui-input">
+            <input type="text" id="tel" value="" class="layui-input">
         </div>
     </div>
 
@@ -32,7 +41,7 @@
             <span class="x-red">*</span>所属地区
         </label>
         <div class="layui-input-inline">
-            <input type="text" id="region" value="{$infos.region}" class="layui-input">
+            <input type="text" id="region" value="" class="layui-input">
         </div>
     </div>
 
@@ -42,28 +51,31 @@
             <span class="x-red">*</span>密码
         </label>
         <div class="layui-input-inline">
-            <input type="password" id="pwd"  value="{$infos.pwd}" class="layui-input">
+            <input type="password" id="pwd"  value="" class="layui-input">
         </div>
         <div class="layui-form-mid layui-word-aux">
             6到16个字符
         </div>
     </div>
 
-    <input type="hidden"  id="mid" value="{$infos.id}">
+    <input type="hidden"  id="role" value="2">
     <div class="layui-form-item">
-        <label for="L_repass" class="layui-form-label">
-        </label>
-        <button  class="layui-btn" onclick="xadmin_edit();">
-            修改
-        </button>
+    <label for="L_repass" class="layui-form-label">
+    </label>
+    <button  class="layui-btn" onclick="xadmin_add();">
+      提交
+    </button>
     </div>
 </div>
 <script>
-    /*
-    function xadmin_edit(){
+
+    function xadmin_add(){
         var user  =$.trim($('#user').val());
         var pwd   =$.trim($('#pwd').val());
-        var mid   =$('#mid').val();
+        var email   =$.trim($('#email').val());
+        var region   =$.trim($('#region').val());
+        var relname   =$.trim($('#relname').val());
+        var tel   =$.trim($('#tel').val());
         var role  =$('#role').val();
 
         if(user =='' || user == undefined){
@@ -77,12 +89,12 @@
             return false;
         }
 
-        var urls = "{:url('member/edit')}";
+        var urls = "{:url('xiao/add')}";
 
-        $.post(urls,{'users':user,'pwd':pwd,'mid':mid,'role':role},function(ret){
+        $.post(urls,{'users':user,'pwd':pwd,'role':role,'relname':relname,'email':email,'tel':tel,'region':region},function(ret){
             if(ret.code == 200){
                 //layer.msg(ret.msg,{icon:6});
-                window.location.href="{:url('member/index')}";
+                window.location.href="{:url('xiao/index')}";
             }
 
             if(ret.code == 400){
@@ -91,7 +103,7 @@
             }
         })
     }
-    */
+
 </script>
 
 </body>

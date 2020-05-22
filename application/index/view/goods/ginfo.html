@@ -5,7 +5,8 @@
     <title>虚拟商品测试H5_一手文旅地产_我是一家测试商城</title>
     <link href="/static/home/css/style.css" rel="stylesheet" type="text/css" />
     <link href="/static/home/css/ec12.css" rel="stylesheet" type="text/css"/>
-    <script type="text/javascript" src="/static/home/js/common2.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/home/css/cloudzoom.css" />
+    <script language='javascript' src='/static/home/js/cxjc0.js' type='text/javascript' charset='utf-8'></script>
 </head>
 <body style="background:#EDEDED">
 <a name="top"></a>
@@ -35,7 +36,7 @@
         </div>
         <div class=pull-right>
             <ul>
-                <li class=myorder><a href="javascript;" class="order">我的订单</a></li>
+                <li class=myorder><a href="{:url('goods/index')}" class="order">我的购物车</a></li>
                 <li class=li1><a onclick=addFavorite(window.location,document.title) href="#">收藏本站</a></li>
             </ul>
         </div>
@@ -62,7 +63,6 @@
                     </form>
                 </div>
                 <div class="hot-keywords"> <span>热门搜索:</span>
-
                     <a href="search.php?keywords=%E7%94%B7%E9%9E%8B">男鞋</a>  <a href="search.php?keywords=%E5%A5%B3%E9%9E%8B">女鞋</a>  <a href="search.php?keywords=%E5%84%BF%E7%AB%A5%E9%9E%8B">儿童鞋</a>  <a href="search.php?keywords=%E5%A4%8F%E9%9E%8B">夏鞋</a>  <a href="search.php?keywords=%E5%86%AC%E9%9E%8B">冬鞋</a>            </div>
             </div>
             <div class="logo3"></div>
@@ -76,20 +76,8 @@
 
         <div class="navs_m">
             <ul class="Menulist">
+                <!-- 导航栏-->
                 <li class="li1"><a href="/" class="cur">首页</a></li>
-                <li><a href="category.php?id=27"
-                >大家电</a></li>
-                <li><a href="category.php?id=317"
-                       target="_blank"
-                >时尚女鞋</a></li>
-                <li><a href="article_cat.php?id=1"
-                >系统分类</a></li>
-                <li><a href="category.php?id=333"
-                >帐篷测测</a></li>
-                <li><a href="article_cat.php?id=7"
-                >配送与支付 </a></li>
-                <li><a href="category.php?id=104"
-                >热卖新款</a></li>
             </ul>
         </div>
         <div class="clear0"></div>
@@ -132,11 +120,11 @@
 
     })
 </script>
-<script language='javascript' src='/static/home/js/cxjc0.js' type='text/javascript' charset='utf-8'></script>
+
 
 <div id="ur_here_g">
     <div class="Navigation">当前位置: <a href="/">首页</a> <code>&gt;</code>
-     </code> 虚拟商品测试H5
+     </code>{$info.title}
     </div>
 </div>
 
@@ -146,13 +134,7 @@
 
         <div class="imgInfo">
 
-            <script language='javascript' src='/static/home/js/cloudzoom.js' type='text/javascript'
-                    charset='utf-8'></script>
-            <link rel="stylesheet" type="text/css" href="/static/home/css/cloudzoom.css" />
-
-
-
-            <div class="gmax_pic_box"><img src="/static/home/images/4ced182d04ce4fb88c2964dc8fbbf3be.jpg" alt="虚拟商品测试H5"  class="gmax_pic"/>
+            <div class="gmax_pic_box"><img src="{$info.imgs}" alt="{$info.title}"  class="gmax_pic"/>
             </div>
             <style>
                 #goodsInfo .imgInfo{width:40%}
@@ -174,20 +156,19 @@
                 .picture  div.up{float:left; margin-right:10px;}
             </style>
             <div class="clear10"></div>
-
         </div>
 
         <div class="textInfo">
-            <div class="goodsnames">虚拟商品测试H5</div>
+            <div class="goodsnames">{$info.title}</div>
             <div class="briefs"></div>
-            <form action="javascript:addToCart(897)" method="post" name="ECS_FORMBUY" id="ECS_FORMBUY" >
+            <form >
                 <div class="clearfix" style="display:none">
-                    <p class="f_r">              </p>
+                    <p class="f_r"></p>
                 </div>
                 <div class="all_price">
                     <div class="ECS_GOODS_AMOUNT">
                         商品单价
-                        <font id="ECS_GOODS_AMOUNT" class="shop">1.0</font> </div>
+                        <font id="ECS_GOODS_AMOUNT" class="shop">{$info.dan|floatval}</font> </div>
 
                     <div class="clear0"></div>
                 </div>
@@ -195,9 +176,6 @@
 
                 <div class="clear0"></div>
                 <ul class="fd30_ulinfo">
-                    <li style="display:none">
-                          <strong>售价：</strong><font class="shop" id="ECS_SHOPPRICE">￥100</font><br />
-                    </li>
 
                     <li> <strong>购买数量：</strong>
                         <b class="fd30_j fd30_jian">-</b>
@@ -243,6 +221,7 @@
         </DIV>
 
     </div>
+
     <div class="c c2"><i></i>
         <dt>新手上路了</dt>
         <dd><a href="javascript;" title="售后流程">售后流程</a></dd>
@@ -277,6 +256,7 @@
         <dd><a href="javascript;" title="选机咨询 ">选机咨询</a></dd>
         <dd><a href="javascript;" title="投诉与建议 ">投诉与建议</a></dd>
     </div>
+
     <div class="clear10"></div>
 </div></div>
 <div class="blank"></div>
