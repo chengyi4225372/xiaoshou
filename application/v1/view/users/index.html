@@ -1,10 +1,109 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{include file='public/header' /}
+<div class="x-nav">
+      <span class="layui-breadcrumb">
+      </span>
+    <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
+        <i class="layui-icon" style="line-height:30px">ဂ</i></a>
+</div>
+<div class="x-body">
+    <div class="layui-row">
+        <form class="layui-form layui-col-md12 x-so">
+            <input type="text" name="username"  placeholder="请输入用户名" autocomplete="off" class="layui-input">
+            <button class="layui-btn"  lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
+        </form>
+    </div>
+    <xblock>
+        <button class="layui-btn" onclick="x_admin_show('添加用户','{:url('member/add')}',600,400)"><i class="layui-icon"></i>添加</button>
+    </xblock>
+    <table class="layui-table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>用户名</th>
+            <th>邮箱</th>
+            <th>联系方式</th>
+            <th>所属地区</th>
+            <th>加入时间</th>
+            <th>操作</th></tr>
+        </thead>
+        <tbody>
+        {volist name='data' id='vo'}
+        <tr>
+            <td>{$vo.id}</td>
+            <td>{$vo.users}</td>
+            <td>{$vo.email}</td>
+            <td>{$vo.tel}</td>
+            <td>{$vo.region}</td>
+            <td>{$vo.create_time|date="Y-m-d,H:i",###}</td>
+            <td class="td-manage">
+                <a title="编辑" onclick="show(this)" data-href="{:url('users/edit')}?mid={$vo.id}"  href="javascript:;">
+                    <i class="layui-icon">&#xe642;</i>
+                </a>
 
-</body>.
+                <a title="删除" onclick="member_del('{:url('users/del')}','{$vo.id}')" href="javascript:;">
+                    <i class="layui-icon">&#xe640;</i>
+                </a>
+            </td>
+        </tr>
+        </tbody>
+        {/volist}
+    </table>
+
+    <div class="page">
+        {$data->render();}
+    </div>
+
+</div>
+<script>
+    layui.use('laydate', function(){
+        var laydate = layui.laydate;
+
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#start' //指定元素
+        });
+
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#end' //指定元素
+        });
+    });
+
+    function show(obj){
+
+        var urls = $(obj).attr('data-href');
+        layer.open({
+            type: 2,
+            area: ['600px','400px'],
+            fix: false, //不固定
+            maxmin: true,
+            shadeClose: true,
+            shade:0.4,
+            title: '编辑',
+            content: urls,
+        });
+    }
+
+
+    /*用户-删除*/
+    function member_del(obj,id){
+        layer.confirm('确认要删除吗？',function(){
+            $.get(obj,{'mid':id},function(ret){
+                if(ret.code == 200){
+                    layer.msg(ret.msg,{icon:6});
+                    window.location.href="{:url('member/index')}";
+                }
+
+                if(ret.code == 400){
+                    layer.msg(ret.msg,{icon:5});
+                    window.location.reload();
+                }
+
+            })
+        });
+    }
+</script>
+
+</body>
+
 </html>

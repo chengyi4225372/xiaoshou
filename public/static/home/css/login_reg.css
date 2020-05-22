@@ -9,7 +9,7 @@ body{ background:#FFF}
 	float:right
 }
 .logo, .user-icon, .pass-icon, .er .inputWrap, .loginbtn, .item, .login_layer .er input, .login_layer .ok input {
-	background:url(login.jpg) no-repeat 0 0 #fff
+	background:url(../images/login.jpg) no-repeat 0 0 #fff
 }
 .loginWrap {
 	width:965px;

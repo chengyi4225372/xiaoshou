@@ -9,17 +9,9 @@
     <link href="/static/home/css/style.css" rel="stylesheet" type="text/css" />
     <LINK rel=stylesheet type=text/css href="/static/home/css/login_reg.css">
     <script src="/static/home/js/jquery.min.js" charset="utf-8"></script>
-    <script src="/static/admin/lib/layui/layui.js" charset="utf-8"></script>
-    <script type="text/javascript" src="/static/home/js/common.js"></script>
-    <script type="text/javascript" src="/static/home/js/transport.js"></script>
+    <script src="/static/admin/lib/layui/layui.all.js" charset="utf-8"></script>
+    <link href="/static/home/css/ec12.css" rel="stylesheet" type="text/css"/>
 <body>
-
-<script type="text/javascript" src="/static/home/js/transport2.js"></script>
-<script type="text/javascript" src="/static/home/js/utils.js"></script>
-<link href="/static/home/css/ec12.css" rel="stylesheet" type="text/css"/>
-
-<script language='javascript' src='/static/home/js/fdjs.js' type='text/javascript' charset='utf-8'></script>
-<script language='javascript' src='/static/home/js/fdjs.json.js' type='text/javascript' charset='utf-8'></script>
 <div class="reg_top" style="padding-top:10px"> <a href="{:url('index/index')}" name="top"><img src="/static/home/images/logo.gif" /></a> </div>
 <div class="clear0"></div>
 <div class="blank"></div>
@@ -32,7 +24,7 @@
                     <h1>注册会员</h1>
                 </div>
                 <div class="content_body">
-                    <form name="formUser"  class="signup-user-form">
+                    <!--<form name="formUser"  class="signup-user-form">-->
                         <div class="input_container email">
                             <label>用户名</label>
                             <label class="input_field">
@@ -57,25 +49,16 @@
                             <label class="input_field">
                                 <input class="f_input" name="password" id="password1" type="password"/>
                             </label>
-                            <!--
-                            <div class="f-input-tip-container">
-                                <div class="f_input_tip_text" id="password_notice"></div>
-                            </div>
-                            <div style="clear: both;"></div>
-
-                            <p class="safe-tip">
-                                <label id="pwd_lower" class="">弱</label>
-                                <label id="pwd_middle" class="">中</label>
-                                <label id="pwd_high" class="">强</label>
-                            </p>
-                              -->
                         </div>
-
-
 
                         <div class="input_container"><label>手机 </label>
                             <label class="input_field">
-                            <input name="extend_field5" type="text" size="25" class="f_input"/></label>
+                            <input name="extend_field5" id="tel" type="text" size="25" class="f_input"/></label>
+                        </div>
+
+                        <div class="input_container"><label>所在地区 </label>
+                            <label class="input_field">
+                                <input name="extend_field5" id="region" type="text" size="25" class="f_input"/></label>
                         </div>
 
                         <div class="email_subscribe check_radio">
@@ -85,11 +68,11 @@
                         </div>
                         <div class="cl"></div>
                         <div class="act">
-                            <input name="act" type="hidden" value="act_register" >
-                            <input type="hidden" name="back_act" value="" />
-                            <input value="同意协议并注册" name="Submit" class="signup_button" type="submit">
+                            <!--<input name="act" type="hidden" value="act_register" >-->
+                            <!--<input type="hidden" name="back_act" value="" />-->
+                            <input value="同意协议并注册" name="Submit" class="signup_button" type="button">
                         </div>
-                    </form>
+                    <!--</form>-->
                 </div>
             </div>
             <div id="sidebar" class="login_page">
@@ -105,6 +88,32 @@
 
 <div class="blank"></div>
 <div class="footads"><IMG alt="广告说明" src="/static/home/images/footad.jpg"></div>
+<script>
+    $('.signup_button').click(function(){
+         var username = $('#username').val();
+         var email    =$('#email').val();
+         var pwd      = $('#password1').val();
+         var tel      = $('#tel').val();
+         var region   = $('#region').val();
+
+         var reurl = "{:url('login/reg')}";
+        $.post(reurl,{'user':username,'email':email,'pwd':pwd,'tel':tel,'region':region},function(ret){
+            if(ret.code == 200){
+                layer.msg(ret.msg,{icon:6},function(){
+                    parent.location.href="{:url('index/index')}";
+                });
+
+            }
+
+            if(ret.code == 400){
+                layer.msg(ret.msg,{icon:5},function(){
+                    parent.location.reload();
+                });
+            }
+        },'json')
+    });
+</script>
+
 
 {include file="common/foot" /}
 </body>

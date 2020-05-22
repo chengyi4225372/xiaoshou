@@ -54,7 +54,7 @@ class Member extends Base {
             $mid = input('post.mid');
             $data['users'] = input('post.users','','trim');
             $data['pwd']   = input('post.pwd','','trim');
-            $data['role']  = input('post.role');
+            $data['role']  = input('post.pwd','','trim');
             if(empty($mid) || !isset($mid)){
                 return false;
             }

@@ -29,18 +29,18 @@
                 <div class="loginBord">
                     <div class="loginTit"><span class="fl">会员登录</span> <span class="fr">
                         <i class="grey">还没有注册账号？</i> <a
-                            href="{:url('login/login')}">立即注册</a></span></div>
-                    <form name="formLogin"  method="post" >
+                            href="{:url('login/reg')}">立即注册</a></span></div>
+                    <!--<form name="formLogin"  method="post" >-->
                         <div class="inputGroup noticWrap">
                             <div class="inputWrap">
                                 <div class="user-icon"></div>
-                                <input class="inputborder" name="username" autocomplete="off" placeholder="用户名" type="text" style="border:0"/>
+                                <input class="inputborder" name="username" id="user" autocomplete="off" placeholder="请使用邮箱和手机号登录" type="text" style="border:0"/>
                             </div>
                         </div>
                         <div class="inputGroup noticWrap">
                             <div class="inputWrap">
                                 <div class="pass-icon"></div>
-                                <input class="inputborder" name="password" placeholder="密码" type="password"/>
+                                <input class="inputborder" name="password" id="pwd" placeholder="密码" type="password"/>
                             </div>
                         </div>
                         <div class="formLine clearfix">
@@ -48,11 +48,11 @@
                                 <input type="checkbox" value="1" name="remember" id="remember"/>
                                 <label for="remember"> 请保存我这次的登录信息。</label>
                             </div>
-                            <a href="user.php?act=get_password" class="fr"> 忘记密码?</a> </div>
-                        <input type="hidden" name="act" value="act_login" />
-                        <input type="hidden" name="back_act" value="" />
+                            <!--<a href="user.php?act=get_password" class="fr"> 忘记密码?</a> </div>-->
+                        <!--<input type="hidden" name="act" value="act_login" />-->
+                        <!--<input type="hidden" name="back_act" value="" />-->
                         <input class="loginbtn" name="submit" value="登 录" type="submit"/>
-                    </form>
+                    <!--</form>-->
                 </div>
                 <div class="shadow_l"></div>
                 <div class="shadow_r"></div>

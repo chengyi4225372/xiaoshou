@@ -13,15 +13,13 @@ use think\Request;
 use app\v1\controller\Base;
 
 class Users extends Base {
+  protected  $table ='member';
 
     public function index(){
-
+        $data = Db::name($this->table)->order('id desc')->paginate(15);
+        $this->assign('data',$data);
         return $this->fetch();
     }
 
-    public function welcome(){
-
-        return $this->fetch();
-    }
 
 }
