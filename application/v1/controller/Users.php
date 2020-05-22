@@ -21,5 +21,17 @@ class Users extends Base {
         return $this->fetch();
     }
 
+    public function edit(){
+        if($this->request->isGet()){
+            $mid = input('get.mid','','int');
+            if(empty($mid) || !isset($mid)){
+                return false;
+            }
+            $infos = Db::name($this->table)->where('id',$mid)->find();
+            $this->assign('infos',$infos);
+            return $this->fetch();
+        }
+        return  false;
+    }
 
 }

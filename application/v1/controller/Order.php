@@ -12,7 +12,7 @@ use think\Db;
 use think\Request;
 use app\v1\controller\Base;
 
-class Ordcer extends Base {
+class Order extends Base {
 
     public function index(){
 
