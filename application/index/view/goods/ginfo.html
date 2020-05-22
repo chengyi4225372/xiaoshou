@@ -4,14 +4,10 @@
     <meta name="Generator" content="" />
     <title>虚拟商品测试H5_一手文旅地产_我是一家测试商城</title>
     <link href="/static/home/css/style.css" rel="stylesheet" type="text/css" />
+    <link href="/static/home/css/ec12.css" rel="stylesheet" type="text/css"/>
     <script type="text/javascript" src="/static/home/js/common2.js"></script>
 </head>
 <body style="background:#EDEDED">
-<script type="text/javascript" src="/static/home/js/transport2.js"></script>
-<script type="text/javascript" src="/static/home/js/utils.js"></script>
-<link href="/static/home/css/ec12.css" rel="stylesheet" type="text/css"/>
-<script language='javascript' src='/static/home/js/fdjs.js' type='text/javascript' charset='utf-8'></script>
-<script language='javascript' src='/static/home/js/fdjs.json.js' type='text/javascript' charset='utf-8'></script>
 <a name="top"></a>
 <div class=fd_top0>
     <div class=fd_top>
@@ -19,10 +15,20 @@
             <table border=0>
                 <tbody>
                 <TR>
+                    <!-- 未登录-->
+                    {empty name="$Think.session.member" }
                     <td><font id="ECS_MEMBERZONE"><div id="append_parent"></div>
-                        欢迎光临本店<a href="{:url('login/login')}" class="sign">[ 请登录 ]</a>
-                        <a href="{:url('login/reg')}" class="reg"> [ 免费注册 ] </a>  </font></td>
-                    <td><div class=fd30_wordmenu><i class="toptel"></i><span>400-678-4586</span></div></td>
+                        欢迎光临本店<a href="{:url('login/login')}" class="sign">[ 请登录 ]</a> <a href="{:url('login/reg')}" class="reg"> [ 免费注册 ] </a>  </font></td>
+                    <td>
+                        <div class=fd30_wordmenu><i class="toptel"></i><span>400-678-4586</span></div>
+                    </td>
+                    {else /}
+                    <!-- 已登录-->
+                    <td><font id="ECS_MEMBERZONE"><div id="append_parent"></div>
+                        <font> 您好，<font class="f4_b">{$Think.session.member['email']}</font>, 欢迎您回来！  | <a
+                                href="{:url('login/loginout')}">退出</a> </font> </font>
+                    </td>
+                    {/empty}
                 </TR>
                 </tbody>
             </table>

@@ -19,7 +19,17 @@ class Login extends Controller{
         }
 
         if($this->request->isPost()){
-
+             $user = input('post.user','','trim');
+             $pwd  = input('post.pwd','','trim');
+             $ret = Db::name('member')->whereOr(['users'=>$user,'tel'=>$user,'email'=>$user])->find();
+             if(empty($ret) || !isset($ret)){
+                 return json(['code'=>402,'msg'=>'该用户不存在']);
+             }
+             if($ret['pwd'] != md5($pwd)){
+                 return json(['code'=>400,'msg'=>'密码错误']);
+             }
+             session('member',$ret);
+             return json(['code'=>200,'msg'=>'登陆成功']);
         }
 
         return false;
@@ -44,5 +54,13 @@ class Login extends Controller{
              }
         }
         return $this->fetch();
+    }
+
+
+    public function loginoout(){
+        if($this->request->isGet()){
+              
+        }
+        return false;
     }
 }

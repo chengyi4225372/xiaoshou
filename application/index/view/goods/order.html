@@ -25,13 +25,9 @@
 <div class="blank"></div>
 <div class="block">
 
-    <form action="flow.php" method="post" name="theForm" id="theForm" onsubmit="return checkOrderForm(this)">
-        <script type="text/javascript">
-            var flow_no_payment = "您必须选定一个支付方式。";
-            var flow_no_shipping = "您必须选定一个配送方式。";
-        </script><div class="step_all step_2"></div>
+    <form name="theForm">
+       <div class="step_all step_2"></div>
         <div class="flowBox">
-            <h6><span>商品列表</span><a href="flow.php" class="f6">修改</a></h6>
             <table width="100%" align="center" border="0" cellpadding="5" cellspacing="1" bgcolor="#dddddd" >
                 <tr>
                     <th >商品名称</th>
@@ -75,112 +71,10 @@
         </div>
         <div class="blank"></div>
         <input name = "shipping" type="radio" value = "-1" checked="checked"  style="display:none"/>
-        <div class="flowBox">
-            <h6><span>支付方式</span></h6>
-            <table width="100%" align="center" border="0" cellpadding="5" cellspacing="1" bgcolor="#dddddd"  id="paymentTable">
-                <tr>
-                    <th width="5%" >&nbsp;</th>
-                    <th width="20%" >名称</th>
-                    <th >订购描述</th>
-                    <th  width="15%">手续费</th>
-                </tr>
-
-                <tr>
-                    <td valign="top" ><input type="radio" name="payment" value="2"  isCod="0" onclick="selectPayment(this)" /></td>
-                    <td valign="top" ><strong>银行汇款/转帐</strong></td>
-                    <td valign="top" >银行名称
-                        收款人信息：全称 ××× ；帐号或地址 ××× ；开户行 ×××。
-                        注意事项：办理电汇时，请在电汇单“汇款用途”一栏处注明您的订单号。</td>
-                    <td align="right"  valign="top">￥0.00</td>
-                </tr>
-
-                <tr>
-                    <td valign="top" ><input type="radio" name="payment" value="4"  isCod="0" onclick="selectPayment(this)" /></td>
-                    <td valign="top" ><strong>支付宝</strong></td>
-                    <td valign="top" >账号：cxjaqcq@163.com
-                        <br />到账类型：支付宝即时到账
-                        <br />收款人：陈先疆 </td>
-                    <td align="right"  valign="top">￥0.00</td>
-                </tr>
-
-                <tr>
-                    <td valign="top" ><input type="radio" name="payment" value="3"  isCod="1" onclick="selectPayment(this)" disabled="true"/></td>
-                    <td valign="top" ><strong>货到付款</strong></td>
-                    <td valign="top" >开通城市：×××
-                        货到付款区域：×××</td>
-                    <td align="right"  valign="top"><span id="ECS_CODFEE">￥0.00</span></td>
-                </tr>
-
-                <tr>
-                    <td valign="top" ><input type="radio" name="payment" value="7"  isCod="0" onclick="selectPayment(this)" /></td>
-                    <td valign="top" ><strong>微信扫一扫支付</strong></td>
-                    <td valign="top" ></td>
-                    <td align="right"  valign="top">￥0.00</td>
-                </tr>
-
-                <tr>
-                    <td valign="top" ><input type="radio" name="payment" value="9"  isCod="0" onclick="selectPayment(this)" /></td>
-                    <td valign="top" ><strong>微信扫码支付</strong></td>
-                    <td valign="top" >扫码支付是指商户系统按微信支付协议生成支付二维码，用户再用微信“扫一扫”来完成支付。
-
-                        适用于PC网站支付、实体店单品等场景。</td>
-                    <td align="right"  valign="top">￥0.00</td>
-                </tr>
-            </table>
-        </div>
-        <div class="blank"></div>
-
-
-        <div class="flowBox">
-            <h6><span>其它信息</span></h6>
-            <table width="100%" align="center" border="0" cellpadding="5" cellspacing="1" bgcolor="#dddddd" >
-                <tr>
-                    <td ><strong>使用红包:</strong></td>
-                    <td >
-                        选择已有红包                <select name="bonus" onchange="changeBonus(this.value)" id="ECS_BONUS" style="border:1px solid #ccc;">
-                        <option value="0" selected>请选择</option>
-                    </select>
-
-                        或者输入红包序列号                <input name="bonus_sn" type="text" class="inputBg" size="15" value="" />
-                        <input name="validate_bonus" type="button" class="bnt_blue_1" value="验证红包" onclick="validateBonus(document.forms['theForm'].elements['bonus_sn'].value)" style="vertical-align:middle;" />
-                    </td>
-                </tr>
-                <tr>
-                    <td ><strong>开发票:</strong>
-                        <input name="need_inv" type="checkbox"  class="input" id="ECS_NEEDINV" onclick="changeNeedInv()" value="1"  />
-                    </td>
-                    <td >
-                        发票类型                <select name="inv_type" id="ECS_INVTYPE" disabled="true" onchange="changeNeedInv()" style="border:1px solid #ccc;">
-                        <option value="1">1 [6%]</option><option value="2">2 [13%]</option></select>
-                        发票抬头                <input name="inv_payee" type="text"  class="input" id="ECS_INVPAYEE" size="20" disabled="true" value="" onblur="changeNeedInv()" />
-                        发票内容              <select name="inv_content" id="ECS_INVCONTENT" disabled="true"  onchange="changeNeedInv()" style="border:1px solid #ccc;">
-
-                        <option value="个人">个人</option><option value="公司">公司</option>
-                    </select></td>
-                </tr>
-                <tr>
-                    <td valign="top" ><strong>订单附言:</strong></td>
-                    <td ><textarea name="postscript" cols="80" rows="3" id="postscript" style="border:1px solid #ccc;"></textarea></td>
-                </tr>
-                <tr>
-                    <td ><strong>缺货处理:</strong></td>
-                    <td >                <label>
-                        <input name="how_oos" type="radio" value="0" checked onclick="changeOOS(this)" />
-                        等待所有商品备齐后再发</label>
-                        <label>
-                            <input name="how_oos" type="radio" value="1"  onclick="changeOOS(this)" />
-                            取消订单</label>
-                        <label>
-                            <input name="how_oos" type="radio" value="2"  onclick="changeOOS(this)" />
-                            与店主协商</label>
-                    </td>
-                </tr>
-            </table>
-        </div>
         <div class="blank"></div>
         <div class="flowBox">
             <h6><span>费用总计</span></h6>
-            <script type="text/javascript" src="js/transport.js"></script><div id="ECS_ORDERTOTAL">
+           <div id="ECS_ORDERTOTAL">
             <table width="100%" align="center" border="0" cellpadding="5" cellspacing="1" bgcolor="#dddddd">
                 <tr>
                     <td align="right" bgcolor="#ffffff">
@@ -192,17 +86,13 @@
                     </td>
                 </tr>
             </table>
-        </div>           <div align="center" style="margin:15px auto;">
+        </div>
+            <div align="center" style="margin:15px auto;">
             <input type="image" src="/static/home/images/bnt_subOrder.gif" />
             <input type="hidden" name="step" value="done" />
         </div>
         </div>
     </form>
-
-
-
-
-
 </div>
 <div class="blank5"></div>
 

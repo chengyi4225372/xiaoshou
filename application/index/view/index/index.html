@@ -6,11 +6,20 @@
             <table border=0>
                 <tbody>
                 <TR>
+                    <!-- 未登录-->
+                    {empty name="$Think.session.member" }
                     <td><font id="ECS_MEMBERZONE"><div id="append_parent"></div>
                         欢迎光临本店<a href="{:url('login/login')}" class="sign">[ 请登录 ]</a> <a href="{:url('login/reg')}" class="reg"> [ 免费注册 ] </a>  </font></td>
                     <td>
                         <div class=fd30_wordmenu><i class="toptel"></i><span>400-678-4586</span></div>
                     </td>
+                    {else /}
+                    <!-- 已登录-->
+                    <td><font id="ECS_MEMBERZONE"><div id="append_parent"></div>
+                        <font> 您好，<font class="f4_b">{$Think.session.member['email']}</font>, 欢迎您回来！  | <a
+                                href="{:url('login/loginout')}">退出</a> </font> </font>
+                    </td>
+                    {/empty}
                 </TR>
                 </tbody>
             </table>
@@ -24,6 +33,8 @@
     </div>
     <div class=clear0></div>
 </div>
+
+
 <div class="fd_top1">
     <div class="fd_top">
         <div class="logo1"><a href="index.php" name="top"><img src="/static/home/images/logo.gif" class="logo" /></a></div>
@@ -129,7 +140,7 @@
     <div class="navs fd_top">
         <div class="navs_m">
             <ul class="Menulist">
-                <li class="li1"><a href="index.php" class="cur">首页</a></li>
+                <li class="li1"><a href="/" class="cur">首页</a></li>
                 <li><a href="category.php?id=27"
                 >大家电</a></li>
                 <li><a href="category.php?id=317"
@@ -219,9 +230,12 @@
     <div class="clear10 fd30_goods_pic"></div>
     <div class="index_f index_f1" id="f1"><span class="allf">1F</span>
         <div class="fl">
-            <div id="Tr_cs2">  <a href='affiche.php?ad_id=3&amp;uri='
-                                  target='_blank'><img src='/static/home/images/1487558402116809004.png' width='228' height='420'
-                                                       border='0' /></a>  </div> <div class="fd30_wordmenu"></div> <div class="clear0"></div></div>
+            <div id="Tr_cs2"><a href='javascript;' target='_blank'>
+                <img src='/static/home/images/1487558402116809004.png' width='228'
+                     height='420' border='0'/></a></div>
+            <div class="fd30_wordmenu"></div>
+            <div class="clear0"></div>
+        </div>
         <div class="fr">
             <!--<h2><span>一手文旅地产</span><a href="category.php?id=261" class="more">更多></a></h2>-->
             <div class="i_prclist hover" id="goods_cat261">

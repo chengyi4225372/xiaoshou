@@ -3,8 +3,8 @@ namespace app\index\controller;
 
 use think\Controller;
 use think\Db;
-
-class Index extends Controller
+use app\index\Controller\Base;
+class Index extends Base
 {
     //首页
     public function index()
