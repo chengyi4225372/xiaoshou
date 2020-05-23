@@ -50,4 +50,26 @@ class Goods extends Base
         }
         return false;
     }
+
+    /**
+     * 购物车
+     */
+    public function addcard(){
+        if($this->request->isPost()){
+            $data['mid'] = input('post.mid');
+            $data['gid'] = input('post.gid');
+            $data['dan'] = input('post.dan');
+            $data['counts'] = input('post.counts');
+
+            $ret = Db::name('card')->insert($data);
+
+            if($ret !== false){
+                return json(['code'=>200,'msg'=>'加入购物车']);
+            }else{
+                return json(['code'=>400,'msg'=>'未能加入购物车']);
+            }
+
+        }
+        return false;
+    }
 }

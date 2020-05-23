@@ -6,7 +6,8 @@
     <link href="/static/home/css/style.css" rel="stylesheet" type="text/css" />
     <link href="/static/home/css/ec12.css" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" type="text/css" href="/static/home/css/cloudzoom.css" />
-    <script language='javascript' src='/static/home/js/cxjc0.js' type='text/javascript' charset='utf-8'></script>
+    <script src="/static/home/js/jquery.min.js" charset="utf-8"></script>
+    <script src="/static/admin/lib/layui/layui.all.js" charset="utf-8"></script>
 </head>
 <body style="background:#EDEDED">
 <a name="top"></a>
@@ -161,14 +162,14 @@
         <div class="textInfo">
             <div class="goodsnames">{$info.title}</div>
             <div class="briefs"></div>
-            <form >
+            <!--<form >-->
                 <div class="clearfix" style="display:none">
                     <p class="f_r"></p>
                 </div>
                 <div class="all_price">
                     <div class="ECS_GOODS_AMOUNT">
                         商品单价
-                        <font id="ECS_GOODS_AMOUNT" class="shop">{$info.dan|floatval}</font> </div>
+                        <font id="ECS_GOODS_AMOUNT" class="shop" data-money="{$info.dan|floatval}">￥{$info.dan|floatval}</font> </div>
 
                     <div class="clear0"></div>
                 </div>
@@ -178,20 +179,23 @@
                 <ul class="fd30_ulinfo">
 
                     <li> <strong>购买数量：</strong>
-                        <b class="fd30_j fd30_jian">-</b>
+                        <b class="fd30_j fd30_jian" onclick="tojian();">-</b>
                         <input name="number" type="text" id="number" value="1" size="2"  style="border:1px solid #ccc; text-align:center "/>
-                        <b class="fd30_j fd30_jia">+</b>
-
+                        <b class="fd30_j fd30_jia" onclick="toadd();">+</b>
                     </li>
+                    <!-- 商品id -->
+                    <input type="hidden" id="gid" value="{$info.id}"  />
+                    <!-- 顾客id -->
+                    <input type="hidden" id="mid" value="{$Think.session.member['id']}" />
                     <li class="padd">
-                        <a href="javascript:addToCart(897)">
+                        <a onclick="addToCart()">
                         <img src="/static/home/images/bnt_cat.gif"/></a>
                         <a href=#">
                             <img src='/static/home/images/bnt_recommend.gif'>
                         </a>
                     </li>
                 </ul>
-            </form>
+            <!--</form>-->
             <script>
                 $(function() {
                     $(".loop label input:checked").parent().addClass("label_click");
@@ -262,5 +266,46 @@
 <div class="blank"></div>
 <div class="footads"><IMG alt="广告说明" src="/static/home/images/footad.jpg"></div>
 {include file="common/foot" /}
+<script>
+    var num = $('#number')
+
+
+    function toadd(){
+        num.val(parseInt(num.val()) + 1);
+    }
+
+    function tojian(){
+        num.val(parseInt(num.val()) - 1);
+
+        if(num.val()<=0){
+            num.val(parseInt(num.val())+1); //最小值为1
+        }
+    }
+
+    function addToCart(){
+            var gid = $('#gid').val();
+            var mid = $('#mid').val();
+            var num = $('#number').val();
+            var dan = $('.shop').attr('data-money');
+            var urls = "{:url('goods/addcard')}";
+
+             $.post(urls,{'gid':gid,'mid':mid,'counts':num,'dan':dan},function(ret){
+                   if(ret.code == 200){
+                       layer.msg(ret.msg,{icon:6},function(){
+                           parent.location.reload();
+                       })
+                   }
+
+                 if(ret.code == 400){
+                     layer.msg(ret.msg,{icon:5},function(){
+                         parent.location.reload();
+                     })
+                 }
+             },'json')
+
+    }
+
+</script>
+
 </body>
 </html>
