@@ -16,6 +16,15 @@ class Goods extends Base
     //首页
     public function index()
     {
+        $list = Db::name('card')->where(['mid'=>session('member.id'),'status'=>1])->select();
+        foreach ($list as $k=>$v){
+            $list[$k]['goods']= Db::name('goods')->where(['id'=>$list[$k]['gid'],'status'=>1])->find();
+            $list[$k]['totalmoney'] = floatval($v['dan']) * floatval($v['counts']);
+        }
+        //todo 商品总价
+        $total=Db::name('card')->where(['mid'=>session('member.id'),'status'=>1])->select();
+
+        $this->assign('list',$list);
         return $this->fetch();
     }
 

@@ -7,13 +7,11 @@
     <meta name="Description" content="" />
     <title>购物流程_我是一家测试商城</title>
     <link href="/static/home/css/style.css" rel="stylesheet" type="text/css" />
+    <link href="/static/home/css/ec12.css" rel="stylesheet" type="text/css"/>
+    <script src="/static/home/js/jquery.min.js" charset="utf-8"></script>
+    <script src="/static/admin/lib/layui/layui.all.js" charset="utf-8"></script>
 </head>
 <body>
-<!--<script type="text/javascript" src="/static/homejs/transport2.js"></script>-->
-<script type="text/javascript" src="js/utils.js"></script>
-<link href="/static/home/css/ec12.css" rel="stylesheet" type="text/css"/>
-<script language='javascript' src='/static/home/js/fdjs.js' type='text/javascript' charset='utf-8'></script>
-<script language='javascript' src='/static/home/js/fdjs.json.js' type='text/javascript' charset='utf-8'></script>
 <div class="reg_top" style="padding-top:10px"> <a href="index.php" name="top"><img src="/static/home/images/logo.gif" /></a> </div>
 <div class="clear0"></div>
 <div class="blank"></div>
@@ -22,7 +20,7 @@
     <script type="text/javascript" src="/static/home/js/showdiv.js"></script>
     <div class="flowBox flowBox1">
 
-        <form id="formCart" name="formCart" method="post" action="flow.php">
+        <form>
             <table width="100%" align="center" border="0" cellpadding="5" cellspacing="0" class="formCart_table" >
                 <tr>
                     <th >商品名称</th>
@@ -32,18 +30,21 @@
                     <th >操作</th>
                 </tr>
                 <tr>
+                    {volist name='list' id='vo'}
                     <td  align="center">
-                        <div class="fl"> <a href="goods.php?id=897" target="_blank"><img src="/static/home/images/4ced182d04ce4fb88c2964dc8fbbf3be.jpg" border="0" title="虚拟商品测试H5" /></a></div>
+                        <div class="fl"> <a href="{:url('goods/ginfo')}?gid={$vo.gid}" target="_blank">
+                            <img src="{$vo['goods']['imgs']}" border="0" title="{$vo['goods']['title']}" />
+                        </a></div>
                         <div class="fl">
-                            <a href="goods.php?id=897" target="_blank" class="f6">虚拟商品测试H5</a>
+                            <a href="{:url('goods/ginfo')}?gid={$vo.gid}" target="_blank" class="f6">{$vo['goods']['title']}</a>
                             <p></p>
                         </div>
                     </td>
-                    <td  >￥100.00</td>
+                    <td  >￥{$vo['goods']['dan']}</td>
                     <td  >
-                        <input name="submit" type="submit" class="fd30_jian_8669" value="-" />
-                        <input type="text" name="goods_number[8669]" id="goods_number_8669" value="1" size="2" class="inputBg fd30_num" style="text-align:center " onkeydown="showdiv(this)"/>
-                        <input name="submit" type="submit" class="fd30_jia_8669" value="+" />
+                        <!--<input name="submit" type="submit" class="fd30_jian_8669" value="-" />-->
+                        <input type="text" name="goods_number[8669]" id="goods_number_8669" value="{$vo.counts}" size="2" class="inputBg fd30_num" style="text-align:center " onkeydown="showdiv(this)"/>
+                        <!--<input name="submit" type="submit" class="fd30_jia_8669" value="+" />-->
                         <script>
                             $(function (){
                                 var t = $("#goods_number_8669");
@@ -68,14 +69,13 @@
 
                             });</script>
                     </td>
-                    <td align="right" >￥100.00</td>
+                    <td align="right" >￥{$vo['totalmoney']}</td>
                     <td align="center" >
-                        <a href="javascript:if (confirm('您确实要把该商品移出购物车吗？')) location.href='flow.php?step=drop_goods&amp;id=8669'; " class="f6">删除</a>
+                        <a href="javascript:if (confirm('您确实要把该商品移出购物车吗？')) location.href=''; " class="f6">删除</a>
                     </td>
                 </tr>
-
+                {/volist}
             </table>
-
 
             <input type="hidden" name="step" value="update_cart" />
         </form>
@@ -86,7 +86,7 @@
                 </td>
                 <td  > <div class="fr"> <a href="{:url('goods/address')}" class="fd30_checkout">去结算</a></div>
                     <div class="fr">
-                        <span>购物金额小计 ￥100.00</span></div>
+                        <span>购物金额小计 ￥{$}</span></div>
                 </td>
             </tr>
         </table>
