@@ -87,7 +87,7 @@ class Goods extends Base
             $data['huo_name'] = input('post.huo_name','','trim');
 
             $ret = Db::name('order')->where(['mid'=>$mid,'status'=>1])->update($data);
-            
+
             if($ret !== false){
                 return json(['code'=>200,'msg'=>'success']);
             }else{
@@ -102,7 +102,25 @@ class Goods extends Base
      * 订单详情
      */
     public function order(){
-        return $this->fetch();
+        if($this->request->isGet()){
+            $goods = Db::name('card')->where(['mid'=>session('member.id'),'status'=>1])->select();
+            $order = Db::name('order')->field('huo_name,tel,region,address')->where(['mid'=>session('member.id'),'status'=>1])->find();
+            foreach ($goods as $key =>$v){
+                $goods[$key]['goods']= Db::name('goods')->where(['id'=>$goods[$key]['gid'],'status'=>1])->find();
+                $goods[$key]['totalmoney'] = floatval($v['dan']) * floatval($v['counts']);
+            }
+            $totals =[];
+            foreach ($goods as $key=>$val){
+                $totals[]=$val['totalmoney'];
+            }
+
+            $totals =array_sum($totals);
+            $this->assign('totals',$totals);
+            $this->assign('goods',$goods);
+            $this->assign('order',$order);
+            return $this->fetch();
+        }
+         return false;
     }
 
     /**
@@ -110,6 +128,19 @@ class Goods extends Base
      * 支付页面
      */
     public function succ(){
+        $goods = Db::name('card')->where(['mid'=>session('member.id'),'status'=>1])->select();
+        foreach ($goods as $key =>$v){
+            $goods[$key]['goods']= Db::name('goods')->where(['id'=>$goods[$key]['gid'],'status'=>1])->find();
+            $goods[$key]['totalmoney'] = floatval($v['dan']) * floatval($v['counts']);
+        }
+        
+        $totals =[];
+        foreach ($goods as $key=>$val){
+            $totals[]=$val['totalmoney'];
+        }
+
+        $totals =array_sum($totals);
+        $this->assign('totals',$totals);
         return $this->fetch();
     }
 

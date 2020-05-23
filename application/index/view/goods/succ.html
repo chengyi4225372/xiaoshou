@@ -7,30 +7,15 @@
     <meta name="Description" content="" />
 
     <title>购物流程_我是一家测试商城</title>
-
+    <link href="/static/home/css/ec12.css" rel="stylesheet" type="text/css"/>
     <link href="/static/home/css/style.css" rel="stylesheet" type="text/css" />
 
-    <script type="text/javascript" src="/static/home/js/common.js"></script>
-    <script type="text/javascript" src="/static/home/js/shopping_flow.js"></script>
-    <script type="text/javascript" src="/static/home/js/common2.js"></script>
-    <script type="text/javascript" src="/static/home/js/compare2.js"></script>
 </head>
 <body>
-<script type="text/javascript" src="/static/home/js/transport2.js"></script>
-<script type="text/javascript" src="/static/home/js/utils.js"></script>
-<link href="/static/home/css/ec12.css" rel="stylesheet" type="text/css"/>
-<script type="text/javascript">
-    var process_request = "正在处理您的请求...";
-</script>
-<script language='javascript' src='/static/home/js/fdjs.js' type='text/javascript' charset='utf-8'></script>
-<script language='javascript' src='/static/home/js/fdjs.json.js' type='text/javascript' charset='utf-8'></script>
-<div class="reg_top" style="padding-top:10px"> <a href="/" name="top"><img src="/static/home/images/logo.gif" /></a> </div>
+
+<div class="reg_top" style="padding-top:10px"> <a href="{:url('index/index')}" name="top"><img src="/static/home/images/logo.gif" /></a> </div>
 <div class="clear0"></div><div class="blank"></div>
 <div class="block">
-
-
-
-
 
 
     <div class="step_all step_3"></div>
@@ -39,7 +24,7 @@
         <table width="100%" align="center" border="0" cellpadding="15" cellspacing="0" bgcolor="#fff" style="border:1px solid #ddd; margin:20px auto;" >
             <tr>
                 <td align="center" >
-                    您选定的支付方式为: <strong>支付宝</strong>。您的应付款金额为: <strong>￥100.00</strong>
+                    您选定的支付方式为: <strong>支付宝</strong>。您的应付款金额为: <strong>￥{$totals|floatval}</strong>
                 </td>
             </tr>
             <tr>

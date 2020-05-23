@@ -36,16 +36,18 @@
                     <th >小计</th>
                 </tr>
                 <tr>
+                    {volist name="goods" id='vo'}
                     <td >
-                        <a href="goods.php?id=897" target="_blank" class="f6">虚拟商品测试H5</a>
+                        <a href="{:url('gooods/index')}?gid={$vo.gid}" target="_blank" class="f6">{$vo['goods']['title']}</a>
                     </td>
-                    <td  align="right">￥100.00</td>
-                    <td  align="right">1</td>
-                    <td  align="right">￥100.00</td>
+                    <td  align="right">￥{$vo['goods']['dan']|floatval}</td>
+                    <td  align="right">{$vo['goods']['counts']}</td>
+                    <td  align="right">￥{$vo.totalmoney|floatval}</td>
                 </tr>
+                {/volist}
                 <tr>
                     <td  colspan="7">
-                        购物金额小计 ￥100.00
+                        购物金额小计 ￥{$totals|floatval}
                     </td>
                 </tr>
             </table>
@@ -56,15 +58,15 @@
             <table width="100%" align="center" border="0" cellpadding="5" cellspacing="1" bgcolor="#dddddd">
                 <tr>
                     <td >收货人姓名:</td>
-                    <td >11111111</td>
-                    <td >电子邮件地址:</td>
-                    <td >2222222222@qq.com</td>
+                    <td >{$order.huo_name}</td>
+                    <td >所属地区:</td>
+                    <td >{$order.region}</td>
                 </tr>
                 <tr>
                     <td >电话:</td>
-                    <td >22222222222 </td>
-                    <td >手机:</td>
-                    <td >18672536669</td>
+                    <td >{$order.tel} </td>
+                    <td >详细配送地址:</td>
+                    <td >{$order.address}</td>
                 </tr>
             </table>
         </div>
@@ -76,17 +78,12 @@
            <div id="ECS_ORDERTOTAL">
             <table width="100%" align="center" border="0" cellpadding="5" cellspacing="1" bgcolor="#dddddd">
                 <tr>
-                    <td align="right" bgcolor="#ffffff">
-                        商品总价: <font class="f4_b">￥100.00</font>
-                    </td>
-                </tr>
-                <tr>
-                    <td align="right" bgcolor="#ffffff"> 应付款金额: <font class="f4_b">￥100.00</font>
+                    <td align="right" bgcolor="#ffffff"> 应付款金额: <font class="f4_b">￥{$totals|floatval}</font>
                     </td>
                 </tr>
             </table>
         </div>
-            <div align="center" style="margin:15px auto;" onclick="show_btn();">
+            <div align="center" style="margin:15px auto;" onclick="show_btn('{:url('goods/succ')}');">
             <input type="image" src="/static/home/images/bnt_subOrder.gif" />
             <input type="hidden" name="step" value="done" />
         </div>
@@ -124,6 +121,11 @@
 <div class="clear10"></div>
 
 <div class="footer_wrap">
+    <script>
+        function show_btn(urls){
+            window.location.href= urls;
+        }
+    </script>
     {include file="common/foot" /}
 </body>
 </html>
