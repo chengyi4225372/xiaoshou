@@ -17,28 +17,84 @@ class Goods extends Base
     public function index()
     {
         $list = Db::name('card')->where(['mid'=>session('member.id'),'status'=>1])->select();
+        $totals =[];
         foreach ($list as $k=>$v){
             $list[$k]['goods']= Db::name('goods')->where(['id'=>$list[$k]['gid'],'status'=>1])->find();
             $list[$k]['totalmoney'] = floatval($v['dan']) * floatval($v['counts']);
         }
-        $money = Db::name('card')->where(['mid'=>session('member.id'),'status'=>1])->field('dan,counts')->select();
-        foreach ($money as $key =>$val){
-            
+
+        foreach ($list as $key=>$val){
+            $totals[]=$val['totalmoney'];
         }
 
-        dump($money);
-        exit();
-        
+        $totals =array_sum($totals);
+        $this->assign('totals',$totals);
         $this->assign('list',$list);
         return $this->fetch();
     }
+
+    /*
+     * 进入订单
+     *
+     */
+     public function addorder(){
+         if($this->request->isPost()){
+              $mid = input('post.mid');
+             if(empty($mid) || !isset($mid)){
+                 return false;
+             }
+              $list = Db::name('card')->where(['mid'=>$mid,'status'=>1])->select();
+              $data =[];
+             foreach ($list as $k =>$val){
+                   $data[$k]['mid'] = $mid;
+                   $data[$k]['gid'] = $val['gid'];
+                   $data[$k]['counts'] = $val['counts'];
+                   $data[$k]['totals'] = floatval($val['dan']) * floatval($val['counts']);
+                   $data[$k]['create_time'] = time();
+              }
+
+             $ret = Db::name('order')->insertAll($data);
+
+             if($ret !== false){
+                 return json(['code'=>200,'msg'=>'success']);
+             }else {
+                 return json(['code'=>400,'msg'=>'error']);
+             }
+
+         }
+         return false;
+     }
+
 
     /**
      * @return mixed
      * 订单地址
      */
     public function address(){
-        return $this->fetch();
+        if($this->request->isGet()){
+            return $this->fetch();
+        }
+
+        if($this->request->isPost()){
+             $mid = input('post.mid');
+
+            if(empty($mid) || !isset($mid)){
+                return false;
+            }
+            $data['tel'] = input('post.tel','','trim');
+            $data['address'] = input('post.address','','trim');
+            $data['region'] = input('post.region','','trim');
+            $data['huo_name'] = input('post.huo_name','','trim');
+
+            $ret = Db::name('order')->where(['mid'=>$mid,'status'=>1])->update($data);
+            
+            if($ret !== false){
+                return json(['code'=>200,'msg'=>'success']);
+            }else{
+                return json(['code'=>400,'msg'=>'error']);
+            }
+        }
+        return false;
     }
 
     /**

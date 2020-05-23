@@ -5,17 +5,14 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="Keywords" content="" />
     <meta name="Description" content="" />
-
     <title>购物流程_我是一家测试商城</title>
     <link href="/static/home/css/style.css" rel="stylesheet" type="text/css" />
     <link href="/static/home/css/ec12.css" rel="stylesheet" type="text/css"/>
+    <script src="/static/home/js/jquery.min.js" charset="utf-8"></script>
+    <script src="/static/admin/lib/layui/layui.all.js" charset="utf-8"></script>
 </head>
 <body>
 
-<script type="text/javascript" src="/static/home/js/transport2.js"></script>
-<script type="text/javascript" src="/static/home/js/utils.js"></script>
-<script language='javascript' src='/static/home/js/fdjs.js' type='text/javascript' charset='utf-8'></script>
-<script language='javascript' src='/static/home/js/fdjs.json.js' type='text/javascript' charset='utf-8'></script>
 <div class="reg_top" style="padding-top:10px">
     <a href="/" name="top"><img src="/static/home/images/logo.gif" /></a> </div>
 <div class="clear0"></div>
@@ -26,29 +23,28 @@
     <script type="text/javascript" src="/static/home/js/region.js"></script>
 
 
-
+    <input type="hidden" id="mid" value="{$Think.session.member['id']}" />
         <div class="flowBox">
             <h6><span>收货人信息</span></h6>
             <!--<script type="text/javascript" src="/static/home/js/transport.js"></script>-->
             <table width="99%" align="center" border="0" cellpadding="5" cellspacing="1" bgcolor="#dddddd">
             <tr>
                 <td bgcolor="#ffffff">收货人姓名:</td>
-                <td bgcolor="#ffffff"><input name="consignee" type="text" class="inputBg" id="consignee_0" value="" />
+                <td bgcolor="#ffffff"><input name="consignee" type="text" class="inputBg" id="huo_name" value="" />
                     (必填) </td>
-                <td bgcolor="#ffffff">电子邮件地址:</td>
-                <td bgcolor="#ffffff"><input name="email" type="text" class="inputBg"  id="email_0" value="" />
+                <td bgcolor="#ffffff">收货所在区域:</td>
+                <td bgcolor="#ffffff"><input name="region" type="text" class="inputBg"  id="huo_region" value="" />
                     (必填)</td>
             </tr>
             <tr>
-                <td bgcolor="#ffffff">电话:</td>
-                <td bgcolor="#ffffff"><input name="tel" type="text" class="inputBg"  id="tel_0" value="" />
-                    (必填)</td>
                 <td bgcolor="#ffffff">手机:</td>
-                <td bgcolor="#ffffff"><input name="mobile" type="text" class="inputBg"  id="mobile_0" value="" /></td>
+                <td bgcolor="#ffffff"><input name="mobile" type="text" class="inputBg"  id="huo_tel" value="" /></td>
+                <td bgcolor="#ffffff">配送详细地址</td>
+                <td bgcolor="#ffffff"><input name="text" type="text" class="inputBg"  id="address" value="" /></td>
             </tr>
             <tr>
                 <td colspan="4" align="center" bgcolor="#ffffff">
-                    <input type="button" name="Submit" class="bnt_blue_2" value="配送至这个地址" onclick="location.href='{:url('goods/order')}'" />
+                    <input type="button" name="Submit" class="bnt_blue_2" value="配送至这个地址" onclick=" thisorder('{:url('goods/address')}')" />
                     <input type="hidden" name="step" value="consignee" />
                     <input type="hidden" name="act" value="checkout" />
                     <input name="address_id" type="hidden" value="" />
@@ -74,7 +70,51 @@
 </script>
 <div class="blank"></div>
 <div class="clear10"></div>
+<script>
+    function thisorder(urls){
+        var mid = $('#mid').val();
 
+        var tel      = $.trim($('#huo_tel').val());
+        var region   = $.trim($('#huo_region').val());
+        var huo_name = $.trim($('#huo_name').val());
+        var address  = $.trim($('#address').val());
+
+        if(tel == '' || tel == undefined){
+            layer.msg('请输入联系方式');
+            return false;
+        }
+
+        if(tel == '' || tel == undefined){
+            layer.msg('请输入联系方式');
+            return false;
+        }
+
+        if(region == '' || region == undefined){
+            layer.msg('请输入所在地区');
+            return false;
+        }
+
+        if(address == '' || address == undefined){
+            layer.msg('请输入详细配送地址');
+            return false;
+        }
+
+        $.post(urls,{'mid':mid,'address':address,'tel':tel,'huo_name':huo_name,'region':region},function(ret){
+              if(ret.code ==200){
+                  layer.msg(ret.msg,{icon:6},function(){
+                      parent.location.href="{:url('goods/order')}";
+                  })
+              }
+
+            if(ret.code ==400){
+                layer.msg(ret.msg,{icon:5},function(){
+                    parent.location.reload();
+                })
+            }
+        })
+    }
+
+</script>
 {include file="common/foot" /}
 </body>
 </html>
