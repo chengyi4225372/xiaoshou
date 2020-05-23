@@ -13,6 +13,10 @@ use think\Request;
 
 class Login extends Controller{
 
+    /**
+     * @return bool
+     * 登录
+     */
     public function login(){
         if($this->request->isGet()){
             return $this->fetch();
@@ -35,7 +39,10 @@ class Login extends Controller{
         return false;
     }
 
-
+    /***
+     * @return mixed
+     * 注册
+     */
     public function reg(){
         if($this->request->isPost()){
              $data['users'] = input('post.user','','trim');
@@ -56,10 +63,16 @@ class Login extends Controller{
         return $this->fetch();
     }
 
-
-    public function loginoout(){
+    /**
+     * @return bool|void
+     * 退出
+     */
+    public function loginout(){
         if($this->request->isGet()){
-              
+            $ret = session('member',null);
+            if($ret !== false){
+                return $this->redirect('index/index');
+            }
         }
         return false;
     }

@@ -12,7 +12,7 @@
     <script src="/static/admin/lib/layui/layui.all.js" charset="utf-8"></script>
 </head>
 <body>
-<div class="reg_top" style="padding-top:10px"> <a href="index.php" name="top"><img src="/static/home/images/logo.gif" /></a> </div>
+<div class="reg_top" style="padding-top:10px"> <a href="/" name="top"><img src="/static/home/images/logo.gif" /></a> </div>
 <div class="clear0"></div>
 <div class="blank"></div>
 <div class="block">
@@ -69,15 +69,13 @@
 
                             });</script>
                     </td>
-                    <td align="right" >￥{$vo['totalmoney']}</td>
+                    <td align="right" class="money" data-money="{$vo.totalmoney}" >￥{$vo.totalmoney}</td>
                     <td align="center" >
-                        <a href="javascript:if (confirm('您确实要把该商品移出购物车吗？')) location.href=''; " class="f6">删除</a>
+                        <a  onclick="del('{:url('goods/delgoods')}?gid={$vo.id}')"  class="f6">删除</a>
                     </td>
                 </tr>
                 {/volist}
             </table>
-
-            <input type="hidden" name="step" value="update_cart" />
         </form>
         <table width="100%" align="center" border="0" cellpadding="5" cellspacing="0" class="fd30_tt" >
             <tr>
@@ -86,7 +84,7 @@
                 </td>
                 <td  > <div class="fr"> <a href="{:url('goods/address')}" class="fd30_checkout">去结算</a></div>
                     <div class="fr">
-                        <span>购物金额小计 ￥{$}</span></div>
+                        <span id="totals">购物金额小计 ￥{$}</span></div>
                 </td>
             </tr>
         </table>
@@ -100,11 +98,32 @@
 <div class="clear10"></div>
 <div class="footer_wrap">
 <script>
+    $(function(){
+        var count = $('.money').attr('data-money');
+        console.log(count);
+    })
+
+
     /*
     *清空购物车
     */
     function qing(){
+        var urls ="{:url('goods/qing')}";
+        var mid  ="{$Think.session.member['id']}";
 
+         $.get(urls,{'mid':mid},function(ret){
+                 if(ret.code == 200){
+                     layer.msg(ret.msg,{icon:6},function(){
+                         parent.location.reload();
+                     })
+                 }
+
+             if(ret.code == 400){
+                 layer.msg(ret.msg,{icon:6},function(){
+                     parent.location.reload();
+                 })
+             }
+    },'json')
     }
 
 
